@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-darkBg text-gray-100 antialiased font-sans overflow-x-hidden;
+    background-image: 
+      radial-gradient(at 0% 0%, rgba(13, 17, 34, 0.8) 0, transparent 50%),
+      radial-gradient(at 50% 0%, rgba(6, 182, 212, 0.08) 0, transparent 50%),
+      radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.08) 0, transparent 50%);
+    background-attachment: fixed;
+  }
+}
+
+/* Glassmorphism Styles */
+.glass-panel {
+  background: rgba(13, 17, 34, 0.45);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+.glass-panel-hover {
+  @apply transition-all duration-300;
+}
+
+.glass-panel-hover:hover {
+  background: rgba(18, 24, 48, 0.65);
+  border-color: rgba(6, 182, 212, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(6, 182, 212, 0.08), 0 0 15px rgba(6, 182, 212, 0.05);
+}
+
+.glass-card-accent-gold {
+  border-left: 3px solid #D4AF37;
+}
+
+.glass-card-accent-green {
+  border-left: 3px solid #00B050;
+}
+
+.glass-card-accent-red {
+  border-left: 3px solid #E10600;
+}
+
+.glass-card-accent-cyan {
+  border-left: 3px solid #06b6d4;
+}
+
+/* Scrollbar customization */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(13, 17, 34, 0.3);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(6, 182, 212, 0.3);
+}
+
+/* Pulse animation variants */
+@keyframes soft-pulse {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.6; }
+}
+
+.animate-soft-pulse {
+  animation: soft-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* High Contrast Mode rules */
+.high-contrast {
+  --tw-bg-opacity: 1 !important;
+  background-color: #000000 !important;
+  color: #FFFFFF !important;
+  border-color: #FFFFFF !important;
+}
+
+.high-contrast .glass-panel {
+  background: #000000 !apply border-2 border-white;
+}
+
+.high-contrast text, .high-contrast p, .high-contrast span, .high-contrast h1, .high-contrast h2, .high-contrast h3 {
+  color: #FFFFFF !important;
+}
+
+/* Custom glowing badge styling */
+.glow-badge {
+  text-shadow: 0 0 8px rgba(6, 182, 212, 0.5);
+}
