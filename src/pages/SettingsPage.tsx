@@ -116,7 +116,7 @@ export const SettingsPage: React.FC = () => {
               <label className="flex items-center justify-between p-3 rounded-xl border border-darkBorder bg-black/20 cursor-pointer hover:border-darkBorderGlow transition-all">
                 <div className="text-xs">
                   <span className="font-bold text-white block">Wheelchair Egress Routing</span>
-                  <span className="text-[10px] text-gray-500 mt-0.5 block">AI generates paths avoiding stairs and escalator slopes.</span>
+                  <span className="text-[10px] text-gray-400 mt-0.5 block">AI generates paths avoiding stairs and escalator slopes.</span>
                 </div>
                 <input 
                   type="checkbox" 
@@ -130,7 +130,7 @@ export const SettingsPage: React.FC = () => {
               <label className="flex items-center justify-between p-3 rounded-xl border border-darkBorder bg-black/20 cursor-pointer hover:border-darkBorderGlow transition-all">
                 <div className="text-xs">
                   <span className="font-bold text-white block">Large Text / Typography Layout</span>
-                  <span className="text-[10px] text-gray-500 mt-0.5 block">Scales browser root font values (18px) for legibility.</span>
+                  <span className="text-[10px] text-gray-400 mt-0.5 block">Scales browser root font values (18px) for legibility.</span>
                 </div>
                 <input 
                   type="checkbox" 
@@ -144,7 +144,7 @@ export const SettingsPage: React.FC = () => {
               <label className="flex items-center justify-between p-3 rounded-xl border border-darkBorder bg-black/20 cursor-pointer hover:border-darkBorderGlow transition-all">
                 <div className="text-xs">
                   <span className="font-bold text-white block">High Contrast Mode</span>
-                  <span className="text-[10px] text-gray-500 mt-0.5 block">Sets background colors to absolute solid black & details to solid white.</span>
+                  <span className="text-[10px] text-gray-400 mt-0.5 block">Sets background colors to absolute solid black & details to solid white.</span>
                 </div>
                 <input 
                   type="checkbox" 
@@ -158,7 +158,7 @@ export const SettingsPage: React.FC = () => {
               <label className="flex items-center justify-between p-3 rounded-xl border border-darkBorder bg-black/20 cursor-pointer hover:border-darkBorderGlow transition-all">
                 <div className="text-xs">
                   <span className="font-bold text-white block">Color-Blind Safe Telemetries</span>
-                  <span className="text-[10px] text-gray-500 mt-0.5 block">Swaps red/green warning states with specific high-contrast shapes.</span>
+                  <span className="text-[10px] text-gray-400 mt-0.5 block">Swaps red/green warning states with specific high-contrast shapes.</span>
                 </div>
                 <input 
                   type="checkbox" 
@@ -172,7 +172,7 @@ export const SettingsPage: React.FC = () => {
               <label className="flex items-center justify-between p-3 rounded-xl border border-darkBorder bg-black/20 cursor-pointer hover:border-darkBorderGlow transition-all">
                 <div className="text-xs">
                   <span className="font-bold text-white block">Voice Synthesizer Narrator</span>
-                  <span className="text-[10px] text-gray-500 mt-0.5 block">Speak AI recommendation cards out loud automatically.</span>
+                  <span className="text-[10px] text-gray-400 mt-0.5 block">Speak AI recommendation cards out loud automatically.</span>
                 </div>
                 <input 
                   type="checkbox" 

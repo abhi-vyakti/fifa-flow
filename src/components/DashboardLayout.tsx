@@ -29,7 +29,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTr
   const { isPlaying: audioActive, toggleAudio: onToggleAudio } = useAtmosphereAudio();
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activitySidebarOpen, setActivitySidebarOpen] = useState(true);
+  const [activitySidebarOpen, setActivitySidebarOpen] = useState(false);
   const [isSidebarHovered, setIsSidebarHovered] = useState(false);
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const [cmdQuery, setCmdQuery] = useState('');
@@ -92,6 +92,8 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTr
     { title: 'Diagnostic Complete', desc: 'Stadium health score: 96%' }
   ];
 
+  const isLanding = location.pathname === '/';
+
   return (
     <div className={`min-h-screen flex flex-col bg-[#020308] text-gray-100 ${highContrast ? 'high-contrast' : ''}`}>
       
@@ -132,7 +134,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTr
       )}
 
       {/* 2. Top Header Navbar (Live Broadcast Match Ribbon) */}
-      <header className="h-20 border-b border-darkBorder bg-darkCard/45 backdrop-blur-xl flex items-center justify-between px-6 z-40 sticky top-0">
+      <header className={`h-20 border-b border-darkBorder bg-darkCard/45 backdrop-blur-xl flex items-center justify-between px-6 z-40 sticky top-0 ${isLanding ? 'hidden' : ''}`}>
         
         {/* Left Section: Logo & Mobile Toggle */}
         <div className="flex items-center space-x-4">
@@ -144,7 +146,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTr
           </button>
           
           <div className="flex items-center space-x-2.5 cursor-pointer" onClick={() => navigate('/')}>
-            <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-fifaGold via-fifaRed to-aiCyan flex items-center justify-center font-bold text-white shadow-glow">
+            <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-fifGold via-fifaRed to-aiCyan flex items-center justify-center font-bold text-white shadow-glow">
               F
             </div>
             <div className="hidden md:block leading-none">
@@ -234,11 +236,11 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTr
         <aside 
           onMouseEnter={() => setIsSidebarHovered(true)}
           onMouseLeave={() => setIsSidebarHovered(false)}
-          className={`hidden md:flex flex-col border-r border-darkBorder bg-darkCard/30 backdrop-blur-md p-4 space-y-6 transition-all duration-300 ease-[0.16,1,0.3,1] z-30 ${isSidebarHovered ? 'w-64' : 'w-20'}`}
+          className={`hidden md:flex flex-col border-r border-darkBorder bg-darkCard/30 backdrop-blur-md p-4 space-y-6 transition-all duration-300 ease-[0.16,1,0.3,1] z-30 ${isSidebarHovered ? 'w-64' : 'w-20'} ${isLanding ? '!hidden' : ''}`}
         >
-          
-          {/* Active Role Toggle Panel */}
-          <div className="bg-white/5 border border-darkBorder p-3 rounded-xl overflow-hidden">
+            
+            {/* Active Role Toggle Panel */}
+            <div className="bg-white/5 border border-darkBorder p-3 rounded-xl overflow-hidden">
             <div className="text-[10px] text-gray-400 font-bold uppercase tracking-wider mb-2 flex items-center justify-between">
               {isSidebarHovered && <span>Active Persona</span>}
               <Wifi size={10} className="text-emerald-500 animate-pulse shrink-0 mx-auto" />
@@ -418,7 +420,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTr
         </main>
 
         {/* Right Sidebar - Live Activity Feed */}
-        {activitySidebarOpen && (
+        {!isLanding && activitySidebarOpen && (
           <aside className="hidden xl:flex flex-col w-80 border-l border-darkBorder bg-darkCard/20 backdrop-blur-md p-4 space-y-4 overflow-hidden h-[calc(100vh-5rem)] sticky top-20">
             <div className="flex items-center justify-between border-b border-darkBorder pb-3">
               <div className="flex items-center space-x-2">

@@ -122,7 +122,7 @@ export const FanAssistant: React.FC = () => {
                     handleFanAsk((e.target as HTMLInputElement).value);
                   }
                 }}
-                className="w-full bg-black/40 border border-darkBorder focus:border-aiCyan rounded-xl px-4 py-3 text-xs outline-none text-white placeholder-gray-500 font-sans"
+                className="w-full bg-black/40 border border-darkBorder focus:border-aiCyan rounded-xl px-4 py-3 text-xs outline-none text-white placeholder-slate-400 font-sans focus:ring-1 focus:ring-aiCyan/30"
               />
               {voiceSupported && (
                 <button 
@@ -178,7 +178,7 @@ export const FanAssistant: React.FC = () => {
                 placeholder="Enter Gate Code (e.g. SEC-C2)"
                 value={ticketInput}
                 onChange={(e) => setTicketInput(e.target.value)}
-                className="w-full bg-black/40 border border-darkBorder focus:border-aiCyan rounded-xl px-4 py-2.5 text-xs outline-none text-white font-sans"
+                className="w-full bg-black/40 border border-darkBorder focus:border-aiCyan rounded-xl px-4 py-2.5 text-xs outline-none text-white placeholder-slate-400 font-sans focus:ring-1 focus:ring-aiCyan/30"
               />
               <button 
                 type="submit" 

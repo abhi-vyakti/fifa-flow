@@ -24,15 +24,17 @@ export const AICopilot: React.FC = () => {
   // Track active alerts
   const activeIncidents = state.incidents.filter(i => i.status !== 'resolved');
   const criticalAlert = activeIncidents.find(i => i.severity === 'critical' || i.severity === 'high');
+  const [lastIncidentCount, setLastIncidentCount] = useState(activeIncidents.length);
 
-  // Auto-transition to summary alert when incidents fire
+  // Auto-transition to summary alert ONLY when a NEW incident is created
   useEffect(() => {
-    setHudState(prev => {
-      if (activeIncidents.length > 0 && prev === 'orb') return 'summary';
-      if (activeIncidents.length === 0 && prev === 'summary') return 'orb';
-      return prev;
-    });
-  }, [activeIncidents.length]);
+    if (activeIncidents.length > lastIncidentCount) {
+      setHudState('summary');
+    } else if (activeIncidents.length === 0) {
+      setHudState('orb');
+    }
+    setLastIncidentCount(activeIncidents.length);
+  }, [activeIncidents.length, lastIncidentCount]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,7 +57,7 @@ export const AICopilot: React.FC = () => {
   };
 
   const handleClose = () => {
-    setHudState(activeIncidents.length > 0 ? 'summary' : 'orb');
+    setHudState('orb');
   };
 
   return (

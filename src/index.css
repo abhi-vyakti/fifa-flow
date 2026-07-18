@@ -121,3 +121,13 @@
 .glow-badge {
   text-shadow: 0 0 8px rgba(6, 182, 212, 0.5);
 }
+
+/* Keyboard Navigation Focus styles */
+button:focus-visible, 
+a:focus-visible, 
+input:focus-visible, 
+select:focus-visible, 
+[role="button"]:focus-visible {
+  outline: 2px solid #06b6d4 !important;
+  outline-offset: 2px;
+}
