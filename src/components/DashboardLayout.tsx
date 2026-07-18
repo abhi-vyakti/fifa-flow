@@ -213,32 +213,89 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
           </div>
 
           {/* Nav Links */}
-          <div className="flex-1 space-y-1 overflow-y-auto">
-            <div className="text-[10px] text-gray-500 font-bold uppercase tracking-widest px-2 mb-2">Navigation</div>
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              const isActive = location.pathname === item.path;
-              return (
-                <button
-                  key={item.path}
-                  onClick={() => navigate(item.path)}
-                  className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm transition-all duration-150 group ${isActive ? 'bg-gradient-to-r from-aiCyan/15 to-transparent border-l-2 border-aiCyan text-white font-medium shadow-glow' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}
-                >
-                  <div className="flex items-center space-x-3">
-                    <Icon size={16} className={isActive ? 'text-aiCyan' : 'text-gray-400 group-hover:text-white'} />
-                    <span>{item.name}</span>
-                  </div>
-                  {item.badge && (
-                    <span className="text-[9px] bg-aiPurple/20 border border-aiPurple/30 text-aiPurple font-extrabold px-1.5 py-0.5 rounded tracking-wide uppercase">
-                      {item.badge}
-                    </span>
-                  )}
-                </button>
-              );
-            })}
-          </div>
+          <div className="flex-1 space-y-4 overflow-y-auto pr-1">
+            
+            {/* MATCH CONTROL GROUP */}
+            <div className="space-y-1">
+              <div className="text-[9px] text-gray-500 font-bold uppercase tracking-widest px-3 mb-1.5">MATCH CONTROL</div>
+              {[
+                { name: 'AI Situation Room', path: '/commander', icon: Brain, badge: 'CORE' },
+                { name: 'Organizer Dashboard', path: '/dashboard', icon: Terminal },
+                { name: 'System Architecture', path: '/architecture', icon: ArchIcon, badge: 'JUDGE' }
+              ].map((item) => {
+                const Icon = item.icon;
+                const isActive = location.pathname === item.path;
+                return (
+                  <button
+                    key={item.path}
+                    onClick={() => navigate(item.path)}
+                    className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-150 group ${isActive ? 'bg-gradient-to-r from-aiCyan/15 to-transparent border-l-2 border-aiCyan text-white shadow-glow' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}
+                  >
+                    <div className="flex items-center space-x-2.5">
+                      <Icon size={14} className={isActive ? 'text-aiCyan' : 'text-gray-400 group-hover:text-white'} />
+                      <span>{item.name}</span>
+                    </div>
+                    {item.badge && (
+                      <span className="text-[8px] bg-aiPurple/20 border border-aiPurple/30 text-aiPurple font-extrabold px-1 rounded uppercase">
+                        {item.badge}
+                      </span>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
 
-          {/* Sidebar Footer */}
+            {/* STAKEHOLDER PORTALS GROUP */}
+            <div className="space-y-1">
+              <div className="text-[9px] text-gray-500 font-bold uppercase tracking-widest px-3 mb-1.5">ROLES COMMAND</div>
+              {[
+                { name: 'Fan Assistant Portal', path: '/fan', icon: Compass },
+                { name: 'Volunteer Portal', path: '/volunteer', icon: Users },
+                { name: 'Security Patrol', path: '/security', icon: Shield },
+                { name: 'Medical Dispatch', path: '/medical', icon: Activity }
+              ].map((item) => {
+                const Icon = item.icon;
+                const isActive = location.pathname === item.path;
+                return (
+                  <button
+                    key={item.path}
+                    onClick={() => navigate(item.path)}
+                    className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-150 group ${isActive ? 'bg-gradient-to-r from-aiCyan/15 to-transparent border-l-2 border-aiCyan text-white shadow-glow' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}
+                  >
+                    <div className="flex items-center space-x-2.5">
+                      <Icon size={14} className={isActive ? 'text-aiCyan' : 'text-gray-400 group-hover:text-white'} />
+                      <span>{item.name}</span>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* PREFERENCES GROUP */}
+            <div className="space-y-1">
+              <div className="text-[9px] text-gray-500 font-bold uppercase tracking-widest px-3 mb-1.5">PREFERENCES</div>
+              {[
+                { name: 'Landing Overview', path: '/', icon: LayoutDashboard },
+                { name: 'Settings Options', path: '/settings', icon: SettingsIcon }
+              ].map((item) => {
+                const Icon = item.icon;
+                const isActive = location.pathname === item.path;
+                return (
+                  <button
+                    key={item.path}
+                    onClick={() => navigate(item.path)}
+                    className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-150 group ${isActive ? 'bg-gradient-to-r from-aiCyan/15 to-transparent border-l-2 border-aiCyan text-white shadow-glow' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}
+                  >
+                    <div className="flex items-center space-x-2.5">
+                      <Icon size={14} className={isActive ? 'text-aiCyan' : 'text-gray-400 group-hover:text-white'} />
+                      <span>{item.name}</span>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+
+          </div>          {/* Sidebar Footer */}
           <div className="text-center text-[10px] text-gray-500 border-t border-darkBorder pt-3">
             <span>2026 World Cup &bull; FIFA FLOW v1.0</span>
           </div>
