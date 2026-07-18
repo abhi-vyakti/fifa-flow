@@ -1,41 +1,62 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useLiveData } from '../contexts/LiveDataContext';
 import { useThemeSettings, type UserRole } from '../contexts/ThemeContext';
+import { useAtmosphereAudio } from '../hooks/useAtmosphereAudio';
 import { 
   Shield, Users, Activity, Sliders, LayoutDashboard, Brain, Compass, 
   Map, Terminal, Settings as SettingsIcon, AlertCircle, Wifi, Play, StopCircle, 
-  Activity as TelemetryIcon, Languages, HelpCircle, CheckCircle2, ChevronRight, Menu, X, HelpCircle as ArchIcon
+  Activity as TelemetryIcon, Languages, HelpCircle, CheckCircle2, ChevronRight, Menu, X, HelpCircle as ArchIcon,
+  Volume2, VolumeX, Search
 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
+  onTriggerIntro?: () => void;
 }
 
-export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
+export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTriggerIntro: _onTriggerIntro }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { 
     state, isPlayingDemo, activeDemoStep, startJudgeDemo, stopJudgeDemo, resolveIncident 
   } = useLiveData();
   const { 
-    role, setRole, language, setLanguage, highContrast, colorBlindSafe 
+    role, setRole, language, setLanguage, highContrast 
   } = useThemeSettings();
+
+  const { isPlaying: audioActive, toggleAudio: onToggleAudio } = useAtmosphereAudio();
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activitySidebarOpen, setActivitySidebarOpen] = useState(true);
+  const [isSidebarHovered, setIsSidebarHovered] = useState(false);
+  const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
+  const [cmdQuery, setCmdQuery] = useState('');
+
+  // Listening to Cmd+K or Ctrl+K shortcut
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        setCommandPaletteOpen(prev => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   // List of paths and navigation
   const navItems = [
-    { name: 'Landing Page', path: '/', icon: LayoutDashboard },
+    { name: 'Landing Overview', path: '/', icon: LayoutDashboard },
     { name: 'AI Situation Room', path: '/commander', icon: Brain, badge: 'CORE' },
     { name: 'Organizer Dashboard', path: '/dashboard', icon: Terminal },
-    { name: 'Fan Assistant', path: '/fan', icon: Compass },
+    { name: 'Fan Assistant Portal', path: '/fan', icon: Compass },
     { name: 'Volunteer Portal', path: '/volunteer', icon: Users },
-    { name: 'Security Dashboard', path: '/security', icon: Shield },
-    { name: 'Medical Dashboard', path: '/medical', icon: Activity },
+    { name: 'Security Patrol', path: '/security', icon: Shield },
+    { name: 'Medical Dispatch', path: '/medical', icon: Activity },
     { name: 'System Architecture', path: '/architecture', icon: ArchIcon, badge: 'JUDGE' },
-    { name: 'Settings & Preferences', path: '/settings', icon: SettingsIcon }
+    { name: 'Settings Options', path: '/settings', icon: SettingsIcon }
   ];
 
   // Map roles to dashboard paths
@@ -52,6 +73,13 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
     navigate(roleRoutes[newRole]);
   };
 
+  // Convert current path to readable breadcrumbs
+  const getBreadcrumbs = () => {
+    const segments = location.pathname.split('/').filter(Boolean);
+    if (segments.length === 0) return 'FIFA FLOW > LANDING';
+    return `FIFA FLOW > ${segments.map(s => s.toUpperCase()).join(' > ')}`;
+  };
+
   const demoSteps = [
     { title: 'Kickoff Rush', desc: 'Stadium filling up quickly' },
     { title: 'Metro Arrival', desc: 'Transit terminal surge' },
@@ -65,7 +93,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
   ];
 
   return (
-    <div className={`min-h-screen flex flex-col bg-darkBg text-gray-100 ${highContrast ? 'high-contrast' : ''}`}>
+    <div className={`min-h-screen flex flex-col bg-[#020308] text-gray-100 ${highContrast ? 'high-contrast' : ''}`}>
       
       {/* 1. Judge Mode Progress Overlay (Sticky Top) */}
       {isPlayingDemo && activeDemoStep !== null && (
@@ -103,9 +131,11 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
         </div>
       )}
 
-      {/* 2. Top Header Navbar (System Telemetry & Quick Action Menu) */}
-      <header className="h-16 border-b border-darkBorder bg-darkCard/60 backdrop-blur-md flex items-center justify-between px-4 z-40 sticky top-0">
-        <div className="flex items-center space-x-3">
+      {/* 2. Top Header Navbar (Live Broadcast Match Ribbon) */}
+      <header className="h-20 border-b border-darkBorder bg-darkCard/45 backdrop-blur-xl flex items-center justify-between px-6 z-40 sticky top-0">
+        
+        {/* Left Section: Logo & Mobile Toggle */}
+        <div className="flex items-center space-x-4">
           <button 
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="p-1.5 md:hidden hover:bg-white/5 rounded text-gray-400"
@@ -113,70 +143,83 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
             {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
           
-          <div className="flex items-center space-x-2 cursor-pointer" onClick={() => navigate('/')}>
+          <div className="flex items-center space-x-2.5 cursor-pointer" onClick={() => navigate('/')}>
             <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-fifaGold via-fifaRed to-aiCyan flex items-center justify-center font-bold text-white shadow-glow">
               F
             </div>
-            <div>
-              <span className="font-extrabold text-white font-sans tracking-wide">FIFA FLOW</span>
-              <span className="hidden sm:inline-block text-[10px] text-aiCyan uppercase font-semibold tracking-widest ml-2 px-1.5 py-0.5 bg-aiCyan/10 border border-aiCyan/25 rounded">
-                AI Copilot
-              </span>
+            <div className="hidden md:block leading-none">
+              <span className="font-extrabold text-white text-sm font-sans tracking-wide">FIFA FLOW</span>
+              <span className="text-[8px] text-gray-500 block uppercase font-mono tracking-widest mt-0.5">OPS COPILOT</span>
             </div>
           </div>
-        </div>
 
-        {/* System Telemetry & Status Indicators (Highly Professional) */}
-        <div className="hidden lg:flex items-center space-x-6 text-xs text-gray-400">
-          <div className="flex items-center space-x-2 border-r border-darkBorder pr-4">
-            <TelemetryIcon size={14} className="text-aiCyan animate-pulse-slow" />
-            <span>FLOW AI Engine:</span>
-            <span className="font-bold text-emerald-400 glow-badge">WATCHING</span>
-          </div>
-
-          <div className="flex items-center space-x-2 border-r border-darkBorder pr-4" title="Groq API Latency">
-            <span>Latency:</span>
-            <span className="font-bold text-white">520 ms</span>
-          </div>
-
-          <div className="flex items-center space-x-2 border-r border-darkBorder pr-4" title="AI Confidence Accuracy Curve">
-            <span>Accuracy:</span>
-            <span className="font-bold text-white">94%</span>
-          </div>
-
-          <div className="flex items-center space-x-2 border-r border-darkBorder pr-4">
-            <span>Active Agents:</span>
-            <span className="text-aiCyan font-bold">12</span>
-          </div>
-
-          <div className="flex items-center space-x-2">
-            <span className="h-2 w-2 rounded-full bg-emerald-500 animate-ping" />
-            <span>Groq:</span>
-            <span className="text-white font-bold">HEALTHY</span>
+          {/* Breadcrumbs for spatial awareness */}
+          <div className="hidden lg:block text-[9px] text-gray-500 font-mono tracking-wider pl-4 border-l border-darkBorder">
+            {getBreadcrumbs()}
           </div>
         </div>
 
-        {/* Global Translation Selector & Navigation Buttons */}
+        {/* Center Section: Live Broadcast Tournament Score Ribbon */}
+        <div className="flex items-center bg-black/40 border border-darkBorder px-4 py-2 rounded-full space-x-4 text-xs font-semibold shadow-inner">
+          <div className="flex items-center space-x-1.5 text-fifaRed">
+            <span className="h-2 w-2 rounded-full bg-fifaRed animate-pulse" />
+            <span className="text-[10px] uppercase font-bold tracking-wider">LIVE</span>
+          </div>
+          <div className="text-white flex items-center space-x-2">
+            <span>🇺🇸 USA</span>
+            <span className="bg-white/10 px-2 py-0.5 rounded font-bold font-mono">1 - 0</span>
+            <span>ENG 🏴󠁧󠁢󠁥󠁮󠁧󠁿</span>
+          </div>
+          <span className="text-gray-500">|</span>
+          <span className="text-fifaGold font-mono">78:42 min</span>
+          <span className="text-gray-500">|</span>
+          <span className="text-gray-400">Group A</span>
+          <span className="text-gray-500 hidden sm:inline">|</span>
+          <span className="text-aiCyan hidden sm:inline">Capacity: 94%</span>
+        </div>
+
+        {/* Right Section: Translate, Audio & Control Tools */}
         <div className="flex items-center space-x-3">
-          <div className="flex items-center bg-white/5 border border-darkBorder rounded px-2.5 py-1 text-xs">
+          
+          {/* Cmd+K Search trigger button */}
+          <button
+            onClick={() => setCommandPaletteOpen(true)}
+            className="hidden sm:flex items-center space-x-1.5 bg-white/5 border border-darkBorder hover:border-darkBorderGlow px-3 py-1.5 rounded-lg text-xs font-semibold text-gray-400 transition-all"
+            title="Search Dashboard (Ctrl+K)"
+          >
+            <Search size={13} />
+            <span className="text-[10px] font-mono border border-white/10 px-1 rounded bg-black/20">Ctrl+K</span>
+          </button>
+
+          {/* Opt-in audio toggle button */}
+          <button 
+            onClick={onToggleAudio}
+            className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all border ${audioActive ? 'bg-fifaGold/15 border-fifaGold text-fifaGold shadow-glass' : 'bg-white/5 border-darkBorder text-gray-400'}`}
+          >
+            {audioActive ? <Volume2 size={13} className="animate-pulse" /> : <VolumeX size={13} />}
+            <span className="hidden lg:inline">{audioActive ? '🔊 Atmosphere ON' : '🔇 Muted Ambient'}</span>
+          </button>
+
+          {/* Language Selector */}
+          <div className="hidden sm:flex items-center bg-white/5 border border-darkBorder rounded-lg px-2 py-1.5 text-xs">
             <Languages size={13} className="text-gray-400 mr-1.5" />
             <select 
               value={language} 
               onChange={(e) => setLanguage(e.target.value as any)}
               className="bg-transparent border-none outline-none text-white cursor-pointer font-medium"
             >
-              <option value="en" className="bg-darkBg">EN (English)</option>
-              <option value="es" className="bg-darkBg">ES (Español)</option>
-              <option value="fr" className="bg-darkBg">FR (Français)</option>
-              <option value="pt" className="bg-darkBg">PT (Português)</option>
-              <option value="ar" className="bg-darkBg">AR (العربية)</option>
-              <option value="hi" className="bg-darkBg">HI (हिन्दी)</option>
+              <option value="en" className="bg-darkBg">EN</option>
+              <option value="es" className="bg-darkBg">ES</option>
+              <option value="fr" className="bg-darkBg">FR</option>
+              <option value="pt" className="bg-darkBg">PT</option>
+              <option value="ar" className="bg-darkBg">AR</option>
+              <option value="hi" className="bg-darkBg">HI</option>
             </select>
           </div>
 
           <button 
             onClick={() => setActivitySidebarOpen(!activitySidebarOpen)}
-            className={`p-2 rounded border transition-all ${activitySidebarOpen ? 'bg-aiCyan/10 border-aiCyan/30 text-aiCyan' : 'bg-white/5 border-darkBorder text-gray-400 hover:text-white'}`}
+            className={`p-2 rounded-lg border transition-all ${activitySidebarOpen ? 'bg-aiCyan/10 border-aiCyan/30 text-aiCyan' : 'bg-white/5 border-darkBorder text-gray-400 hover:text-white'}`}
             title="Toggle Live Activity Feed"
           >
             <AlertCircle size={16} />
@@ -187,37 +230,39 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
       {/* 3. Main Workspace Area */}
       <div className="flex-1 flex overflow-hidden">
         
-        {/* Sidebar Left Navigation (Desktop) */}
-        <aside className="hidden md:flex flex-col w-64 border-r border-darkBorder bg-darkCard/30 backdrop-blur-md p-4 space-y-6">
+        {/* Sidebar Left Navigation (Desktop Hover-Expanding Rail) */}
+        <aside 
+          onMouseEnter={() => setIsSidebarHovered(true)}
+          onMouseLeave={() => setIsSidebarHovered(false)}
+          className={`hidden md:flex flex-col border-r border-darkBorder bg-darkCard/30 backdrop-blur-md p-4 space-y-6 transition-all duration-300 ease-[0.16,1,0.3,1] z-30 ${isSidebarHovered ? 'w-64' : 'w-20'}`}
+        >
           
-          {/* Active Role Quick Toggle Panel */}
-          <div className="bg-white/5 border border-darkBorder p-3 rounded-xl">
+          {/* Active Role Toggle Panel */}
+          <div className="bg-white/5 border border-darkBorder p-3 rounded-xl overflow-hidden">
             <div className="text-[10px] text-gray-400 font-bold uppercase tracking-wider mb-2 flex items-center justify-between">
-              <span>Active Persona View</span>
-              <Wifi size={10} className="text-emerald-500 animate-pulse" />
+              {isSidebarHovered && <span>Active Persona</span>}
+              <Wifi size={10} className="text-emerald-500 animate-pulse shrink-0 mx-auto" />
             </div>
+            
             <select
               value={role}
               onChange={(e) => handleRoleChange(e.target.value as any)}
               className="w-full bg-darkBg text-white text-xs border border-darkBorder rounded-lg p-2 focus:outline-none focus:border-aiCyan"
             >
-              <option value="organizer">Organizer Command</option>
-              <option value="fan">Fan Assistant</option>
-              <option value="volunteer">Volunteer Portal</option>
-              <option value="security">Security Patrol</option>
-              <option value="medical">Medical Dispatch</option>
+              <option value="organizer">{isSidebarHovered ? 'Organizer' : 'ORG'}</option>
+              <option value="fan">{isSidebarHovered ? 'Fan companion' : 'FAN'}</option>
+              <option value="volunteer">{isSidebarHovered ? 'Volunteer' : 'VOL'}</option>
+              <option value="security">{isSidebarHovered ? 'Security' : 'SEC'}</option>
+              <option value="medical">{isSidebarHovered ? 'Medical' : 'MED'}</option>
             </select>
-            <div className="mt-2 text-[10px] text-gray-500">
-              Swapping role adapts AI reasoning context prompts dynamically.
-            </div>
           </div>
 
-          {/* Nav Links */}
-          <div className="flex-1 space-y-4 overflow-y-auto pr-1">
+          {/* Grouped Nav Links */}
+          <div className="flex-1 space-y-5 overflow-y-auto pr-1">
             
             {/* MATCH CONTROL GROUP */}
             <div className="space-y-1">
-              <div className="text-[9px] text-gray-500 font-bold uppercase tracking-widest px-3 mb-1.5">MATCH CONTROL</div>
+              {isSidebarHovered && <div className="text-[9px] text-gray-500 font-bold uppercase tracking-widest px-3 mb-1.5">MATCH CONTROL</div>}
               {[
                 { name: 'AI Situation Room', path: '/commander', icon: Brain, badge: 'CORE' },
                 { name: 'Organizer Dashboard', path: '/dashboard', icon: Terminal },
@@ -229,13 +274,13 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
                   <button
                     key={item.path}
                     onClick={() => navigate(item.path)}
-                    className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-150 group ${isActive ? 'bg-gradient-to-r from-aiCyan/15 to-transparent border-l-2 border-aiCyan text-white shadow-glow' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}
+                    className={`w-full flex items-center px-3 py-2.5 rounded-lg text-xs font-semibold transition-all duration-150 group ${isActive ? 'bg-gradient-to-r from-aiCyan/15 to-transparent border-l-2 border-aiCyan text-white shadow-glow' : 'text-gray-400 hover:text-white hover:bg-white/5'} ${isSidebarHovered ? 'justify-between' : 'justify-center'}`}
                   >
                     <div className="flex items-center space-x-2.5">
-                      <Icon size={14} className={isActive ? 'text-aiCyan' : 'text-gray-400 group-hover:text-white'} />
-                      <span>{item.name}</span>
+                      <Icon size={15} className={isActive ? 'text-aiCyan' : 'text-gray-400 group-hover:text-white'} />
+                      {isSidebarHovered && <span>{item.name}</span>}
                     </div>
-                    {item.badge && (
+                    {isSidebarHovered && item.badge && (
                       <span className="text-[8px] bg-aiPurple/20 border border-aiPurple/30 text-aiPurple font-extrabold px-1 rounded uppercase">
                         {item.badge}
                       </span>
@@ -247,7 +292,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
 
             {/* STAKEHOLDER PORTALS GROUP */}
             <div className="space-y-1">
-              <div className="text-[9px] text-gray-500 font-bold uppercase tracking-widest px-3 mb-1.5">ROLES COMMAND</div>
+              {isSidebarHovered && <div className="text-[9px] text-gray-500 font-bold uppercase tracking-widest px-3 mb-1.5">ROLES COMMAND</div>}
               {[
                 { name: 'Fan Assistant Portal', path: '/fan', icon: Compass },
                 { name: 'Volunteer Portal', path: '/volunteer', icon: Users },
@@ -260,11 +305,11 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
                   <button
                     key={item.path}
                     onClick={() => navigate(item.path)}
-                    className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-150 group ${isActive ? 'bg-gradient-to-r from-aiCyan/15 to-transparent border-l-2 border-aiCyan text-white shadow-glow' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}
+                    className={`w-full flex items-center px-3 py-2.5 rounded-lg text-xs font-semibold transition-all duration-150 group ${isActive ? 'bg-gradient-to-r from-aiCyan/15 to-transparent border-l-2 border-aiCyan text-white shadow-glow' : 'text-gray-400 hover:text-white hover:bg-white/5'} ${isSidebarHovered ? 'justify-between' : 'justify-center'}`}
                   >
                     <div className="flex items-center space-x-2.5">
-                      <Icon size={14} className={isActive ? 'text-aiCyan' : 'text-gray-400 group-hover:text-white'} />
-                      <span>{item.name}</span>
+                      <Icon size={15} className={isActive ? 'text-aiCyan' : 'text-gray-400 group-hover:text-white'} />
+                      {isSidebarHovered && <span>{item.name}</span>}
                     </div>
                   </button>
                 );
@@ -273,7 +318,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
 
             {/* PREFERENCES GROUP */}
             <div className="space-y-1">
-              <div className="text-[9px] text-gray-500 font-bold uppercase tracking-widest px-3 mb-1.5">PREFERENCES</div>
+              {isSidebarHovered && <div className="text-[9px] text-gray-500 font-bold uppercase tracking-widest px-3 mb-1.5">PREFERENCES</div>}
               {[
                 { name: 'Landing Overview', path: '/', icon: LayoutDashboard },
                 { name: 'Settings Options', path: '/settings', icon: SettingsIcon }
@@ -284,20 +329,22 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
                   <button
                     key={item.path}
                     onClick={() => navigate(item.path)}
-                    className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-150 group ${isActive ? 'bg-gradient-to-r from-aiCyan/15 to-transparent border-l-2 border-aiCyan text-white shadow-glow' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}
+                    className={`w-full flex items-center px-3 py-2.5 rounded-lg text-xs font-semibold transition-all duration-150 group ${isActive ? 'bg-gradient-to-r from-aiCyan/15 to-transparent border-l-2 border-aiCyan text-white shadow-glow' : 'text-gray-400 hover:text-white hover:bg-white/5'} ${isSidebarHovered ? 'justify-between' : 'justify-center'}`}
                   >
                     <div className="flex items-center space-x-2.5">
-                      <Icon size={14} className={isActive ? 'text-aiCyan' : 'text-gray-400 group-hover:text-white'} />
-                      <span>{item.name}</span>
+                      <Icon size={15} className={isActive ? 'text-aiCyan' : 'text-gray-400 group-hover:text-white'} />
+                      {isSidebarHovered && <span>{item.name}</span>}
                     </div>
                   </button>
                 );
               })}
             </div>
 
-          </div>          {/* Sidebar Footer */}
-          <div className="text-center text-[10px] text-gray-500 border-t border-darkBorder pt-3">
-            <span>2026 World Cup &bull; FIFA FLOW v1.0</span>
+          </div>
+
+          {/* Sidebar Footer */}
+          <div className="text-center text-[9px] text-gray-600 border-t border-darkBorder pt-3">
+            {isSidebarHovered ? <span>2026 World Cup &bull; FIFA FLOW</span> : <span>'26</span>}
           </div>
         </aside>
 
@@ -358,14 +405,21 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
           </div>
         )}
 
-        {/* Main Dashboard Pages Slot */}
-        <main className="flex-1 overflow-y-auto p-4 md:p-6 bg-gradient-to-b from-darkBg/60 to-darkBg">
-          {children}
+        {/* Main Dashboard Pages Slot (Uses directional camera pan reveal transition) */}
+        <main className="flex-1 overflow-y-auto p-4 md:p-6 bg-gradient-to-b from-darkBg/60 to-darkBg relative z-10">
+          <motion.div
+            key={location.pathname}
+            initial={{ opacity: 0, x: 10, filter: 'blur(4px)' }}
+            animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          >
+            {children}
+          </motion.div>
         </main>
 
-        {/* Right Sidebar - Live Activity Feed (Highly Interactive) */}
+        {/* Right Sidebar - Live Activity Feed */}
         {activitySidebarOpen && (
-          <aside className="hidden xl:flex flex-col w-80 border-l border-darkBorder bg-darkCard/20 backdrop-blur-md p-4 space-y-4 overflow-hidden h-[calc(100vh-4rem)] sticky top-16">
+          <aside className="hidden xl:flex flex-col w-80 border-l border-darkBorder bg-darkCard/20 backdrop-blur-md p-4 space-y-4 overflow-hidden h-[calc(100vh-5rem)] sticky top-20">
             <div className="flex items-center justify-between border-b border-darkBorder pb-3">
               <div className="flex items-center space-x-2">
                 <span className="flex h-2 w-2 relative">
@@ -429,7 +483,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
               {state.incidents.filter(i => i.status !== 'resolved').length === 0 && (
                 <div className="bg-emerald-950/10 border border-emerald-900/30 p-4 rounded-xl text-center">
                   <CheckCircle2 className="mx-auto text-emerald-500 mb-1.5" size={20} />
-                  <p className="text-xs text-gray-400 font-sans font-medium">All emergency dispatch lines cleared. Perimeter secure.</p>
+                  <p className="text-xs text-gray-400 font-sans font-medium">All emergency dispatch lines cleared.</p>
                 </div>
               )}
             </div>
@@ -437,6 +491,75 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
         )}
 
       </div>
+
+      {/* 4. Command Palette Dialogue Overlay (Ctrl+K Modal) */}
+      <AnimatePresence>
+        {commandPaletteOpen && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[1000] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4"
+            onClick={() => setCommandPaletteOpen(false)}
+          >
+            <motion.div 
+              initial={{ scale: 0.95, y: -20, filter: 'blur(10px)' }}
+              animate={{ scale: 1, y: 0, filter: 'blur(0px)' }}
+              exit={{ scale: 0.95, y: -20, filter: 'blur(10px)' }}
+              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              className="w-full max-w-lg glass-panel bg-darkCard/95 border border-darkBorder rounded-2xl shadow-glow overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="p-4 border-b border-darkBorder flex items-center space-x-3">
+                <Search size={16} className="text-aiCyan" />
+                <input
+                  type="text"
+                  placeholder="Type a portal name or shortcut..."
+                  value={cmdQuery}
+                  onChange={(e) => setCmdQuery(e.target.value)}
+                  className="bg-transparent border-none outline-none text-white w-full text-xs font-semibold focus:ring-0"
+                  autoFocus
+                />
+                <span className="text-[9px] bg-white/5 border border-darkBorder px-1.5 py-0.5 rounded text-gray-500 font-mono">ESC</span>
+              </div>
+              
+              <div className="p-2 max-h-60 overflow-y-auto space-y-1">
+                {navItems
+                  .filter(item => item.name.toLowerCase().includes(cmdQuery.toLowerCase()))
+                  .map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <button
+                        key={item.path}
+                        onClick={() => {
+                          const routeRoles: Record<string, UserRole> = {
+                            '/commander': 'organizer',
+                            '/dashboard': 'organizer',
+                            '/fan': 'fan',
+                            '/volunteer': 'volunteer',
+                            '/security': 'security',
+                            '/medical': 'medical'
+                          };
+                          if (routeRoles[item.path]) {
+                            setRole(routeRoles[item.path]);
+                          }
+                          navigate(item.path);
+                          setCommandPaletteOpen(false);
+                          setCmdQuery('');
+                        }}
+                        className="w-full flex items-center space-x-3 px-3 py-2 rounded-xl text-xs text-left text-gray-400 hover:text-white hover:bg-white/5 transition-all font-semibold"
+                      >
+                        <Icon size={14} className="text-gray-500" />
+                        <span>{item.name}</span>
+                      </button>
+                    );
+                  })}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
     </div>
   );
 };

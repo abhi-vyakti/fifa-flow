@@ -152,21 +152,21 @@ export const OrganizerDashboard: React.FC = () => {
                   <AreaChart data={crowdTrendData}>
                     <defs>
                       <linearGradient id="colorIngress" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#06b6d4" stopOpacity={0.2}/>
+                        <stop offset="5%" stopColor="#06b6d4" stopOpacity={0.06}/>
                         <stop offset="95%" stopColor="#06b6d4" stopOpacity={0}/>
                       </linearGradient>
                       <linearGradient id="colorQueues" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.2}/>
+                        <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.06}/>
                         <stop offset="95%" stopColor="#f59e0b" stopOpacity={0}/>
                       </linearGradient>
                     </defs>
-                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
-                    <XAxis dataKey="name" stroke="#9CA3AF" />
-                    <YAxis stroke="#9CA3AF" />
-                    <Tooltip contentStyle={{ backgroundColor: '#0D1122', borderColor: 'rgba(255,255,255,0.08)', color: '#FFF' }} />
-                    <Legend />
-                    <Area type="monotone" dataKey="Ingress" stroke="#06b6d4" fillOpacity={1} fill="url(#colorIngress)" name="Ingress Rate" />
-                    <Area type="monotone" dataKey="Queues" stroke="#f59e0b" fillOpacity={1} fill="url(#colorQueues)" name="Avg Queue (mins)" />
+                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.03)" />
+                    <XAxis dataKey="name" stroke="rgba(255,255,255,0.15)" tick={{ fontSize: 10 }} />
+                    <YAxis stroke="rgba(255,255,255,0.15)" tick={{ fontSize: 10 }} />
+                    <Tooltip contentStyle={{ backgroundColor: '#0D1122', borderColor: 'rgba(255,255,255,0.08)', color: '#FFF', fontSize: '11px' }} />
+                    <Legend wrapperStyle={{ fontSize: '10px' }} />
+                    <Area type="monotone" dataKey="Ingress" stroke="#06b6d4" strokeWidth={1.5} fillOpacity={1} fill="url(#colorIngress)" name="Ingress Rate" dot={false} />
+                    <Area type="monotone" dataKey="Queues" stroke="#f59e0b" strokeWidth={1.5} fillOpacity={1} fill="url(#colorQueues)" name="Avg Queue (mins)" dot={false} />
                   </AreaChart>
                 </ResponsiveContainer>
               </div>
@@ -190,9 +190,9 @@ export const OrganizerDashboard: React.FC = () => {
                 <div className="h-28 w-full text-xs">
                   <ResponsiveContainer width="100%" height="100%">
                     <AreaChart data={utilityData}>
-                      <CartesianGrid stroke="rgba(255,255,255,0.05)" />
-                      <XAxis dataKey="name" stroke="#6B7280" />
-                      <YAxis stroke="#6B7280" />
+                      <CartesianGrid stroke="rgba(255,255,255,0.03)" />
+                      <XAxis dataKey="name" stroke="rgba(255,255,255,0.15)" />
+                      <YAxis stroke="rgba(255,255,255,0.15)" />
                       <Area type="monotone" dataKey="Power" stroke="#f59e0b" fill="rgba(245, 158, 11, 0.08)" />
                     </AreaChart>
                   </ResponsiveContainer>
@@ -214,9 +214,9 @@ export const OrganizerDashboard: React.FC = () => {
                 <div className="h-28 w-full text-xs">
                   <ResponsiveContainer width="100%" height="100%">
                     <AreaChart data={utilityData}>
-                      <CartesianGrid stroke="rgba(255,255,255,0.05)" />
-                      <XAxis dataKey="name" stroke="#6B7280" />
-                      <YAxis stroke="#6B7280" />
+                      <CartesianGrid stroke="rgba(255,255,255,0.03)" />
+                      <XAxis dataKey="name" stroke="rgba(255,255,255,0.15)" />
+                      <YAxis stroke="rgba(255,255,255,0.15)" />
                       <Area type="monotone" dataKey="Water" stroke="#06b6d4" fill="rgba(6, 182, 212, 0.08)" />
                     </AreaChart>
                   </ResponsiveContainer>
@@ -260,9 +260,9 @@ export const OrganizerDashboard: React.FC = () => {
             <div className="h-64 w-full text-xs">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={foodInventoryData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
-                  <XAxis dataKey="name" stroke="#9CA3AF" />
-                  <YAxis stroke="#9CA3AF" />
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.03)" />
+                  <XAxis dataKey="name" stroke="rgba(255,255,255,0.15)" />
+                  <YAxis stroke="rgba(255,255,255,0.15)" />
                   <Tooltip contentStyle={{ backgroundColor: '#0D1122', borderColor: 'rgba(255,255,255,0.08)', color: '#FFF' }} />
                   <Legend />
                   <Bar dataKey="stock" fill="#3b82f6" radius={[4, 4, 0, 0]} name="Inventory Percent (%)" />
