@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useAI, AIReasoningTrace } from '../contexts/AIContext';
+import { useAI, type AIReasoningTrace } from '../contexts/AIContext';
 import { useLiveData } from '../contexts/LiveDataContext';
 import { useSpeech } from '../hooks/useSpeech';
 import { 

@@ -1,8 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-darkBg: #05070F;
+  --color-darkCard: rgba(13, 17, 34, 0.65);
+  --color-darkBorder: rgba(255, 255, 255, 0.06);
+  --color-darkBorderGlow: rgba(59, 130, 246, 0.15);
+  --color-fifaGold: #D4AF37;
+  --color-fifaRed: #E10600;
+  --color-fifaGreen: #00B050;
+  --color-aiCyan: #06b6d4;
+  --color-aiPurple: #8b5cf6;
+
+  --font-sans: 'Inter', 'Outfit', sans-serif;
+
+  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-glow-spin: glowSpin 4s linear infinite;
+
+  @keyframes glowSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+}
 
 @layer base {
   body {
@@ -88,7 +108,9 @@
 }
 
 .high-contrast .glass-panel {
-  background: #000000 !apply border-2 border-white;
+  background: #000000;
+  border-width: 2px !important;
+  border-color: #FFFFFF !important;
 }
 
 .high-contrast text, .high-contrast p, .high-contrast span, .high-contrast h1, .high-contrast h2, .high-contrast h3 {

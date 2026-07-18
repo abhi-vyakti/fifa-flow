@@ -1,5 +1,5 @@
 import React from 'react';
-import { useThemeSettings, UserRole, AppLanguage } from '../contexts/ThemeContext';
+import { useThemeSettings, type UserRole, type AppLanguage } from '../contexts/ThemeContext';
 import { 
   Settings as SettingsIcon, Accessibility, Eye, Volume2, Shield, Languages, Check, Sliders
 } from 'lucide-react';

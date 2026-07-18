@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { formatDuration, getActiveIncidents, getSeverityColor } from './helpers';
-import { Incident } from '../types';
+import type { Incident } from '../types';
 
 describe('FIFA FLOW Helpers', () => {
   describe('formatDuration', () => {

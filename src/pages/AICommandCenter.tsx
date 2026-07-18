@@ -5,7 +5,7 @@ import { useLiveData } from '../contexts/LiveDataContext';
 import { 
   Sparkles, Sliders, AlertCircle, RefreshCw, BarChart2, Shield, Heart 
 } from 'lucide-react';
-import { PresetScenario } from '../types';
+import type { PresetScenario } from '../types';
 
 export const AICommandCenter: React.FC = () => {
   const { triggerScenario, loading, state } = useLiveData();

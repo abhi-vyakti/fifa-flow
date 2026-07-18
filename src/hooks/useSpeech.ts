@@ -1,9 +1,15 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 
 export const useSpeech = (onResult?: (text: string) => void) => {
   const [isListening, setIsListening] = useState(false);
   const [supported, setSupported] = useState(false);
   const [recognition, setRecognition] = useState<any>(null);
+
+  // Capture onResult in a Ref to avoid triggering useEffect cycles
+  const onResultRef = useRef(onResult);
+  useEffect(() => {
+    onResultRef.current = onResult;
+  }, [onResult]);
 
   useEffect(() => {
     const SpeechRecognition =
@@ -31,14 +37,14 @@ export const useSpeech = (onResult?: (text: string) => void) => {
 
       rec.onresult = (event: any) => {
         const text = event.results[0][0].transcript;
-        if (onResult) {
-          onResult(text);
+        if (onResultRef.current) {
+          onResultRef.current(text);
         }
       };
 
       setRecognition(rec);
     }
-  }, [onResult]);
+  }, []); // Run exactly once on mount
 
   const startListening = useCallback(() => {
     if (recognition && !isListening) {
@@ -58,7 +64,6 @@ export const useSpeech = (onResult?: (text: string) => void) => {
 
   const speak = useCallback((text: string) => {
     if ('speechSynthesis' in window) {
-      // Cancel any ongoing speech
       window.speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.rate = 1.0;

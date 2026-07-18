@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
-import { StadiumState, Incident, PresetScenario } from '../types';
+import type { StadiumState, Incident, PresetScenario } from '../types';
 
 interface LiveDataContextType {
   state: StadiumState;

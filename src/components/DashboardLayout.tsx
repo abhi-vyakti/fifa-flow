@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useLiveData } from '../contexts/LiveDataContext';
-import { useThemeSettings, UserRole } from '../contexts/ThemeContext';
+import { useThemeSettings, type UserRole } from '../contexts/ThemeContext';
 import { 
   Shield, Users, Activity, Sliders, LayoutDashboard, Brain, Compass, 
   Map, Terminal, Settings as SettingsIcon, AlertCircle, Wifi, Play, StopCircle, 

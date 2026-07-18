@@ -1,4 +1,4 @@
-import { Incident } from '../types';
+import type { Incident } from '../types';
 
 /**
  * Formats seconds into a human-readable duration string (e.g., 80 seconds -> "1m 20s")
