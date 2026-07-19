@@ -342,26 +342,19 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTr
                 </button>
               </div>
 
-              <div className="bg-surface-container p-3 rounded-lg border border-outline-variant/60">
-                <div className="text-[10px] text-secondary font-bold uppercase mb-1">Select Persona</div>
-                <select
-                  value={role}
-                  onChange={(e) => {
-                    handleRoleChange(e.target.value as any);
-                    setMobileMenuOpen(false);
-                  }}
-                  className="w-full bg-surface text-on-surface text-xs border border-outline-variant rounded p-2 outline-none cursor-pointer font-bold"
-                >
-                  <option value="organizer">Organizer Command</option>
-                  <option value="fan">Fan Assistant</option>
-                  <option value="volunteer">Volunteer Portal</option>
-                  <option value="security">Security Patrol</option>
-                  <option value="medical">Medical Dispatch</option>
-                </select>
+              {/* Active Persona Badge */}
+              <div className={`flex items-center gap-2.5 px-3 py-2 rounded-xl ${activeMeta.color} border border-outline-variant/40`}>
+                <activeMeta.Icon size={15} className={activeMeta.textColor} />
+                <div className="flex flex-col">
+                  <span className={`text-[11px] font-black uppercase tracking-widest font-mono ${activeMeta.textColor}`}>
+                    {activeMeta.label}
+                  </span>
+                  <span className="text-[9px] text-secondary font-mono">Active Workspace</span>
+                </div>
               </div>
 
               <div className="flex-1 space-y-1 overflow-y-auto">
-                {navItems.map((item) => {
+                {visibleNavItems.map((item) => {
                   const Icon = item.icon;
                   const isActive = location.pathname === item.path;
                   return (
@@ -377,6 +370,11 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTr
                         <Icon size={16} />
                         <span>{item.name}</span>
                       </div>
+                      {item.badge && (
+                        <span className="text-[8px] bg-primary/20 border border-primary/30 text-primary font-extrabold px-1 rounded uppercase">
+                          {item.badge}
+                        </span>
+                      )}
                     </button>
                   );
                 })}
@@ -402,37 +400,20 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTr
       {/* MOBILE BOTTOM NAVIGATION BAR */}
       {!isLanding && (
         <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-surface/95 backdrop-blur-xl border-t border-outline-variant/60 flex items-center justify-around py-2 px-1 shadow-ultra-soft">
-          <button 
-            onClick={() => navigate('/')}
-            className={`flex flex-col items-center gap-0.5 text-[10px] font-mono font-bold cursor-pointer ${location.pathname === '/' ? 'text-primary' : 'text-secondary'}`}
-          >
-            <Compass size={18} />
-            <span>Workspace</span>
-          </button>
-          
-          <button 
-            onClick={() => navigate('/commander')}
-            className={`flex flex-col items-center gap-0.5 text-[10px] font-mono font-bold cursor-pointer ${location.pathname === '/commander' ? 'text-primary' : 'text-secondary'}`}
-          >
-            <Brain size={18} />
-            <span>Command</span>
-          </button>
-
-          <button 
-            onClick={() => navigate('/digital-twin')}
-            className={`flex flex-col items-center gap-0.5 text-[10px] font-mono font-bold cursor-pointer ${location.pathname === '/digital-twin' ? 'text-primary' : 'text-secondary'}`}
-          >
-            <Map size={18} />
-            <span>Twin</span>
-          </button>
-
-          <button 
-            onClick={() => navigate('/security')}
-            className={`flex flex-col items-center gap-0.5 text-[10px] font-mono font-bold cursor-pointer ${location.pathname === '/security' ? 'text-primary' : 'text-secondary'}`}
-          >
-            <Shield size={18} />
-            <span>Security</span>
-          </button>
+          {visibleNavItems.slice(0, 4).map((item) => {
+            const Icon = item.icon;
+            const isActive = location.pathname === item.path;
+            return (
+              <button 
+                key={item.path}
+                onClick={() => navigate(item.path)}
+                className={`flex flex-col items-center gap-0.5 text-[10px] font-mono font-bold cursor-pointer max-w-[70px] truncate ${isActive ? 'text-primary' : 'text-secondary'}`}
+              >
+                <Icon size={18} />
+                <span className="truncate w-full text-center">{item.name.split(' ')[0]}</span>
+              </button>
+            );
+          })}
 
           <button 
             onClick={() => setMobileMenuOpen(true)}
