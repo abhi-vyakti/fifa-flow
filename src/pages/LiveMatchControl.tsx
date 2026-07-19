@@ -140,14 +140,14 @@ export const LiveMatchControl: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/5 pointer-events-none" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 border border-primary/5 rounded-full pointer-events-none" />
         
-        <div className="relative z-10 grid grid-cols-3 items-center gap-4">
+        <div className="relative z-10 grid grid-cols-3 items-center gap-2 sm:gap-4">
           {/* USA */}
           <div className="flex flex-col items-center md:items-end gap-1.5">
-            <div className="flex items-center gap-2.5">
-              <span className="font-display text-3xl md:text-4xl font-black text-on-surface">USA</span>
-              <USABadge className="w-8 h-8 md:w-9 md:h-9" />
+            <div className="flex items-center gap-1.5 sm:gap-2.5">
+              <span className="font-display text-2xl sm:text-3xl md:text-4xl font-black text-on-surface">USA</span>
+              <USABadge className="w-6 h-6 sm:w-8 sm:h-8 md:w-9 md:h-9" />
             </div>
-            <span className="text-secondary font-mono text-[10px] font-bold uppercase tracking-wider">UNITED STATES</span>
+            <span className="text-secondary font-mono text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-center sm:text-right">UNITED STATES</span>
             <div className="hidden md:flex gap-1 flex-wrap justify-end">
               {liveMatch.homeGoals.map((g, idx) => (
                 <span key={idx} className="px-2 py-0.5 bg-primary/10 text-primary text-[10px] font-mono rounded font-semibold">{g}</span>
@@ -158,30 +158,34 @@ export const LiveMatchControl: React.FC = () => {
           {/* Timer & Score */}
           <div className="flex flex-col items-center text-center">
             <div className="flex items-center gap-1.5 mb-1">
-              <span className="h-2 w-2 rounded-full bg-error animate-pulse" />
-              <span className="text-xs font-black text-error uppercase tracking-wider font-mono">LIVE STAGE</span>
+              <span className="h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-error animate-pulse" />
+              <span className="text-[10px] sm:text-xs font-black text-error uppercase tracking-wider font-mono">LIVE STAGE</span>
             </div>
-            <div className="font-display text-4xl md:text-5xl font-black tracking-tight text-primary">
-              {liveMatch.homeScore} <span className="text-outline-variant mx-2">—</span> {liveMatch.awayScore}
+            
+            <div className="font-display text-2xl sm:text-4xl md:text-5xl font-black tracking-tight text-primary whitespace-nowrap flex items-center justify-center gap-1.5">
+              <span>{liveMatch.homeScore}</span>
+              <span className="text-outline-variant opacity-60 text-lg sm:text-3xl">—</span>
+              <span>{liveMatch.awayScore}</span>
             </div>
-            <div className="mt-2.5 px-3.5 py-1 bg-surface-container rounded-full border border-outline-variant/50 flex items-center gap-1.5">
-              <Clock size={12} className="text-primary animate-pulse" />
-              <span className="font-mono text-xs font-bold text-on-surface">
+
+            <div className="mt-2 px-2.5 sm:px-3.5 py-1 bg-surface-container rounded-full border border-outline-variant/50 flex items-center gap-1.5">
+              <Clock size={12} className="text-primary animate-pulse shrink-0" />
+              <span className="font-mono text-[10px] sm:text-xs font-bold text-on-surface whitespace-nowrap">
                 {liveMatch.minute}:{liveMatch.second.toString().padStart(2, '0')}
               </span>
             </div>
-            <span className="text-secondary font-mono text-[10px] font-semibold uppercase tracking-wider mt-2">
+            <span className="text-secondary font-mono text-[8.5px] sm:text-[10px] font-semibold uppercase tracking-wider mt-1.5 text-center leading-tight">
               LUSAIL ICONIC STADIUM · GROUP A
             </span>
           </div>
 
           {/* ENG */}
           <div className="flex flex-col items-center md:items-start gap-1.5">
-            <div className="flex items-center gap-2.5">
-              <ENGBadge className="w-8 h-8 md:w-9 md:h-9" />
-              <span className="font-display text-3xl md:text-4xl font-black text-on-surface">ENG</span>
+            <div className="flex items-center gap-1.5 sm:gap-2.5">
+              <ENGBadge className="w-6 h-6 sm:w-8 sm:h-8 md:w-9 md:h-9" />
+              <span className="font-display text-2xl sm:text-3xl md:text-4xl font-black text-on-surface">ENG</span>
             </div>
-            <span className="text-secondary font-mono text-[10px] font-bold uppercase tracking-wider">ENGLAND</span>
+            <span className="text-secondary font-mono text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-center sm:text-left">ENGLAND</span>
             <div className="hidden md:flex gap-1 flex-wrap">
               {liveMatch.awayGoals.map((g, idx) => (
                 <span key={idx} className="px-2 py-0.5 bg-outline-variant text-secondary text-[10px] font-mono rounded font-semibold">{g}</span>
@@ -192,10 +196,10 @@ export const LiveMatchControl: React.FC = () => {
       </section>
 
       {/* ── Sub Navigation Tabs ── */}
-      <div className="flex gap-1.5 p-1.5 bg-surface-container rounded-xl border border-outline-variant/40 w-fit">
+      <div className="flex flex-wrap gap-1.5 p-1.5 bg-surface-container rounded-xl border border-outline-variant/40 w-full sm:w-fit">
         <button
           onClick={() => setActiveTab('decisions')}
-          className={`px-4.5 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer ${
+          className={`flex-1 sm:flex-initial text-center px-3 sm:px-4.5 py-2.5 rounded-lg text-[10px] sm:text-xs font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer ${
             activeTab === 'decisions' ? 'bg-primary text-white shadow-md shadow-primary/10' : 'text-secondary hover:text-on-surface hover:bg-surface-container-high'
           }`}
         >
@@ -203,7 +207,7 @@ export const LiveMatchControl: React.FC = () => {
         </button>
         <button
           onClick={() => setActiveTab('feed')}
-          className={`px-4.5 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer ${
+          className={`flex-1 sm:flex-initial text-center px-3 sm:px-4.5 py-2.5 rounded-lg text-[10px] sm:text-xs font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer ${
             activeTab === 'feed' ? 'bg-primary text-white shadow-md shadow-primary/10' : 'text-secondary hover:text-on-surface hover:bg-surface-container-high'
           }`}
         >
@@ -211,7 +215,7 @@ export const LiveMatchControl: React.FC = () => {
         </button>
         <button
           onClick={() => setActiveTab('incidents')}
-          className={`px-4.5 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer ${
+          className={`flex-1 sm:flex-initial text-center px-3 sm:px-4.5 py-2.5 rounded-lg text-[10px] sm:text-xs font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer ${
             activeTab === 'incidents' ? 'bg-primary text-white shadow-md shadow-primary/10' : 'text-secondary hover:text-on-surface hover:bg-surface-container-high'
           }`}
         >
