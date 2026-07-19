@@ -8,7 +8,7 @@ import {
 
 export const LandingPage: React.FC = () => {
   const navigate = useNavigate();
-  const { setRole } = useThemeSettings();
+  const { setRole, t } = useThemeSettings();
 
   return (
     <div className="space-y-16 py-6 px-4 max-w-6xl mx-auto font-sans relative">
@@ -43,7 +43,7 @@ export const LandingPage: React.FC = () => {
             }}
             className="w-full flex items-center justify-center space-x-2 py-3 bg-primary hover:bg-primary-container text-white font-bold rounded-2xl transition-all shadow-ultra-soft text-xs uppercase tracking-wider cursor-pointer"
           >
-            <span>Enter Operations Platform</span>
+            <span>{t.enterPlatform}</span>
             <ArrowRight size={14} />
           </button>
         </div>
@@ -63,27 +63,32 @@ export const LandingPage: React.FC = () => {
             <ellipse cx="300" cy="150" rx="145" ry="72" stroke="rgba(239,68,68,0.2)" strokeWidth="1.5" strokeDasharray="18,180" />
             <defs>
               <linearGradient id="flowG" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0%" stopColor="#c2652a" stopOpacity="0" />
-                <stop offset="50%" stopColor="#c2652a" stopOpacity="0.9" />
-                <stop offset="100%" stopColor="#c2652a" stopOpacity="0" />
+                <stop offset="0%" stopColor="#10b981" />
+                <stop offset="50%" stopColor="var(--color-primary)" />
+                <stop offset="100%" stopColor="#ef4444" />
               </linearGradient>
             </defs>
           </svg>
 
-          {/* Center HUD label */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-center space-y-1 pointer-events-none">
-              <div className="text-[9px] font-mono font-bold uppercase tracking-widest text-primary">Digital Twin Active</div>
-              <div className="text-[8px] text-secondary font-mono">98% Capacity &bull; Gate C: Stable</div>
+          <div className="absolute inset-0 flex flex-col items-center justify-center space-y-2 pointer-events-none z-20">
+            <div className="px-3 py-1 bg-surface-container-lowest/90 backdrop-blur border border-outline-variant/60 rounded-full shadow-ultra-soft flex items-center space-x-2">
+              <div className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
+              <span className="text-[10px] font-mono font-bold text-on-surface">METLIFE STADIUM &bull; 82,500 SEATS</span>
+            </div>
+            <div className="text-[9px] font-mono text-secondary">
+              96% Optimal Flow Efficiency &bull; AI Reasoning Active
             </div>
           </div>
         </div>
       </section>
 
-      {/* 3. WORKSPACE PORTAL PATHWAYS */}
-      <section className="space-y-5">
-        <h2 className="text-[10px] font-bold text-center text-secondary uppercase tracking-widest">Select Your Workspace</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-3xl mx-auto font-sans">
+      {/* 3. WORKSPACE SELECTION CARDS */}
+      <section className="space-y-6 text-center">
+        <h2 className="text-xl font-headline font-black text-on-surface uppercase tracking-tight">
+          {t.selectWorkspace}
+        </h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto text-left">
           
           {/* Fan Companion */}
           <div 
@@ -95,14 +100,14 @@ export const LandingPage: React.FC = () => {
                 <Compass size={18} />
               </div>
               <h3 className="font-headline font-black text-lg text-on-surface group-hover:text-primary transition-colors">
-                Spectator Fan Companion
+                {t.spectatorCompanion}
               </h3>
               <p className="text-[11px] text-secondary leading-relaxed">
                 Accessible routing, food queue monitors, parking zones, and emergency SOS for stadium guests.
               </p>
             </div>
             <div className="flex items-center text-[10px] text-primary font-bold uppercase tracking-widest pt-1">
-              <span>Open Companion</span>
+              <span>{t.openCompanion}</span>
               <ArrowRight size={11} className="ml-1.5 group-hover:translate-x-1 transition-transform" />
             </div>
           </div>
@@ -117,14 +122,14 @@ export const LandingPage: React.FC = () => {
                 <Terminal size={18} />
               </div>
               <h3 className="font-headline font-black text-lg text-on-surface group-hover:text-primary transition-colors">
-                Operations Command Control
+                {t.operationsCommand}
               </h3>
               <p className="text-[11px] text-secondary leading-relaxed">
                 SVG heatmaps, what-if simulations, dispatcher teams, and explainable AI reasoning traces.
               </p>
             </div>
             <div className="flex items-center text-[10px] text-primary font-bold uppercase tracking-widest pt-1">
-              <span>Enter Command</span>
+              <span>{t.enterCommand}</span>
               <ArrowRight size={11} className="ml-1.5 group-hover:translate-x-1 transition-transform" />
             </div>
           </div>
@@ -136,29 +141,19 @@ export const LandingPage: React.FC = () => {
       <section className="bg-surface-container-low p-6 sm:p-8 rounded-3xl border border-outline-variant/60 max-w-3xl mx-auto shadow-ultra-soft">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div className="space-y-3 text-left">
-            <h3 className="text-[9px] text-primary font-bold uppercase tracking-widest">Live Engine Telemetry</h3>
+            <h3 className="text-[9px] text-primary font-bold uppercase tracking-widest">{t.liveEngineTelemetry}</h3>
             <h2 className="text-xl font-headline font-black text-on-surface leading-tight">
-              Context-aware command intelligence.
+              {t.contextAwareIntelligence}
             </h2>
-            <p className="text-[11px] text-secondary leading-relaxed">
-              FLOW processes live sensors, updates gate validations, evaluates queues, and provides explainable, structured AI recommendations with confidence traces.
+            <p className="text-xs text-secondary leading-relaxed">
+              Synthesizing crowd throughput, gate queue density, transport arrivals, and volunteer deployment grids into unified operational decisions.
             </p>
-            <div className="grid grid-cols-2 gap-3 pt-1 text-[10px] text-secondary">
-              <div className="flex items-center space-x-1.5">
-                <CheckCircle2 size={11} className="text-emerald-600 shrink-0" />
-                <span>98.9% Model Accuracy</span>
-              </div>
-              <div className="flex items-center space-x-1.5">
-                <CheckCircle2 size={11} className="text-emerald-600 shrink-0" />
-                <span>520ms Ingress Latency</span>
-              </div>
-            </div>
           </div>
 
           <div className="bg-surface-container-lowest border border-outline-variant p-4 rounded-2xl space-y-3 text-left">
             <div className="flex items-center justify-between text-[9px] text-secondary uppercase tracking-widest border-b border-outline-variant pb-2 font-mono">
-              <span>AI Pipeline Status</span>
-              <span className="text-primary font-bold">STABLE</span>
+              <span>{t.aiPipelineStatus}</span>
+              <span className="text-primary font-bold">{t.stable}</span>
             </div>
             <div className="bg-primary/10 border border-primary/20 p-3 rounded-xl text-xs space-y-1">
               <div className="flex items-center justify-between text-primary font-bold text-[11px] font-mono">

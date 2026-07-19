@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { getTranslation, type TranslationDictionary } from '../utils/translations';
 
 export type UserRole = 'organizer' | 'fan' | 'security' | 'volunteer' | 'medical';
 export type AppLanguage = 'en' | 'es' | 'fr' | 'pt' | 'ar' | 'hi';
@@ -16,6 +17,7 @@ interface ThemeContextType {
   setRole: (role: UserRole) => void;
   language: AppLanguage;
   setLanguage: (lang: AppLanguage) => void;
+  t: TranslationDictionary;
   highContrast: boolean;
   setHighContrast: (val: boolean) => void;
   colorBlindSafe: boolean;
@@ -48,6 +50,19 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     largeText: false
   });
 
+  const t = getTranslation(language);
+
+  // Sync document language and RTL direction
+  useEffect(() => {
+    const root = document.documentElement;
+    root.lang = language;
+    if (language === 'ar') {
+      root.dir = 'rtl';
+    } else {
+      root.dir = 'ltr';
+    }
+  }, [language]);
+
   // Keep body class synced with accessibility choices and emergency mode
   useEffect(() => {
     const root = document.documentElement;
@@ -76,7 +91,6 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const setRole = (newRole: UserRole) => {
     setRoleState(newRole);
-    // Add audio confirmation if voice output is enabled
     if (voiceOutput) {
       const speech = new SpeechSynthesisUtterance(`Role switched to ${newRole}`);
       window.speechSynthesis.speak(speech);
@@ -89,6 +103,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       setRole,
       language,
       setLanguage,
+      t,
       highContrast,
       setHighContrast,
       colorBlindSafe,

@@ -22,7 +22,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTr
   const location = useLocation();
   const { state, liveMatch } = useLiveData();
   const { 
-    role, setRole, language, setLanguage, highContrast, emergencyMode, setEmergencyMode 
+    role, setRole, language, setLanguage, highContrast, emergencyMode, setEmergencyMode, t 
   } = useThemeSettings();
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -44,36 +44,36 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTr
 
   // List of paths and navigation with persona-based access control
   const navItems = [
-    // SYSTEM CONTROL — organizer + security for mission control
-    { name: 'Global Mission Control', path: '/mission-control', icon: Compass, group: 'SYSTEM CONTROL',
+    // SYSTEM CONTROL
+    { name: t.globalMissionControl, path: '/mission-control', icon: Compass, group: t.systemControl,
       roles: ['organizer', 'security'] },
-    { name: 'AI Situation Room', path: '/commander', icon: Brain, badge: 'AI OS', group: 'SYSTEM CONTROL',
+    { name: t.aiSituationRoom, path: '/commander', icon: Brain, badge: 'AI OS', group: t.systemControl,
       roles: ['organizer'] },
 
-    // OPERATIONS — access scoped per persona
-    { name: 'Match Operations',       path: '/matches',      icon: Terminal,      group: 'OPERATIONS',
+    // OPERATIONS
+    { name: t.matchOperations,       path: '/matches',      icon: Terminal,      group: t.operations,
       roles: ['organizer', 'security', 'volunteer', 'medical'] },
-    { name: 'Live Match Control',     path: '/live',         icon: Play,          group: 'OPERATIONS',
+    { name: t.liveMatchControl,     path: '/live',         icon: Play,          group: t.operations,
       roles: ['organizer'] },
-    { name: 'Stadium Digital Twin',   path: '/digital-twin', icon: Map,           group: 'OPERATIONS',
+    { name: t.stadiumDigitalTwin,   path: '/digital-twin', icon: Map,           group: t.operations,
       roles: ['organizer', 'security', 'volunteer', 'medical', 'fan'] },
-    { name: 'Broadcast Center',       path: '/broadcast',    icon: TelemetryIcon, group: 'OPERATIONS',
+    { name: t.broadcastCenter,       path: '/broadcast',    icon: TelemetryIcon, group: t.operations,
       roles: ['organizer'] },
-    { name: 'Security Center',        path: '/security',     icon: Shield,        group: 'OPERATIONS',
+    { name: t.securityCenter,        path: '/security',     icon: Shield,        group: t.operations,
       roles: ['organizer', 'security'] },
-    { name: 'Medical Center',         path: '/medical',      icon: Activity,      group: 'OPERATIONS',
+    { name: t.medicalCenter,         path: '/medical',      icon: Activity,      group: t.operations,
       roles: ['organizer', 'medical'] },
-    { name: 'Volunteer Command',      path: '/volunteers',   icon: Users,         group: 'OPERATIONS',
+    { name: t.volunteerCommand,      path: '/volunteers',   icon: Users,         group: t.operations,
       roles: ['organizer', 'volunteer'] },
-    { name: 'Fan Experience',         path: '/fan',          icon: HelpCircle,    group: 'OPERATIONS',
+    { name: t.fanExperience,         path: '/fan',          icon: HelpCircle,    group: t.operations,
       roles: ['organizer', 'fan', 'volunteer'] },
-    { name: 'AI Decision Simulator',  path: '/simulator',    icon: Sliders,       group: 'OPERATIONS',
+    { name: t.aiDecisionSimulator,  path: '/simulator',    icon: Sliders,       group: t.operations,
       roles: ['organizer'] },
-    { name: 'Executive Intelligence', path: '/executive',    icon: CheckCircle2,  badge: 'REPORT', group: 'OPERATIONS',
+    { name: t.executiveIntelligence, path: '/executive',    icon: CheckCircle2,  badge: 'REPORT', group: t.operations,
       roles: ['organizer'] },
 
     // CONFIG
-    { name: 'Settings Options', path: '/settings', icon: SettingsIcon, group: 'CONFIG',
+    { name: t.settingsOptions, path: '/settings', icon: SettingsIcon, group: t.config,
       roles: ['organizer', 'fan', 'volunteer', 'security', 'medical'] }
   ];
 
@@ -82,11 +82,11 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTr
 
   // Role display metadata
   const roleLabels: Record<string, { label: string; color: string; textColor: string; Icon: React.ElementType }> = {
-    organizer:  { label: 'Commander',  color: 'bg-primary/10',      textColor: 'text-primary',    Icon: Compass },
-    fan:        { label: 'Fan',        color: 'bg-sky-500/10',      textColor: 'text-sky-400',    Icon: UserCircle2 },
-    volunteer:  { label: 'Volunteer',  color: 'bg-amber-500/10',    textColor: 'text-amber-400',  Icon: HardHat },
-    security:   { label: 'Security',   color: 'bg-red-500/10',      textColor: 'text-red-400',    Icon: Shield },
-    medical:    { label: 'Medical',    color: 'bg-emerald-500/10',  textColor: 'text-emerald-400', Icon: Stethoscope },
+    organizer:  { label: t.commander,  color: 'bg-primary/10',      textColor: 'text-primary',    Icon: Compass },
+    fan:        { label: t.fan,        color: 'bg-sky-500/10',      textColor: 'text-sky-400',    Icon: UserCircle2 },
+    volunteer:  { label: t.volunteer,  color: 'bg-amber-500/10',    textColor: 'text-amber-400',  Icon: HardHat },
+    security:   { label: t.security,   color: 'bg-red-500/10',      textColor: 'text-red-400',    Icon: Shield },
+    medical:    { label: t.medical,    color: 'bg-emerald-500/10',  textColor: 'text-emerald-400', Icon: Stethoscope },
   };
   const activeMeta = roleLabels[role];
 
@@ -147,7 +147,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTr
 
             <div className="hidden md:flex flex-col leading-none">
               <span className="font-display font-black text-white text-[14px] tracking-tight group-hover:text-primary transition-colors">FIFA FLOW</span>
-              <span className="text-[7.5px] font-mono font-bold text-emerald-500 uppercase tracking-widest mt-0.5">OS ONLINE</span>
+              <span className="text-[7.5px] font-mono font-bold text-emerald-500 uppercase tracking-widest mt-0.5">{t.osOnline}</span>
             </div>
           </div>
 
@@ -164,7 +164,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTr
             {/* Live Indicator */}
             <div className="flex items-center gap-1.5 mr-3 pr-3 border-r border-white/10">
               <span className="h-1.5 w-1.5 rounded-full bg-error animate-pulse" />
-              <span className="text-[8.5px] font-black font-mono text-error uppercase tracking-widest">LIVE</span>
+              <span className="text-[8.5px] font-black font-mono text-error uppercase tracking-widest">{t.live}</span>
             </div>
 
             {/* Match Teams and Scores */}
@@ -209,7 +209,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTr
             }`}
           >
             <AlertCircle size={12} />
-            <span className="hidden sm:inline">{emergencyMode ? 'EMERGENCY' : 'Emergency HUD'}</span>
+            <span className="hidden sm:inline">{emergencyMode ? t.emergency : t.emergencyHud}</span>
           </button>
 
           {/* Language Selector */}
@@ -251,7 +251,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTr
                   <span className={`text-[10px] font-black uppercase tracking-widest font-mono ${activeMeta.textColor}`}>
                     {activeMeta.label}
                   </span>
-                  <span className="text-[8px] text-secondary font-mono">Active Session</span>
+                  <span className="text-[8px] text-secondary font-mono">{t.activeSession}</span>
                 </div>
               </div>
             ) : (
