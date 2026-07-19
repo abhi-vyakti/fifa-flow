@@ -10,7 +10,7 @@ import {
 export const SecurityDashboard: React.FC = () => {
   const { state, reportIncident } = useLiveData();
   const { askCopilot } = useAI();
-  const { language } = useThemeSettings();
+  const { language, t } = useThemeSettings();
 
   const [broadcastQuery, setBroadcastQuery] = useState('');
   const [broadcastResults, setBroadcastResults] = useState<Record<string, string> | null>(null);
@@ -105,8 +105,8 @@ export const SecurityDashboard: React.FC = () => {
       
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-black font-sans tracking-wide text-white">Security Patrol Dashboard</h1>
-        <p className="text-xs text-gray-400">Threat assessments, multilingual audio dispatch, and roving patrols.</p>
+        <h1 className="text-2xl font-black font-sans tracking-wide text-white">{t.securityTitle}</h1>
+        <p className="text-xs text-gray-400">{t.securityDesc}</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

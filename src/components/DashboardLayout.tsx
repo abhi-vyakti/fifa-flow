@@ -45,35 +45,35 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTr
   // List of paths and navigation with persona-based access control
   const navItems = [
     // SYSTEM CONTROL
-    { name: t.globalMissionControl, path: '/mission-control', icon: Compass, group: t.systemControl,
+    { name: t.globalMissionControl, path: '/mission-control', icon: Compass, group: 'SYSTEM_CONTROL',
       roles: ['organizer', 'security'] },
-    { name: t.aiSituationRoom, path: '/commander', icon: Brain, badge: 'AI OS', group: t.systemControl,
+    { name: t.aiSituationRoom, path: '/commander', icon: Brain, badge: 'AI OS', group: 'SYSTEM_CONTROL',
       roles: ['organizer'] },
 
     // OPERATIONS
-    { name: t.matchOperations,       path: '/matches',      icon: Terminal,      group: t.operations,
+    { name: t.matchOperations,       path: '/matches',      icon: Terminal,      group: 'OPERATIONS',
       roles: ['organizer', 'security', 'volunteer', 'medical'] },
-    { name: t.liveMatchControl,     path: '/live',         icon: Play,          group: t.operations,
+    { name: t.liveMatchControl,     path: '/live',         icon: Play,          group: 'OPERATIONS',
       roles: ['organizer'] },
-    { name: t.stadiumDigitalTwin,   path: '/digital-twin', icon: Map,           group: t.operations,
+    { name: t.stadiumDigitalTwin,   path: '/digital-twin', icon: Map,           group: 'OPERATIONS',
       roles: ['organizer', 'security', 'volunteer', 'medical', 'fan'] },
-    { name: t.broadcastCenter,       path: '/broadcast',    icon: TelemetryIcon, group: t.operations,
+    { name: t.broadcastCenter,       path: '/broadcast',    icon: TelemetryIcon, group: 'OPERATIONS',
       roles: ['organizer'] },
-    { name: t.securityCenter,        path: '/security',     icon: Shield,        group: t.operations,
+    { name: t.securityCenter,        path: '/security',     icon: Shield,        group: 'OPERATIONS',
       roles: ['organizer', 'security'] },
-    { name: t.medicalCenter,         path: '/medical',      icon: Activity,      group: t.operations,
+    { name: t.medicalCenter,         path: '/medical',      icon: Activity,      group: 'OPERATIONS',
       roles: ['organizer', 'medical'] },
-    { name: t.volunteerCommand,      path: '/volunteers',   icon: Users,         group: t.operations,
+    { name: t.volunteerCommand,      path: '/volunteers',   icon: Users,         group: 'OPERATIONS',
       roles: ['organizer', 'volunteer'] },
-    { name: t.fanExperience,         path: '/fan',          icon: HelpCircle,    group: t.operations,
+    { name: t.fanExperience,         path: '/fan',          icon: HelpCircle,    group: 'OPERATIONS',
       roles: ['organizer', 'fan', 'volunteer'] },
-    { name: t.aiDecisionSimulator,  path: '/simulator',    icon: Sliders,       group: t.operations,
+    { name: t.aiDecisionSimulator,  path: '/simulator',    icon: Sliders,       group: 'OPERATIONS',
       roles: ['organizer'] },
-    { name: t.executiveIntelligence, path: '/executive',    icon: CheckCircle2,  badge: 'REPORT', group: t.operations,
+    { name: t.executiveIntelligence, path: '/executive',    icon: CheckCircle2,  badge: 'REPORT', group: 'OPERATIONS',
       roles: ['organizer'] },
 
     // CONFIG
-    { name: t.settingsOptions, path: '/settings', icon: SettingsIcon, group: t.config,
+    { name: t.settingsOptions, path: '/settings', icon: SettingsIcon, group: 'CONFIG',
       roles: ['organizer', 'fan', 'volunteer', 'security', 'medical'] }
   ];
 
@@ -98,50 +98,35 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTr
   const getBreadcrumbs = () => {
     const segments = location.pathname.split('/').filter(Boolean);
     if (segments.length === 0) return 'FIFA FLOW > LANDING';
-    return `FIFA FLOW > ${segments.map(s => s.toUpperCase()).join(' > ')}`;
+    return `FIFA FLOW > ${segments[segments.length - 1].toUpperCase()}`;
   };
-
-  const demoSteps = [
-    { title: 'Kickoff Rush', desc: 'Stadium filling up quickly' },
-    { title: 'Metro Arrival', desc: 'Transit terminal surge' },
-    { title: 'Gate C Congestion', desc: 'Entry bottleneck warning' },
-    { title: 'FLOW Prediction', desc: 'Hotspot warning trigger' },
-    { title: 'Volunteers Deployed', desc: 'Dispatched to Section C2' },
-    { title: 'Routes Updated', desc: 'Egress rerouted to Gate D' },
-    { title: 'Crowd Normalized', desc: 'Congestion levels drop' },
-    { title: 'Incident Resolved', desc: 'Bypass parameters cleared' },
-    { title: 'Diagnostic Complete', desc: 'Stadium health score: 96%' }
-  ];
 
   const isLanding = location.pathname === '/';
 
   return (
-    <div className={`min-h-screen flex flex-col bg-[#020308] text-gray-100 ${highContrast ? 'high-contrast' : ''}`}>
+    <div className={`min-h-screen bg-background text-on-surface flex flex-col font-sans selection:bg-primary/30 ${highContrast ? 'high-contrast' : ''}`}>
       
-      {/* Premium Dark Glass Header (Borderless & Frameless) */}
-      <header className={`h-16 flex items-center justify-between px-6 z-40 sticky top-0 bg-[#020308]/60 backdrop-blur-md select-none ${isLanding ? 'hidden' : ''}`}>
+      {/* Top Application Bar */}
+      <header className="h-14 border-b border-outline-variant/60 bg-surface-container-low/90 backdrop-blur-md px-4 flex items-center justify-between sticky top-0 z-40 shadow-ultra-soft">
         
-        {/* Subtle accent glow line at the top */}
-        <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
-
-        {/* LEFT: Premium Corporate Brand Identity */}
-        <div className="flex items-center gap-4">
-          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="p-1.5 md:hidden hover:bg-white/5 rounded text-secondary">
-            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+        {/* LEFT: Branding & Hamburger toggle */}
+        <div className="flex items-center space-x-3">
+          <button 
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden p-2 rounded-xl text-secondary hover:text-on-surface hover:bg-surface-container-high cursor-pointer transition-all"
+          >
+            {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
 
-          {/* Clean minimalist logo */}
-          <div className="flex items-center gap-3 cursor-pointer group" onClick={() => navigate('/')}>
-            <div className="relative w-8 h-8 flex items-center justify-center bg-gradient-to-tr from-primary/20 to-primary/5 border border-primary/20 rounded-lg">
-              <svg viewBox="0 0 36 36" className="w-5 h-5 text-primary">
-                {/* Globe lines */}
-                <circle cx="18" cy="18" r="16" fill="none" stroke="currentColor" strokeWidth="1.5" className="opacity-40" />
-                <ellipse cx="18" cy="18" rx="6" ry="16" fill="none" stroke="currentColor" strokeWidth="1" className="opacity-30" />
-                <line x1="2" y1="18" x2="34" y2="18" stroke="currentColor" strokeWidth="1" className="opacity-30" />
-                {/* Minimal Cup */}
-                <path d="M12 10 h12 v3 a6 6 0 0 1-12 0 z" fill="currentColor" />
-                <rect x="16.5" y="16" width="3" height="5" fill="currentColor" />
-                <path d="M14 21 h8" stroke="currentColor" strokeWidth="2" />
+          <div 
+            onClick={() => navigate('/')} 
+            className="flex items-center space-x-2.5 cursor-pointer group"
+          >
+            <div className="w-8 h-8 rounded-xl bg-primary/10 border border-primary/25 flex items-center justify-center text-primary group-hover:scale-105 transition-transform shadow-ultra-soft">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                <path d="M2 12h20" />
               </svg>
             </div>
 
@@ -150,24 +135,17 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTr
               <span className="text-[7.5px] font-mono font-bold text-emerald-500 uppercase tracking-widest mt-0.5">{t.osOnline}</span>
             </div>
           </div>
-
-          {/* Minimal breadcrumb style, no host badge */}
-          <div className="hidden lg:block pl-4 border-l border-white/10">
-            <span className="text-[9px] text-gray-500 font-mono tracking-widest uppercase">{getBreadcrumbs().replace('FIFA FLOW > ', '')}</span>
-          </div>
         </div>
 
         {/* CENTER: Floating Broadcast-Quality Scoreboard */}
         <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-3">
           <div className="flex items-center bg-[#111827]/80 backdrop-blur-sm border border-white/5 rounded-2xl px-4 py-1.5 shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
             
-            {/* Live Indicator */}
             <div className="flex items-center gap-1.5 mr-3 pr-3 border-r border-white/10">
               <span className="h-1.5 w-1.5 rounded-full bg-error animate-pulse" />
               <span className="text-[8.5px] font-black font-mono text-error uppercase tracking-widest">{t.live}</span>
             </div>
 
-            {/* Match Teams and Scores */}
             <div className="flex items-center gap-6">
               <div className="flex items-center gap-2">
                 <USABadge className="w-5 h-5 rounded-full border border-white/10 shadow-sm" />
@@ -188,7 +166,6 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTr
               </div>
             </div>
 
-            {/* Time Elapsed */}
             <div className="flex items-center gap-1.5 ml-3 pl-3 border-l border-white/10">
               <span className="text-primary font-mono font-black text-[11px] tracking-wider animate-pulse">
                 {liveMatch.minute}'
@@ -199,7 +176,6 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTr
 
         {/* RIGHT: Minimalist Controls */}
         <div className="flex items-center gap-2.5">
-          {/* Emergency HUD Toggle */}
           <button
             onClick={() => setEmergencyMode(!emergencyMode)}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all duration-150 border cursor-pointer active:scale-95 ${
@@ -213,36 +189,34 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTr
           </button>
 
           {/* Language Selector */}
-          <div className="hidden sm:flex items-center bg-white/5 border border-white/10 rounded-xl px-2.5 py-1 text-xs gap-1.5">
+          <div className="flex items-center gap-1 bg-surface-container border border-outline-variant/60 rounded-xl px-2 py-1 text-xs">
             <Languages size={12} className="text-gray-400" />
             <select
               value={language}
               onChange={(e) => setLanguage(e.target.value as any)}
-              className="bg-transparent border-none outline-none text-white cursor-pointer font-bold text-xs"
+              className="bg-transparent text-on-surface text-[11px] font-bold outline-none cursor-pointer"
             >
-              <option value="en" className="bg-[#0b0f19]">EN</option>
-              <option value="es" className="bg-[#0b0f19]">ES</option>
-              <option value="fr" className="bg-[#0b0f19]">FR</option>
-              <option value="pt" className="bg-[#0b0f19]">PT</option>
-              <option value="ar" className="bg-[#0b0f19]">AR</option>
-              <option value="hi" className="bg-[#0b0f19]">HI</option>
+              <option value="en" className="bg-surface text-on-surface">EN</option>
+              <option value="es" className="bg-surface text-on-surface">ES</option>
+              <option value="fr" className="bg-surface text-on-surface">FR</option>
+              <option value="pt" className="bg-surface text-on-surface">PT</option>
+              <option value="ar" className="bg-surface text-on-surface">AR</option>
+              <option value="hi" className="bg-surface text-on-surface">HI</option>
             </select>
           </div>
         </div>
       </header>
 
-      {/* 3. Main Workspace Area */}
-      <div className="flex-1 flex overflow-hidden">
-        
-        {/* Sidebar Left Navigation (Desktop Hover-Expanding Rail) */}
-        <aside 
+      {/* Main Body Shell */}
+      <div className="flex-1 flex overflow-hidden relative">
+
+        {/* Left Desktop Sidebar Navigation */}
+        <aside
           onMouseEnter={() => setIsSidebarHovered(true)}
           onMouseLeave={() => setIsSidebarHovered(false)}
           className={`hidden md:flex flex-col border-r border-outline-variant/60 bg-surface-container-low p-4 space-y-6 transition-all duration-300 ease-[0.16,1,0.3,1] z-30 ${isSidebarHovered ? 'w-64' : 'w-20'} ${isLanding ? '!hidden' : ''}`}
         >
             
-
-
             {/* Persona Role Indicator */}
             {isSidebarHovered ? (
               <div className={`flex items-center gap-2.5 px-3 py-2 rounded-xl ${activeMeta.color}`}>
@@ -265,10 +239,10 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTr
             
             {/* SYSTEM CONTROL GROUP */}
             <div className="space-y-1">
-              {isSidebarHovered && visibleNavItems.some(i => i.group === 'SYSTEM CONTROL') && (
-                <div className="text-[9px] text-secondary font-bold uppercase tracking-widest px-3 mb-1.5 font-mono">SYSTEM CONTROL</div>
+              {isSidebarHovered && visibleNavItems.some(i => i.group === 'SYSTEM_CONTROL') && (
+                <div className="text-[9px] text-secondary font-bold uppercase tracking-widest px-3 mb-1.5 font-mono">{t.systemControl}</div>
               )}
-              {visibleNavItems.filter(item => item.group === 'SYSTEM CONTROL').map((item) => {
+              {visibleNavItems.filter(item => item.group === 'SYSTEM_CONTROL').map((item) => {
                 const Icon = item.icon;
                 const isActive = location.pathname === item.path;
                 return (
@@ -294,7 +268,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTr
             {/* OPERATIONS MODULES GROUP */}
             <div className="space-y-1">
               {isSidebarHovered && visibleNavItems.some(i => i.group === 'OPERATIONS') && (
-                <div className="text-[9px] text-secondary font-bold uppercase tracking-widest px-3 mb-1.5 font-mono font-bold">INTEGRATED MODULES</div>
+                <div className="text-[9px] text-secondary font-bold uppercase tracking-widest px-3 mb-1.5 font-mono font-bold">{t.operations}</div>
               )}
               {visibleNavItems.filter(item => item.group === 'OPERATIONS').map((item) => {
                 const Icon = item.icon;

@@ -10,7 +10,7 @@ import {
 export const FanAssistant: React.FC = () => {
   const { state, reportIncident } = useLiveData();
   const { askCopilot } = useAI();
-  const { voiceOutput } = useThemeSettings();
+  const { voiceOutput, t } = useThemeSettings();
 
   const [ticketInput, setTicketInput] = useState('');
   const [ticketResult, setTicketResult] = useState<any | null>(null);
@@ -38,8 +38,9 @@ export const FanAssistant: React.FC = () => {
     } else {
       setTicketResult({
         sec: 'A3', row: '24', seat: '8',
-        gate: 'Gate A (North Entrance)',
-        closestFood: 'FIFA Fan Grill (Section A3)'
+        gate: 'Gate A',
+        closestFood: 'Stadium Grill (Section A3)',
+        alert: 'All routes clear to Section A3.'
       });
     }
   };
@@ -93,8 +94,8 @@ export const FanAssistant: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-black font-sans tracking-wide text-on-surface">Fan Assistant Portal</h1>
-          <p className="text-xs text-secondary font-medium">Navigation aids, restroom queue updates, and ticketing paths.</p>
+          <h1 className="text-2xl font-black font-sans tracking-wide text-on-surface">{t.fanAssistantTitle}</h1>
+          <p className="text-xs text-secondary font-medium">{t.fanAssistantDesc}</p>
         </div>
 
         {/* SOS Emergency button */}
@@ -102,7 +103,7 @@ export const FanAssistant: React.FC = () => {
           onClick={triggerSOS}
           className="px-6 py-2.5 bg-red-600 hover:bg-red-500 text-white font-extrabold rounded-xl text-xs tracking-wider uppercase shadow-sm animate-pulse transition-all cursor-pointer active:scale-95"
         >
-          🚨 Trigger Emergency SOS
+          🚨 {t.sosEmergencyButton}
         </button>
       </div>
 

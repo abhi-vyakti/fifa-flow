@@ -29,23 +29,74 @@ export interface TranslationDictionary {
   medical: string;
   activeSession: string;
 
-  // Header
+  // Header & Status
   osOnline: string;
   live: string;
   emergencyHud: string;
   emergency: string;
+  stable: string;
+  aiPipelineStatus: string;
+  liveEngineTelemetry: string;
+  contextAwareIntelligence: string;
 
-  // Common UI
+  // Common Actions & Dashboard Cards
   enterPlatform: string;
   selectWorkspace: string;
   spectatorCompanion: string;
   operationsCommand: string;
   openCompanion: string;
   enterCommand: string;
-  liveEngineTelemetry: string;
-  contextAwareIntelligence: string;
-  aiPipelineStatus: string;
-  stable: string;
+  healthScore: string;
+  stadiumOccupancy: string;
+  activeIncidents: string;
+  weatherCondition: string;
+  refreshTelemetry: string;
+  dispatchResponder: string;
+  resolveIncident: string;
+  downloadReport: string;
+  runSimulation: string;
+  searchPlaceholder: string;
+  filterAll: string;
+  statusLabel: string;
+  priorityLabel: string;
+  locationLabel: string;
+
+  // Page Specific Headers & Descriptions
+  fanAssistantTitle: string;
+  fanAssistantDesc: string;
+  findSeatButton: string;
+  foodQueueTitle: string;
+  accessibleRouteTitle: string;
+  sosEmergencyButton: string;
+
+  securityTitle: string;
+  securityDesc: string;
+  crowdDensityTitle: string;
+  broadcastAnnouncementTitle: string;
+  logIncidentTitle: string;
+
+  medicalTitle: string;
+  medicalDesc: string;
+  aidStationCapacityTitle: string;
+  ambulanceCorridorsTitle: string;
+
+  volunteerTitle: string;
+  volunteerDesc: string;
+  assignedTasksTitle: string;
+  volunteerTierTitle: string;
+
+  digitalTwinTitle: string;
+  digitalTwinDesc: string;
+  northStand: string;
+  eastStand: string;
+  southStand: string;
+  westStand: string;
+
+  settingsTitle: string;
+  settingsDesc: string;
+  activePersonaLabel: string;
+  interfaceLanguageLabel: string;
+  accessibilityPreferencesLabel: string;
 }
 
 export const translations: Record<AppLanguage, TranslationDictionary> = {
@@ -79,6 +130,10 @@ export const translations: Record<AppLanguage, TranslationDictionary> = {
     live: 'LIVE',
     emergencyHud: 'Emergency HUD',
     emergency: 'EMERGENCY',
+    stable: 'STABLE',
+    aiPipelineStatus: 'AI Pipeline Status',
+    liveEngineTelemetry: 'Live Engine Telemetry',
+    contextAwareIntelligence: 'Context-aware command intelligence.',
 
     enterPlatform: 'Enter Operations Platform',
     selectWorkspace: 'Select Your Workspace',
@@ -86,10 +141,56 @@ export const translations: Record<AppLanguage, TranslationDictionary> = {
     operationsCommand: 'Operations Command Control',
     openCompanion: 'Open Companion',
     enterCommand: 'Enter Command',
-    liveEngineTelemetry: 'Live Engine Telemetry',
-    contextAwareIntelligence: 'Context-aware command intelligence.',
-    aiPipelineStatus: 'AI Pipeline Status',
-    stable: 'STABLE'
+    healthScore: 'Overall Stadium Health',
+    stadiumOccupancy: 'Stadium Occupancy',
+    activeIncidents: 'Active Safety Incidents',
+    weatherCondition: 'Weather Condition',
+    refreshTelemetry: 'Refresh Telemetry',
+    dispatchResponder: 'Dispatch Responder',
+    resolveIncident: 'Resolve Incident',
+    downloadReport: 'Download Operations Report',
+    runSimulation: 'Run Simulation Scenario',
+    searchPlaceholder: 'Search incidents, locations, or commands...',
+    filterAll: 'All Categories',
+    statusLabel: 'Status',
+    priorityLabel: 'Priority',
+    locationLabel: 'Location',
+
+    fanAssistantTitle: 'FIFA Spectator Assistant',
+    fanAssistantDesc: 'Accessible navigation, queue tracking, and emergency SOS for stadium guests.',
+    findSeatButton: 'Find My Seat',
+    foodQueueTitle: 'Concession & Food Stall Queues',
+    accessibleRouteTitle: 'Wheelchair Accessible Navigation',
+    sosEmergencyButton: 'Trigger Emergency SOS',
+
+    securityTitle: 'Security Control & Crowd Patrols',
+    securityDesc: 'Monitor perimeter sensors, crowd density thresholds, and multilingual safety broadcasts.',
+    crowdDensityTitle: 'Crowd Density & Bottlenecks',
+    broadcastAnnouncementTitle: 'Multilingual Security Announcement',
+    logIncidentTitle: 'Log New Security Incident',
+
+    medicalTitle: 'Medical Triage & Emergency Response',
+    medicalDesc: 'Track aid bed capacity, dispatch medical units, and clear fast emergency corridors.',
+    aidStationCapacityTitle: 'First Aid Station Bed Capacity',
+    ambulanceCorridorsTitle: 'Fast Emergency Evacuation Corridors',
+
+    volunteerTitle: 'Volunteer Operations Portal',
+    volunteerDesc: 'Manage field assignments, log lost items, and track shift performance rewards.',
+    assignedTasksTitle: 'Assigned Field Tasks',
+    volunteerTierTitle: 'Volunteer Rank & Tier',
+
+    digitalTwinTitle: 'Interactive Stadium Digital Twin',
+    digitalTwinDesc: 'Visual floor plan of stadium stands with real-time crowd heatmap telemetries.',
+    northStand: 'North Stand',
+    eastStand: 'East Stand',
+    southStand: 'South Stand',
+    westStand: 'West Stand',
+
+    settingsTitle: 'System Settings & Accessibility',
+    settingsDesc: 'Customize interface persona, language localization, and high-contrast preferences.',
+    activePersonaLabel: 'Active User Persona',
+    interfaceLanguageLabel: 'Interface Language',
+    accessibilityPreferencesLabel: 'Accessibility Preferences'
   },
   es: {
     systemControl: 'CONTROL DEL SISTEMA',
@@ -121,6 +222,10 @@ export const translations: Record<AppLanguage, TranslationDictionary> = {
     live: 'EN VIVO',
     emergencyHud: 'HUD de Emergencia',
     emergency: 'EMERGENCIA',
+    stable: 'ESTABLE',
+    aiPipelineStatus: 'Estado del Pipeline IA',
+    liveEngineTelemetry: 'Telemetría del Motor en Vivo',
+    contextAwareIntelligence: 'Inteligencia de mando contextual.',
 
     enterPlatform: 'Entrar a la Plataforma',
     selectWorkspace: 'Selecciona tu Espacio de Trabajo',
@@ -128,10 +233,56 @@ export const translations: Record<AppLanguage, TranslationDictionary> = {
     operationsCommand: 'Control de Comando de Operaciones',
     openCompanion: 'Abrir Compañero',
     enterCommand: 'Entrar al Comando',
-    liveEngineTelemetry: 'Telemetría del Motor en Vivo',
-    contextAwareIntelligence: 'Inteligencia de mando contextual.',
-    aiPipelineStatus: 'Estado del Pipeline IA',
-    stable: 'ESTABLE'
+    healthScore: 'Salud General del Estadio',
+    stadiumOccupancy: 'Ocupación del Estadio',
+    activeIncidents: 'Incidentes de Seguridad Activos',
+    weatherCondition: 'Condición Meteorológica',
+    refreshTelemetry: 'Actualizar Telemetría',
+    dispatchResponder: 'Despachar Respondedor',
+    resolveIncident: 'Resolver Incidente',
+    downloadReport: 'Descargar Informe de Operaciones',
+    runSimulation: 'Ejecutar Escenario de Simulación',
+    searchPlaceholder: 'Buscar incidentes, ubicaciones o comandos...',
+    filterAll: 'Todas las Categorías',
+    statusLabel: 'Estado',
+    priorityLabel: 'Prioridad',
+    locationLabel: 'Ubicación',
+
+    fanAssistantTitle: 'Asistente de Espectadores FIFA',
+    fanAssistantDesc: 'Navegación accesible, seguimiento de colas y SOS de emergencia para invitados.',
+    findSeatButton: 'Buscar Mi Asiento',
+    foodQueueTitle: 'Colas de Comida y Concesiones',
+    accessibleRouteTitle: 'Navegación Accesible para Sillas de Ruedas',
+    sosEmergencyButton: 'Activar SOS de Emergencia',
+
+    securityTitle: 'Control de Seguridad y Patrullas',
+    securityDesc: 'Monitorear sensores perimetrales, umbrales de densidad y avisos multilenguaje.',
+    crowdDensityTitle: 'Densidad de Multitud y Embotellamientos',
+    broadcastAnnouncementTitle: 'Anuncio Multilingüe de Seguridad',
+    logIncidentTitle: 'Registrar Nuevo Incidente de Seguridad',
+
+    medicalTitle: 'Triage Médico y Respuesta de Emergencia',
+    medicalDesc: 'Rastrear capacidad de camas de auxilio, despachar unidades y despejar corredores.',
+    aidStationCapacityTitle: 'Capacidad de Camas en Puestos de Primeros Auxilios',
+    ambulanceCorridorsTitle: 'Corredores Rápidos de Evacuación de Emergencia',
+
+    volunteerTitle: 'Portal de Operaciones de Voluntarios',
+    volunteerDesc: 'Gestionar tareas asignadas, registrar objetos perdidos y rastrear recompensas.',
+    assignedTasksTitle: 'Tareas de Campo Asignadas',
+    volunteerTierTitle: 'Rango y Nivel del Voluntario',
+
+    digitalTwinTitle: 'Gemelo Digital Interactivo del Estadio',
+    digitalTwinDesc: 'Plano visual de tribunas del estadio con mapas de calor de multitud en tiempo real.',
+    northStand: 'Tribuna Norte',
+    eastStand: 'Tribuna Este',
+    southStand: 'Tribuna Sur',
+    westStand: 'Tribuna Oeste',
+
+    settingsTitle: 'Configuración del Sistema y Accesibilidad',
+    settingsDesc: 'Personalizar el perfil de usuario, localización de idioma y contraste.',
+    activePersonaLabel: 'Perfil de Usuario Activo',
+    interfaceLanguageLabel: 'Idioma de la Interfaz',
+    accessibilityPreferencesLabel: 'Preferencias de Accesibilidad'
   },
   fr: {
     systemControl: 'CONTRÔLE DU SYSTÈME',
@@ -163,6 +314,10 @@ export const translations: Record<AppLanguage, TranslationDictionary> = {
     live: 'EN DIRECT',
     emergencyHud: 'HUD d\'Urgence',
     emergency: 'URGENCE',
+    stable: 'STABLE',
+    aiPipelineStatus: 'Statut du Pipeline IA',
+    liveEngineTelemetry: 'Télémétrie Moteur en Direct',
+    contextAwareIntelligence: 'Intelligence de commande contextuelle.',
 
     enterPlatform: 'Accéder à la Plateforme',
     selectWorkspace: 'Sélectionnez votre Espace de Travail',
@@ -170,10 +325,56 @@ export const translations: Record<AppLanguage, TranslationDictionary> = {
     operationsCommand: 'Contrôle des Opérations',
     openCompanion: 'Ouvrir le Compagnon',
     enterCommand: 'Entrer la Commande',
-    liveEngineTelemetry: 'Télémétrie Moteur en Direct',
-    contextAwareIntelligence: 'Intelligence de commande contextuelle.',
-    aiPipelineStatus: 'Statut du Pipeline IA',
-    stable: 'STABLE'
+    healthScore: 'Santé Globale du Stade',
+    stadiumOccupancy: 'Occupation du Stade',
+    activeIncidents: 'Incidents de Sécurité Actifs',
+    weatherCondition: 'Conditions Météorologiques',
+    refreshTelemetry: 'Actualiser la Télémétrie',
+    dispatchResponder: 'Déployer un Intervenant',
+    resolveIncident: 'Résoudre l\'Incident',
+    downloadReport: 'Télécharger le Rapport d\'Opérations',
+    runSimulation: 'Lancer le Scénario de Simulation',
+    searchPlaceholder: 'Rechercher des incidents, lieux ou commandes...',
+    filterAll: 'Toutes les Catégories',
+    statusLabel: 'Statut',
+    priorityLabel: 'Priorité',
+    locationLabel: 'Emplacement',
+
+    fanAssistantTitle: 'Assistant des Spectateurs FIFA',
+    fanAssistantDesc: 'Navigation accessible, suivi des files d\'attente et SOS d\'urgence.',
+    findSeatButton: 'Trouver Mon Siège',
+    foodQueueTitle: 'Files d\'Attente Restauration',
+    accessibleRouteTitle: 'Navigation Accessible en Fauteuil Roulant',
+    sosEmergencyButton: 'Déclencher le SOS d\'Urgence',
+
+    securityTitle: 'Contrôle de Sécurité & Patrouilles',
+    securityDesc: 'Surveiller les capteurs de périmètre et les alertes multilingues de sécurité.',
+    crowdDensityTitle: 'Densité de la Foule & Goulots d\'Étranglement',
+    broadcastAnnouncementTitle: 'Annonce de Sécurité Multilingue',
+    logIncidentTitle: 'Enregistrer un Nouvel Incident de Sécurité',
+
+    medicalTitle: 'Triage Médical & Intervention d\'Urgence',
+    medicalDesc: 'Suivre la capacité en lits et dégager les couloirs d\'évacuation rapide.',
+    aidStationCapacityTitle: 'Capacité en Lits des Postes de Secours',
+    ambulanceCorridorsTitle: 'Couloirs d\'Évacuation d\'Urgence Rapide',
+
+    volunteerTitle: 'Portail des Opérations des Bénévoles',
+    volunteerDesc: 'Gérer les missions sur le terrain, enregistrer les objets trouvés et les récompenses.',
+    assignedTasksTitle: 'Tâches de Terrain Assignées',
+    volunteerTierTitle: 'Rang & Niveau du Bénévole',
+
+    digitalTwinTitle: 'Jumeau Numérique Interactif du Stade',
+    digitalTwinDesc: 'Plan visuel des tribunes du stade avec cartes thermiques en temps réel.',
+    northStand: 'Tribune Nord',
+    eastStand: 'Tribune Est',
+    southStand: 'Tribune Sud',
+    westStand: 'Tribune Ouest',
+
+    settingsTitle: 'Paramètres du Système & Accessibilité',
+    settingsDesc: 'Personnaliser le profil d\'utilisateur, la langue et le contraste élevé.',
+    activePersonaLabel: 'Profil d\'Utilisateur Actif',
+    interfaceLanguageLabel: 'Langue de l\'Interface',
+    accessibilityPreferencesLabel: 'Préférences d\'Accessibilité'
   },
   pt: {
     systemControl: 'CONTROLE DO SISTEMA',
@@ -205,6 +406,10 @@ export const translations: Record<AppLanguage, TranslationDictionary> = {
     live: 'AO VIVO',
     emergencyHud: 'HUD de Emergência',
     emergency: 'EMERGÊNCIA',
+    stable: 'ESTÁVEL',
+    aiPipelineStatus: 'Status do Pipeline IA',
+    liveEngineTelemetry: 'Telemetria do Motor ao Vivo',
+    contextAwareIntelligence: 'Inteligência de comando contextual.',
 
     enterPlatform: 'Entrar na Plataforma',
     selectWorkspace: 'Selecione seu Espaço de Trabalho',
@@ -212,10 +417,56 @@ export const translations: Record<AppLanguage, TranslationDictionary> = {
     operationsCommand: 'Controle de Comando de Operações',
     openCompanion: 'Abrir Guia',
     enterCommand: 'Entrar no Comando',
-    liveEngineTelemetry: 'Telemetria do Motor ao Vivo',
-    contextAwareIntelligence: 'Inteligência de comando contextual.',
-    aiPipelineStatus: 'Status do Pipeline IA',
-    stable: 'ESTÁVEL'
+    healthScore: 'Saúde Geral do Estádio',
+    stadiumOccupancy: 'Ocupação do Estádio',
+    activeIncidents: 'Incidentes de Segurança Ativos',
+    weatherCondition: 'Condições Meteorológicas',
+    refreshTelemetry: 'Atualizar Telemetria',
+    dispatchResponder: 'Despachar Socorrista',
+    resolveIncident: 'Resolver Incidente',
+    downloadReport: 'Baixar Relatório de Operações',
+    runSimulation: 'Executar Cenário de Simulação',
+    searchPlaceholder: 'Pesquisar incidentes, locais ou comandos...',
+    filterAll: 'Todas as Categorias',
+    statusLabel: 'Status',
+    priorityLabel: 'Prioridade',
+    locationLabel: 'Localização',
+
+    fanAssistantTitle: 'Assistente de Torcedores FIFA',
+    fanAssistantDesc: 'Navegação acessível, monitoramento de filas e SOS de emergência.',
+    findSeatButton: 'Encontrar Meu Assento',
+    foodQueueTitle: 'Filas de Alimentação e Concessões',
+    accessibleRouteTitle: 'Navegação Acessível para Cadeira de Rodas',
+    sosEmergencyButton: 'Acionar SOS de Emergência',
+
+    securityTitle: 'Controle de Segurança e Patrulhas',
+    securityDesc: 'Monitorar sensores perimetrais, limites de densidade e avisos multilíngues.',
+    crowdDensityTitle: 'Densidade de Multidão e Gargalos',
+    broadcastAnnouncementTitle: 'Anúncio Multilíngue de Segurança',
+    logIncidentTitle: 'Registrar Novo Incidente de Segurança',
+
+    medicalTitle: 'Triagem Médica e Resposta de Emergência',
+    medicalDesc: 'Rastrear capacidade de leitos, despachar unidades e liberar corredores.',
+    aidStationCapacityTitle: 'Capacidade de Leitos no Posto de Primeiros Socorros',
+    ambulanceCorridorsTitle: 'Corredores Rápidos de Evacuação de Emergência',
+
+    volunteerTitle: 'Portal de Operações de Voluntários',
+    volunteerDesc: 'Gerenciar tarefas atribuídas, registrar achados e perdidos e recompensas.',
+    assignedTasksTitle: 'Tarefas de Campo Atribuídas',
+    volunteerTierTitle: 'Nível e Nível do Voluntário',
+
+    digitalTwinTitle: 'Gêmeo Digital Interativo do Estádio',
+    digitalTwinDesc: 'Plano visual das arquibancadas com mapa de calor de multidão em tempo real.',
+    northStand: 'Arquibancada Norte',
+    eastStand: 'Arquibancada Leste',
+    southStand: 'Arquibancada Sul',
+    westStand: 'Arquibancada Oeste',
+
+    settingsTitle: 'Configurações do Sistema e Acessibilidade',
+    settingsDesc: 'Personalizar perfil do usuário, localização de idioma e contraste alto.',
+    activePersonaLabel: 'Perfil de Usuário Ativo',
+    interfaceLanguageLabel: 'Idioma da Interface',
+    accessibilityPreferencesLabel: 'Preferências de Acessibilidade'
   },
   ar: {
     systemControl: 'التحكم في النظام',
@@ -247,6 +498,10 @@ export const translations: Record<AppLanguage, TranslationDictionary> = {
     live: 'مباشر',
     emergencyHud: 'شاشة الطوارئ',
     emergency: 'طوارئ',
+    stable: 'مستقر',
+    aiPipelineStatus: 'حالة مسار الذكاء الاصطناعي',
+    liveEngineTelemetry: 'بيانات المحرك المباشرة',
+    contextAwareIntelligence: 'ذكاء القيادة المرتبط بالسياق.',
 
     enterPlatform: 'الدخول إلى منصة العمليات',
     selectWorkspace: 'اختر مساحة العمل الخاصة بك',
@@ -254,10 +509,56 @@ export const translations: Record<AppLanguage, TranslationDictionary> = {
     operationsCommand: 'التحكم في قيادة العمليات',
     openCompanion: 'فتح الدليل',
     enterCommand: 'الدخول إلى القيادة',
-    liveEngineTelemetry: 'بيانات المحرك المباشرة',
-    contextAwareIntelligence: 'ذكاء القيادة المرتبط بالسياق.',
-    aiPipelineStatus: 'حالة مسار الذكاء الاصطناعي',
-    stable: 'مستقر'
+    healthScore: 'الصحة العامة للملعب',
+    stadiumOccupancy: 'نسبة إشغال الملعب',
+    activeIncidents: 'حوادث السلامة النشطة',
+    weatherCondition: 'الحالة الجوية',
+    refreshTelemetry: 'تحديث البيانات المباشرة',
+    dispatchResponder: 'إرسال فرقة الاستجابة',
+    resolveIncident: 'حل الحادثة',
+    downloadReport: 'تحميل تقرير العمليات',
+    runSimulation: 'تشغيل محاكاة سيناريو',
+    searchPlaceholder: 'البحث عن حوادث أو مواقع أو أوامر...',
+    filterAll: 'جميع الفئات',
+    statusLabel: 'الحالة',
+    priorityLabel: 'الأولوية',
+    locationLabel: 'الموقع',
+
+    fanAssistantTitle: 'مساعد المشجعين لبطولة كأس العالم',
+    fanAssistantDesc: 'ملاحة سهلة، متابعة الطوابير وطلب الطوارئ للمشجعين.',
+    findSeatButton: 'البحث عن مقعدي',
+    foodQueueTitle: 'طوابير المطاعم والمأكولات',
+    accessibleRouteTitle: 'مسارات كراسي المتحرك الميسرة',
+    sosEmergencyButton: 'إطلاق نداء طوارئ SOS',
+
+    securityTitle: 'التحكم الأمني والدوريات',
+    securityDesc: 'مراقبة مستشعرات المحيط، كثافة الحشود وإذاعة تعليمات السلامة متعددة اللغات.',
+    crowdDensityTitle: 'كثافة الحشود ونقاط الاختناق',
+    broadcastAnnouncementTitle: 'إعلان سلامة متعدد اللغات',
+    logIncidentTitle: 'تسجيل حادث أمني جديد',
+
+    medicalTitle: 'الفرز الطبي واستجابة الطوارئ',
+    medicalDesc: 'متابعة سعة أسرة الإسعاف وإرسال الفرق الطبية وفتح ممرات الإخلاء.',
+    aidStationCapacityTitle: 'سعة أسرة محطات الإسعافات الأولية',
+    ambulanceCorridorsTitle: 'ممرات الإخلاء الطبي السريع',
+
+    volunteerTitle: 'بوابة عمليات المتطوعين',
+    volunteerDesc: 'إدارة المهام الميدانية، تسجيل المفقودات ومتابعة المكافآت.',
+    assignedTasksTitle: 'المهام الميدانية الموحدة',
+    volunteerTierTitle: 'رتبة ومستوى المتطوع',
+
+    digitalTwinTitle: 'التوأم الرقمي التفاعلي للملعب',
+    digitalTwinDesc: 'مخطط بصري لمدرجات الملعب مع الخريطة الحرارية للحشود في الوقت الفعلي.',
+    northStand: 'المدرج الشمالي',
+    eastStand: 'المدرج الشرقي',
+    southStand: 'المدرج الجنوبي',
+    westStand: 'المدرج الغربي',
+
+    settingsTitle: 'إعدادات النظام وإمكانية الوصول',
+    settingsDesc: 'تخصيص هوية المستخدم، ترجمة اللغة وتباين الألوان العالي.',
+    activePersonaLabel: 'هوية المستخدم النشطة',
+    interfaceLanguageLabel: 'لغة الواجهة',
+    accessibilityPreferencesLabel: 'تفضيلات إمكانية الوصول'
   },
   hi: {
     systemControl: 'सिस्टम कंट्रोल',
@@ -289,6 +590,10 @@ export const translations: Record<AppLanguage, TranslationDictionary> = {
     live: 'लाइव',
     emergencyHud: 'इमरजेंसी HUD',
     emergency: 'आपातकाल',
+    stable: 'स्थिर',
+    aiPipelineStatus: 'एआई पाइपलाइन स्थिति',
+    liveEngineTelemetry: 'लाइव इंजन टेलीमेट्री',
+    contextAwareIntelligence: 'संदर्भ-जागरूक कमांड बुद्धिमत्ता।',
 
     enterPlatform: 'ऑपरेशंस प्लेटफॉर्म में प्रवेश करें',
     selectWorkspace: 'अपना वर्कस्पेस चुनें',
@@ -296,10 +601,56 @@ export const translations: Record<AppLanguage, TranslationDictionary> = {
     operationsCommand: 'ऑपरेशंस कमांड कंट्रोल',
     openCompanion: 'साथी खोलें',
     enterCommand: 'कमांड दर्ज करें',
-    liveEngineTelemetry: 'लाइव इंजन टेलीमेट्री',
-    contextAwareIntelligence: 'संदर्भ-जागरूक कमांड बुद्धिमत्ता।',
-    aiPipelineStatus: 'एआई पाइपलाइन स्थिति',
-    stable: 'स्थिर'
+    healthScore: 'स्टेडियम का समग्र स्वास्थ्य',
+    stadiumOccupancy: 'स्टेडियम की उपस्थिति',
+    activeIncidents: 'सक्रिय सुरक्षा घटनाएं',
+    weatherCondition: 'मौसम की स्थिति',
+    refreshTelemetry: 'टेलीमेट्री रीफ्रेश करें',
+    dispatchResponder: 'रेस्पोंडर भेजें',
+    resolveIncident: 'घटना हल करें',
+    downloadReport: 'ऑपरेशंस रिपोर्ट डाउनलोड करें',
+    runSimulation: 'सिमुलेशन परिदृश्य चलाएं',
+    searchPlaceholder: 'घटनाएं, स्थान या कमांड खोजें...',
+    filterAll: 'सभी श्रेणियां',
+    statusLabel: 'स्थिति',
+    priorityLabel: 'प्राथमिकता',
+    locationLabel: 'स्थान',
+
+    fanAssistantTitle: 'फीफा दर्शक सहायक',
+    fanAssistantDesc: 'सुगम नेविगेशन, कतार ट्रैकिंग और आपातकालीन SOS।',
+    findSeatButton: 'मेरी सीट खोजें',
+    foodQueueTitle: 'भोजन और स्नैक्स की कतारें',
+    accessibleRouteTitle: 'व्हीलचेयर सुगम मार्ग',
+    sosEmergencyButton: 'आपातकालीन SOS सक्रिय करें',
+
+    securityTitle: 'सुरक्षा नियंत्रण और गश्त',
+    securityDesc: 'सुरक्षा सेंसर, भीड़ घनत्व और बहुभाषी घोषणाओं की निगरानी करें।',
+    crowdDensityTitle: 'भीड़ का घनत्व और अड़चनें',
+    broadcastAnnouncementTitle: 'बहुभाषी सुरक्षा घोषणा',
+    logIncidentTitle: 'नई सुरक्षा घटना दर्ज करें',
+
+    medicalTitle: 'मेडिकल ट्राइएज और आपातकालीन प्रतिक्रिया',
+    medicalDesc: 'फर्स्ट एड बेड क्षमता ट्रैक करें और आपातकालीन मार्ग खोलें।',
+    aidStationCapacityTitle: 'प्राथमिक चिकित्सा केंद्र बेड क्षमता',
+    ambulanceCorridorsTitle: 'त्वरित आपातकालीन निकासी गलियारे',
+
+    volunteerTitle: 'वोलंटियर ऑपरेशंस पोर्टल',
+    volunteerDesc: 'मैदानी कार्य प्रबंधित करें, खोई वस्तुएं दर्ज करें और पुरस्कार पाएं।',
+    assignedTasksTitle: 'आवंटित मैदानी कार्य',
+    volunteerTierTitle: 'वोलंटियर रैंक और श्रेणी',
+
+    digitalTwinTitle: 'इंटरैक्टिव स्टेडियम डिजिटल ट्विन',
+    digitalTwinDesc: 'वास्तविक समय भीड़ हीटमैप टेलीमेट्री के साथ स्टेडियम स्टैंड का दृश्य मानचित्र।',
+    northStand: 'उत्तर स्टैंड',
+    eastStand: 'पूर्व स्टैंड',
+    southStand: 'दक्षिण स्टैंड',
+    westStand: 'पश्चिम स्टैंड',
+
+    settingsTitle: 'सिस्टम सेटिंग्स और सुगमता',
+    settingsDesc: 'उपयोगकर्ता प्रोफ़ाइल, भाषा स्थानीकरण और उच्च कंट्रास्ट अनुकूलित करें।',
+    activePersonaLabel: 'सक्रिय उपयोगकर्ता प्रोफ़ाइल',
+    interfaceLanguageLabel: 'इंटरफ़ेस भाषा',
+    accessibilityPreferencesLabel: 'सुगमता प्राथमिकताएं'
   }
 };
 

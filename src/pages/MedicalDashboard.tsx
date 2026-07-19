@@ -1,11 +1,13 @@
 import React from 'react';
 import { useLiveData } from '../contexts/LiveDataContext';
+import { useThemeSettings } from '../contexts/ThemeContext';
 import { 
   Activity, MapPin, CheckCircle2, Clock, PlusSquare 
 } from 'lucide-react';
 
 export const MedicalDashboard: React.FC = () => {
   const { state, resolveIncident } = useLiveData();
+  const { t } = useThemeSettings();
   
   // Active medical incidents
   const medicalIncidents = state.incidents.filter(i => i.type === 'medical');
@@ -22,8 +24,8 @@ export const MedicalDashboard: React.FC = () => {
       
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-black font-sans tracking-wide text-on-surface">Medical Dispatch Portal</h1>
-        <p className="text-xs text-secondary font-medium">Triage prioritization, fastest corridor navigation, and bed availability.</p>
+        <h1 className="text-2xl font-black font-sans tracking-wide text-on-surface">{t.medicalTitle}</h1>
+        <p className="text-xs text-secondary font-medium">{t.medicalDesc}</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
