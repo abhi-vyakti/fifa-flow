@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useLiveData } from '../contexts/LiveDataContext';
+import { useThemeSettings } from '../contexts/ThemeContext';
 import type { SectionInfo } from '../types';
 import { Users, AlertTriangle, Coffee, ShieldAlert, Sparkles, X, ChevronRight } from 'lucide-react';
 
 export const StadiumDigitalTwin: React.FC = () => {
   const { state } = useLiveData();
+  const { t } = useThemeSettings();
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
 
   // Map density to tailwind colors
@@ -31,8 +33,8 @@ export const StadiumDigitalTwin: React.FC = () => {
     <div className="bg-surface-container-low p-5 rounded-3xl space-y-4">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
         <div>
-          <h2 className="text-lg font-display font-black text-on-surface">Stadium Digital Twin</h2>
-          <p className="text-xs text-secondary">Click sections to inspect live crowd, queue, security, and medical status.</p>
+          <h2 className="text-lg font-display font-black text-on-surface">{t.digitalTwinTitle}</h2>
+          <p className="text-xs text-secondary">{t.digitalTwinDesc}</p>
         </div>
         <div className="flex space-x-2 text-[10px] font-mono font-bold">
           <span className="flex items-center space-x-1"><span className="h-2.5 w-2.5 rounded bg-emerald-500/20 border border-emerald-500" /> <span className="text-secondary">Low</span></span>
@@ -208,8 +210,8 @@ export const StadiumDigitalTwin: React.FC = () => {
             <div className="border border-dashed border-outline-variant/60 p-6 rounded-2xl text-center flex flex-col items-center justify-center h-full text-secondary space-y-3 bg-surface-container-lowest shadow-ultra-soft">
               <Users size={32} className="text-secondary" />
               <div>
-                <div className="text-xs font-bold text-on-surface">No Section Selected</div>
-                <p className="text-[11px] text-secondary mt-1 max-w-[200px]">Click on any stadium quadrant to overlay live telemetry.</p>
+                <div className="text-xs font-bold text-on-surface">{t.noSectionSelected}</div>
+                <p className="text-[11px] text-secondary mt-1 max-w-[200px]">{t.clickQuadrantToOverlay}</p>
               </div>
               <div className="text-[10px] bg-surface-container px-2.5 py-1 rounded-xl text-secondary font-mono">
                 Simulated updates every 10s

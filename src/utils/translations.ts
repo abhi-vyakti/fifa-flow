@@ -39,6 +39,26 @@ export interface TranslationDictionary {
   liveEngineTelemetry: string;
   contextAwareIntelligence: string;
 
+  // Command Center & Situation Room
+  aiCommandCenter: string;
+  commandCenterDesc: string;
+  continuousTelemetry: string;
+  situationRoomTab: string;
+  whatIfSimulatorTab: string;
+  systemThreatLevel: string;
+  transitIngressSurge: string;
+  dispatchedAlarms: string;
+  healthBreakout: string;
+  safetySecurity: string;
+  transportation: string;
+  concessionsFood: string;
+  medicalDispatch: string;
+  accessibility: string;
+  sustainability: string;
+  aiDecisionPath: string;
+  noSectionSelected: string;
+  clickQuadrantToOverlay: string;
+
   // Common Actions & Dashboard Cards
   enterPlatform: string;
   selectWorkspace: string;
@@ -135,6 +155,25 @@ export const translations: Record<AppLanguage, TranslationDictionary> = {
     liveEngineTelemetry: 'Live Engine Telemetry',
     contextAwareIntelligence: 'Context-aware command intelligence.',
 
+    aiCommandCenter: 'AI Command Center',
+    commandCenterDesc: 'Predictive crowd intelligence and situational analytics. Use the floating orb (bottom-right) for the AI Copilot.',
+    continuousTelemetry: 'Continuous Telemetry Active',
+    situationRoomTab: 'Situation Room',
+    whatIfSimulatorTab: 'What-If Simulator',
+    systemThreatLevel: 'System Threat Level',
+    transitIngressSurge: 'Transit Ingress Surge',
+    dispatchedAlarms: 'Dispatched Alarms',
+    healthBreakout: 'Health Breakout',
+    safetySecurity: 'Safety & Security',
+    transportation: 'Transportation',
+    concessionsFood: 'Concessions / Food',
+    medicalDispatch: 'Medical Dispatch',
+    accessibility: 'Accessibility',
+    sustainability: 'Sustainability',
+    aiDecisionPath: 'AI Decision Path',
+    noSectionSelected: 'No Section Selected',
+    clickQuadrantToOverlay: 'Click on any stadium quadrant to overlay live telemetry.',
+
     enterPlatform: 'Enter Operations Platform',
     selectWorkspace: 'Select Your Workspace',
     spectatorCompanion: 'Spectator Fan Companion',
@@ -226,6 +265,25 @@ export const translations: Record<AppLanguage, TranslationDictionary> = {
     aiPipelineStatus: 'Estado del Pipeline IA',
     liveEngineTelemetry: 'Telemetría del Motor en Vivo',
     contextAwareIntelligence: 'Inteligencia de mando contextual.',
+
+    aiCommandCenter: 'Centro de Mando IA',
+    commandCenterDesc: 'Inteligencia predictiva de multitud y analítica situacional.',
+    continuousTelemetry: 'Telemetría Continua Activa',
+    situationRoomTab: 'Sala de Situación',
+    whatIfSimulatorTab: 'Simulador Qué-Pasaría-Si',
+    systemThreatLevel: 'Nivel de Amenaza del Sistema',
+    transitIngressSurge: 'Surge de Ingresos de Tránsito',
+    dispatchedAlarms: 'Alarmas Despachadas',
+    healthBreakout: 'Desglose de Salud',
+    safetySecurity: 'Seguridad y Protección',
+    transportation: 'Transporte',
+    concessionsFood: 'Concesiones / Alimentos',
+    medicalDispatch: 'Despacho Médico',
+    accessibility: 'Accesibilidad',
+    sustainability: 'Sostenibilidad',
+    aiDecisionPath: 'Ruta de Decisión IA',
+    noSectionSelected: 'Ninguna Sección Seleccionada',
+    clickQuadrantToOverlay: 'Haga clic en cualquier cuadrante del estadio para superponer telemetría.',
 
     enterPlatform: 'Entrar a la Plataforma',
     selectWorkspace: 'Selecciona tu Espacio de Trabajo',
@@ -319,6 +377,25 @@ export const translations: Record<AppLanguage, TranslationDictionary> = {
     liveEngineTelemetry: 'Télémétrie Moteur en Direct',
     contextAwareIntelligence: 'Intelligence de commande contextuelle.',
 
+    aiCommandCenter: 'Centre de Commandement IA',
+    commandCenterDesc: 'Intelligence prédictive de la foule et analyse situationnelle.',
+    continuousTelemetry: 'Télémétrie Continue Active',
+    situationRoomTab: 'Salle de Situation',
+    whatIfSimulatorTab: 'Simulateur De Scénarios',
+    systemThreatLevel: 'Niveau de Menace du Système',
+    transitIngressSurge: 'Surge d\'Ingress de Transit',
+    dispatchedAlarms: 'Alarmes Déployées',
+    healthBreakout: 'Répartition de la Santé',
+    safetySecurity: 'Sécurité & Sûreté',
+    transportation: 'Transports',
+    concessionsFood: 'Restauration / Nourriture',
+    medicalDispatch: 'Dépêche Médicale',
+    accessibility: 'Accessibilité',
+    sustainability: 'Durabilité',
+    aiDecisionPath: 'Chemin de Décision IA',
+    noSectionSelected: 'Aucune Section Sélectionnée',
+    clickQuadrantToOverlay: 'Cliquez sur un quadrant du stade pour afficher la télémétrie.',
+
     enterPlatform: 'Accéder à la Plateforme',
     selectWorkspace: 'Sélectionnez votre Espace de Travail',
     spectatorCompanion: 'Compagnon des Supporters',
@@ -410,6 +487,25 @@ export const translations: Record<AppLanguage, TranslationDictionary> = {
     aiPipelineStatus: 'Status do Pipeline IA',
     liveEngineTelemetry: 'Telemetria do Motor ao Vivo',
     contextAwareIntelligence: 'Inteligência de comando contextual.',
+
+    aiCommandCenter: 'Centro de Comando IA',
+    commandCenterDesc: 'Inteligência preditiva de multidão e análise situacional.',
+    continuousTelemetry: 'Telemetria Contínua Ativa',
+    situationRoomTab: 'Sala de Situação',
+    whatIfSimulatorTab: 'Simulador O Que Aconteceria Se',
+    systemThreatLevel: 'Nível de Ameaça do Sistema',
+    transitIngressSurge: 'Surto de Ingressos de Trânsito',
+    dispatchedAlarms: 'Alarmes Despachados',
+    healthBreakout: 'Detalhamento da Saúde',
+    safetySecurity: 'Segurança & Proteção',
+    transportation: 'Transporte',
+    concessionsFood: 'Alimentação / Lanchonetes',
+    medicalDispatch: 'Despacho Médico',
+    accessibility: 'Acessibilidade',
+    sustainability: 'Sustentabilidade',
+    aiDecisionPath: 'Caminho de Decisão IA',
+    noSectionSelected: 'Nenhuma Seção Selecionada',
+    clickQuadrantToOverlay: 'Clique em qualquer quadrante para sobrepor a telemetria.',
 
     enterPlatform: 'Entrar na Plataforma',
     selectWorkspace: 'Selecione seu Espaço de Trabalho',
@@ -503,6 +599,25 @@ export const translations: Record<AppLanguage, TranslationDictionary> = {
     liveEngineTelemetry: 'بيانات المحرك المباشرة',
     contextAwareIntelligence: 'ذكاء القيادة المرتبط بالسياق.',
 
+    aiCommandCenter: 'مركز قيادة الذكاء الاصطناعي',
+    commandCenterDesc: 'الذكاء التنبؤي للحشود والتحليلات الظرفية.',
+    continuousTelemetry: 'القياس المباشر التلقائي نشط',
+    situationRoomTab: 'غرفة الوضع',
+    whatIfSimulatorTab: 'محاكي السيناريوهات',
+    systemThreatLevel: 'مستوى تهديد النظام',
+    transitIngressSurge: 'تدفق حركة النقل',
+    dispatchedAlarms: 'إنذارات الاستجابة',
+    healthBreakout: 'تفاصيل الصحة',
+    safetySecurity: 'السلامة والأمن',
+    transportation: 'المواصلات',
+    concessionsFood: 'الأغذية والمأكولات',
+    medicalDispatch: 'الإرسال الطبي',
+    accessibility: 'إمكانية الوصول',
+    sustainability: 'الاستدامة',
+    aiDecisionPath: 'مسار قرار الذكاء الاصطناعي',
+    noSectionSelected: 'لم يتم تحديد أي قسم',
+    clickQuadrantToOverlay: 'انقر فوق أي ربع في الملعب لعرض البيانات المباشرة.',
+
     enterPlatform: 'الدخول إلى منصة العمليات',
     selectWorkspace: 'اختر مساحة العمل الخاصة بك',
     spectatorCompanion: 'دليل المشجعين',
@@ -594,6 +709,25 @@ export const translations: Record<AppLanguage, TranslationDictionary> = {
     aiPipelineStatus: 'एआई पाइपलाइन स्थिति',
     liveEngineTelemetry: 'लाइव इंजन टेलीमेट्री',
     contextAwareIntelligence: 'संदर्भ-जागरूक कमांड बुद्धिमत्ता।',
+
+    aiCommandCenter: 'एआई कमांड सेंटर',
+    commandCenterDesc: 'पूर्वानुमानित भीड़ बुद्धिमत्ता और स्थिति संबंधी विश्लेषण।',
+    continuousTelemetry: 'निरंतर टेलीमेट्री सक्रिय',
+    situationRoomTab: 'सिचुएशन रूम',
+    whatIfSimulatorTab: 'व्हाट-इफ सिमुलेटर',
+    systemThreatLevel: 'सिस्टम खतरा स्तर',
+    transitIngressSurge: 'ट्रांजिट इनग्रेस सर्ज',
+    dispatchedAlarms: 'भेजी गई अलार्म',
+    healthBreakout: 'स्वास्थ्य ब्रेकआउट',
+    safetySecurity: 'सुरक्षा और सुरक्षा',
+    transportation: 'परिवहन',
+    concessionsFood: 'रियायतें / भोजन',
+    medicalDispatch: 'मेडिकल प्रेषण',
+    accessibility: 'सुगमता',
+    sustainability: 'सततता',
+    aiDecisionPath: 'एआई निर्णय पथ',
+    noSectionSelected: 'कोई अनुभाग चयनित नहीं',
+    clickQuadrantToOverlay: 'लाइव टेलीमेट्री देखने के लिए किसी भी स्टेडियम क्वाड्रेंट पर क्लिक करें।',
 
     enterPlatform: 'ऑपरेशंस प्लेटफॉर्म में प्रवेश करें',
     selectWorkspace: 'अपना वर्कस्पेस चुनें',

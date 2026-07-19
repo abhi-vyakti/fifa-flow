@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useLiveData } from '../contexts/LiveDataContext';
+import { useThemeSettings } from '../contexts/ThemeContext';
 import { StadiumDigitalTwin } from './StadiumDigitalTwin';
 import { 
   ShieldCheck, AlertTriangle, Clock, Activity, ShieldAlert, Zap,
@@ -9,6 +10,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 export const AISituationRoom: React.FC = () => {
   const { state } = useLiveData();
+  const { t } = useThemeSettings();
   const [activeExplainId, setActiveExplainId] = useState<string | null>(null);
 
   // Compute threat level based on active incidents
@@ -41,7 +43,7 @@ export const AISituationRoom: React.FC = () => {
         
         {/* Risk Status Pill */}
         <div className="space-y-1 text-left">
-          <span className="text-[9px] text-secondary font-bold uppercase tracking-widest block">System Threat Level</span>
+          <span className="text-[9px] text-secondary font-bold uppercase tracking-widest block">{t.systemThreatLevel}</span>
           <div className={`inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg border text-xs font-black uppercase tracking-wider -skew-x-6 ${riskColor}`}>
             <ShieldAlert size={12} className="shrink-0" />
             <span>{riskLevel} RISK</span>
@@ -50,7 +52,7 @@ export const AISituationRoom: React.FC = () => {
 
         {/* Next critical countdown */}
         <div className="space-y-1 text-left">
-          <span className="text-[9px] text-secondary font-bold uppercase tracking-widest block">Transit Ingress Surge</span>
+          <span className="text-[9px] text-secondary font-bold uppercase tracking-widest block">{t.transitIngressSurge}</span>
           <div className="flex items-center space-x-1.5 text-on-surface">
             <Clock size={13} className="text-primary" />
             <span className="text-xs font-extrabold font-mono">Metro: {nextMetroArrival} min</span>
@@ -59,16 +61,16 @@ export const AISituationRoom: React.FC = () => {
 
         {/* Dynamic Stadium Health */}
         <div className="space-y-1 text-left">
-          <span className="text-[9px] text-secondary font-bold uppercase tracking-widest block">Overall Health</span>
+          <span className="text-[9px] text-secondary font-bold uppercase tracking-widest block">{t.healthScore}</span>
           <div className="flex items-baseline space-x-1.5">
             <span className="text-sm font-black text-on-surface font-sans leading-none">{state.healthScore.overall}%</span>
-            <span className="text-[9px] text-emerald-600 font-mono font-bold">STABLE</span>
+            <span className="text-[9px] text-emerald-600 font-mono font-bold">{t.stable}</span>
           </div>
         </div>
 
         {/* Active Alarms */}
         <div className="space-y-1 text-left">
-          <span className="text-[9px] text-secondary font-bold uppercase tracking-widest block">Dispatched Alarms</span>
+          <span className="text-[9px] text-secondary font-bold uppercase tracking-widest block">{t.dispatchedAlarms}</span>
           <div className="flex items-center space-x-1.5 text-on-surface">
             <span className={`h-2 w-2 rounded-full ${activeIncidents.length > 0 ? 'bg-error animate-ping' : 'bg-emerald-500'}`} />
             <span className="text-xs font-extrabold">{activeIncidents.length} Active alerts</span>
@@ -83,17 +85,17 @@ export const AISituationRoom: React.FC = () => {
         {/* Left HUD: Granular health progress parameters */}
         <div className="space-y-5 lg:col-span-1">
           <div className="border-b border-outline-variant/60 pb-2">
-            <span className="text-[10px] text-secondary font-bold uppercase tracking-widest">Health breakout</span>
+            <span className="text-[10px] text-secondary font-bold uppercase tracking-widest">{t.healthBreakout}</span>
           </div>
           
           <div className="space-y-4">
             {[
-              { label: 'Safety & Security', val: state.healthScore.safety, color: 'bg-emerald-600' },
-              { label: 'Transportation', val: state.healthScore.safety, color: 'bg-primary' },
-              { label: 'Concessions / Food', val: state.healthScore.food, color: 'bg-primary' },
-              { label: 'Medical Dispatch', val: state.healthScore.medical, color: 'bg-error' },
-              { label: 'Accessibility', val: state.healthScore.accessibility, color: 'bg-primary' },
-              { label: 'Sustainability', val: state.healthScore.sustainability, color: 'bg-emerald-600' }
+              { label: t.safetySecurity, val: state.healthScore.safety, color: 'bg-emerald-600' },
+              { label: t.transportation, val: state.healthScore.safety, color: 'bg-primary' },
+              { label: t.concessionsFood, val: state.healthScore.food, color: 'bg-primary' },
+              { label: t.medicalDispatch, val: state.healthScore.medical, color: 'bg-error' },
+              { label: t.accessibility, val: state.healthScore.accessibility, color: 'bg-primary' },
+              { label: t.sustainability, val: state.healthScore.sustainability, color: 'bg-emerald-600' }
             ].map((score, idx) => (
               <div key={idx} className="space-y-1.5 text-xs text-left">
                 <div className="flex items-center justify-between text-secondary">
@@ -106,7 +108,7 @@ export const AISituationRoom: React.FC = () => {
               </div>
             ))}
           </div>
- 
+
           {/* Core Latency diagnostics indicator */}
           <div className="bg-primary/5 border border-outline-variant/60 p-4 rounded-2xl space-y-2 text-left shadow-ultra-soft">
             <div className="flex items-center space-x-1.5 text-[10px] font-bold text-primary uppercase tracking-wider">
@@ -122,7 +124,7 @@ export const AISituationRoom: React.FC = () => {
         {/* Center HUD: The visual centerpiece (Stands Map Heatmap) */}
         <div className="lg:col-span-2 space-y-4">
           <div className="border-b border-outline-variant/60 pb-2 text-center">
-            <span className="text-[10px] text-secondary font-bold uppercase tracking-widest">Interactive Digital Twin Heatmap</span>
+            <span className="text-[10px] text-secondary font-bold uppercase tracking-widest">{t.digitalTwinTitle}</span>
           </div>
 
           <div className="p-4 bg-surface-container-low border border-outline-variant/60 rounded-3xl overflow-hidden shadow-ultra-soft">
@@ -133,7 +135,7 @@ export const AISituationRoom: React.FC = () => {
         {/* Right HUD: AI automation logs connected timeline */}
         <div className="space-y-5 lg:col-span-1">
           <div className="border-b border-outline-variant/60 pb-2">
-            <span className="text-[10px] text-secondary font-bold uppercase tracking-widest">AI Decision Path</span>
+            <span className="text-[10px] text-secondary font-bold uppercase tracking-widest">{t.aiDecisionPath}</span>
           </div>
 
           <div className="space-y-4 pr-1">

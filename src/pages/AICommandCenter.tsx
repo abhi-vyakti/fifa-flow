@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { AISituationRoom } from '../components/AISituationRoom';
 import { useLiveData } from '../contexts/LiveDataContext';
+import { useThemeSettings } from '../contexts/ThemeContext';
 import { 
   RefreshCw, Brain, FlaskConical
 } from 'lucide-react';
@@ -10,6 +11,7 @@ type CommandCenterTab = 'situation' | 'simulator';
 
 export const AICommandCenter: React.FC = () => {
   const { triggerScenario, loading } = useLiveData();
+  const { t } = useThemeSettings();
   const [activeTab, setActiveTab] = useState<CommandCenterTab>('situation');
 
   const handleScenarioChange = async (scenario: PresetScenario) => {
@@ -32,13 +34,13 @@ export const AICommandCenter: React.FC = () => {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-outline-variant/60 pb-4">
         <div>
-          <h1 className="text-3xl font-display font-black tracking-tight text-on-surface">AI Command Center</h1>
-          <p className="text-xs text-secondary mt-0.5">Predictive crowd intelligence and situational analytics. Use the floating orb (bottom-right) for the AI Copilot.</p>
+          <h1 className="text-3xl font-display font-black tracking-tight text-on-surface">{t.aiCommandCenter}</h1>
+          <p className="text-xs text-secondary mt-0.5">{t.commandCenterDesc}</p>
         </div>
         
         <div className="flex items-center space-x-2 text-[10px] bg-surface-container-low border border-outline-variant/60 px-3 py-1.5 rounded-xl text-secondary shrink-0 shadow-ultra-soft">
           <RefreshCw size={12} className="animate-spin text-primary" />
-          <span className="font-mono font-bold">Continuous Telemetry Active</span>
+          <span className="font-mono font-bold">{t.continuousTelemetry}</span>
         </div>
       </div>
 
@@ -53,7 +55,7 @@ export const AICommandCenter: React.FC = () => {
           }`}
         >
           <Brain size={14} />
-          <span>Situation Room</span>
+          <span>{t.situationRoomTab}</span>
         </button>
 
         <button
@@ -65,7 +67,7 @@ export const AICommandCenter: React.FC = () => {
           }`}
         >
           <FlaskConical size={14} />
-          <span>What-If Simulator</span>
+          <span>{t.whatIfSimulatorTab}</span>
         </button>
       </div>
 

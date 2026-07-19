@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLiveData } from '../contexts/LiveDataContext';
+import { useThemeSettings } from '../contexts/ThemeContext';
 import { 
   Compass, MapPin, Plane, Radio, Cloud, Shield, Cpu, Wifi, ArrowRight, AlertTriangle,
   ChevronRight, Activity, Users, Thermometer, Eye, Zap
@@ -48,6 +49,7 @@ const VENUES: Venue[] = [
 export const GlobalMissionControl: React.FC = () => {
   const navigate = useNavigate();
   const { liveMatch } = useLiveData();
+  const { t } = useThemeSettings();
   const [selectedVenue, setSelectedVenue] = useState<Venue>(VENUES.find(v => v.id === 'newyork')!);
   const [hoveredVenue, setHoveredVenue] = useState<string | null>(null);
 
@@ -76,10 +78,10 @@ export const GlobalMissionControl: React.FC = () => {
         <div>
           <div className="flex items-center gap-2 text-[10px] font-bold text-primary uppercase font-mono tracking-wider">
             <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-            AI OS · Global Operations Command
+            AI OS · {t.globalMissionControl}
           </div>
           <h1 className="font-display font-black text-2xl text-on-surface mt-1 leading-tight">
-            Tournament Network — {VENUES.length} Active Nodes
+            {t.globalMissionControl} — {VENUES.length} Active Nodes
           </h1>
           <p className="text-secondary text-[11px] font-sans mt-0.5">
             Real-time satellite telemetry, weather grids, and IoT sensor arrays across 3 host nations.
