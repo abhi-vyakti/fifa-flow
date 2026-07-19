@@ -125,48 +125,51 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTr
             <div className="w-8 h-8 rounded-xl bg-primary/10 border border-primary/25 flex items-center justify-center text-primary group-hover:scale-105 transition-transform shadow-ultra-soft">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                 <circle cx="12" cy="12" r="10" />
-                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10z" />
                 <path d="M2 12h20" />
               </svg>
             </div>
 
             <div className="hidden md:flex flex-col leading-none">
-              <span className="font-display font-black text-white text-[14px] tracking-tight group-hover:text-primary transition-colors">FIFA FLOW</span>
-              <span className="text-[7.5px] font-mono font-bold text-emerald-500 uppercase tracking-widest mt-0.5">{t.osOnline}</span>
+              <span className="font-display font-black text-on-surface text-[14px] tracking-tight group-hover:text-primary transition-colors">FIFA FLOW</span>
+              <span className="text-[7.5px] font-mono font-bold text-emerald-600 uppercase tracking-widest mt-0.5">{t.osOnline}</span>
             </div>
           </div>
         </div>
 
         {/* CENTER: Floating Broadcast-Quality Scoreboard */}
         <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-3">
-          <div className="flex items-center bg-[#111827]/80 backdrop-blur-sm border border-white/5 rounded-2xl px-4 py-1.5 shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
+          <div className="flex items-center bg-surface-container-high/95 backdrop-blur-sm border border-outline-variant/80 rounded-2xl px-4 py-1.5 shadow-ultra-soft">
             
-            <div className="flex items-center gap-1.5 mr-3 pr-3 border-r border-white/10">
+            {/* Live Indicator */}
+            <div className="flex items-center gap-1.5 mr-3 pr-3 border-r border-outline-variant/60">
               <span className="h-1.5 w-1.5 rounded-full bg-error animate-pulse" />
               <span className="text-[8.5px] font-black font-mono text-error uppercase tracking-widest">{t.live}</span>
             </div>
 
+            {/* Match Teams and Scores */}
             <div className="flex items-center gap-6">
               <div className="flex items-center gap-2">
-                <USABadge className="w-5 h-5 rounded-full border border-white/10 shadow-sm" />
-                <span className="font-display font-black text-xs text-white tracking-wide">USA</span>
-                <span className="font-display font-black text-sm text-white/90 bg-white/5 px-2 py-0.5 rounded-md ml-1 font-mono">
+                <USABadge className="w-5 h-5 rounded-full border border-outline-variant/60 shadow-sm" />
+                <span className="font-display font-black text-xs text-on-surface tracking-wide">USA</span>
+                <span className="font-display font-black text-sm text-on-surface bg-surface-container px-2 py-0.5 rounded-md ml-1 font-mono border border-outline-variant/40">
                   {liveMatch.homeScore}
                 </span>
               </div>
 
-              <span className="text-gray-600 font-mono text-xs font-bold">:</span>
+              <span className="text-secondary font-mono text-xs font-bold">:</span>
 
               <div className="flex items-center gap-2">
-                <span className="font-display font-black text-sm text-white/90 bg-white/5 px-2 py-0.5 rounded-md mr-1 font-mono">
+                <span className="font-display font-black text-sm text-on-surface bg-surface-container px-2 py-0.5 rounded-md mr-1 font-mono border border-outline-variant/40">
                   {liveMatch.awayScore}
                 </span>
-                <span className="font-display font-black text-xs text-white tracking-wide">ENG</span>
-                <ENGBadge className="w-5 h-5 rounded-full border border-white/10 shadow-sm" />
+                <span className="font-display font-black text-xs text-on-surface tracking-wide">ENG</span>
+                <ENGBadge className="w-5 h-5 rounded-full border border-outline-variant/60 shadow-sm" />
               </div>
             </div>
 
-            <div className="flex items-center gap-1.5 ml-3 pl-3 border-l border-white/10">
+            {/* Time Elapsed */}
+            <div className="flex items-center gap-1.5 ml-3 pl-3 border-l border-outline-variant/60">
               <span className="text-primary font-mono font-black text-[11px] tracking-wider animate-pulse">
                 {liveMatch.minute}'
               </span>
@@ -176,12 +179,13 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTr
 
         {/* RIGHT: Minimalist Controls */}
         <div className="flex items-center gap-2.5">
+          {/* Emergency HUD Toggle */}
           <button
             onClick={() => setEmergencyMode(!emergencyMode)}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all duration-150 border cursor-pointer active:scale-95 ${
               emergencyMode
                 ? 'bg-error border-error text-white shadow-[0_0_12px_rgba(192,57,43,0.35)]'
-                : 'bg-white/5 border-white/10 hover:border-error/50 hover:text-error text-gray-400'
+                : 'bg-surface-container border border-outline-variant/60 hover:border-error/50 hover:text-error text-secondary'
             }`}
           >
             <AlertCircle size={12} />
@@ -190,7 +194,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTr
 
           {/* Language Selector */}
           <div className="flex items-center gap-1 bg-surface-container border border-outline-variant/60 rounded-xl px-2 py-1 text-xs">
-            <Languages size={12} className="text-gray-400" />
+            <Languages size={12} className="text-secondary" />
             <select
               value={language}
               onChange={(e) => setLanguage(e.target.value as any)}
