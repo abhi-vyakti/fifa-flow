@@ -137,8 +137,8 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTr
           </div>
         </div>
 
-        {/* CENTER: Floating Broadcast-Quality Scoreboard */}
-        <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-3">
+        {/* CENTER: Floating Broadcast-Quality Scoreboard (Desktop & Tablet) */}
+        <div className="hidden lg:flex absolute left-1/2 -translate-x-1/2 items-center gap-3">
           <div className="flex items-center bg-surface-container-high/95 backdrop-blur-sm border border-outline-variant/80 rounded-2xl px-4 py-1.5 shadow-ultra-soft">
             
             {/* Live Indicator */}
@@ -178,11 +178,17 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTr
         </div>
 
         {/* RIGHT: Minimalist Controls */}
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-2">
+          {/* Mobile Live Match Badge */}
+          <div className="flex lg:hidden items-center bg-surface-container border border-outline-variant/60 rounded-xl px-2 py-1 text-[10px] font-mono font-bold text-on-surface space-x-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-error animate-pulse" />
+            <span>USA {liveMatch.homeScore}-{liveMatch.awayScore} ENG</span>
+          </div>
+
           {/* Emergency HUD Toggle */}
           <button
             onClick={() => setEmergencyMode(!emergencyMode)}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all duration-150 border cursor-pointer active:scale-95 ${
+            className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all duration-150 border cursor-pointer active:scale-95 ${
               emergencyMode
                 ? 'bg-error border-error text-white shadow-[0_0_12px_rgba(192,57,43,0.35)]'
                 : 'bg-surface-container border border-outline-variant/60 hover:border-error/50 hover:text-error text-secondary'
@@ -193,7 +199,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTr
           </button>
 
           {/* Language Selector */}
-          <div className="flex items-center gap-1 bg-surface-container border border-outline-variant/60 rounded-xl px-2 py-1 text-xs">
+          <div className="hidden sm:flex items-center gap-1 bg-surface-container border border-outline-variant/60 rounded-xl px-2 py-1 text-xs">
             <Languages size={12} className="text-secondary" />
             <select
               value={language}
@@ -326,7 +332,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTr
                 <div className="flex items-center space-x-2">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="text-primary animate-pulse-slow">
                     <circle cx="12" cy="12" r="10" />
-                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10z" />
                     <path d="M2 12h20" />
                   </svg>
                   <span className="font-display font-extrabold text-primary">FIFA FLOW</span>
@@ -344,7 +350,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTr
                     handleRoleChange(e.target.value as any);
                     setMobileMenuOpen(false);
                   }}
-                  className="w-full bg-surface text-on-surface text-xs border border-outline-variant rounded p-2 outline-none cursor-pointer"
+                  className="w-full bg-surface text-on-surface text-xs border border-outline-variant rounded p-2 outline-none cursor-pointer font-bold"
                 >
                   <option value="organizer">Organizer Command</option>
                   <option value="fan">Fan Assistant</option>
@@ -365,7 +371,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTr
                         navigate(item.path);
                         setMobileMenuOpen(false);
                       }}
-                      className={`w-full flex items-center justify-between px-3 py-2.5 rounded text-sm cursor-pointer ${isActive ? 'bg-primary/10 border-l-2 border-primary text-primary font-medium' : 'text-secondary hover:text-primary'}`}
+                      className={`w-full flex items-center justify-between px-3 py-2.5 rounded text-sm cursor-pointer font-semibold ${isActive ? 'bg-primary/10 border-l-2 border-primary text-primary font-bold' : 'text-secondary hover:text-primary'}`}
                     >
                       <div className="flex items-center space-x-3">
                         <Icon size={16} />
@@ -379,19 +385,64 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTr
           </div>
         )}
 
-        {/* Main Dashboard Pages Slot (Uses directional camera pan reveal transition) */}
-        <main className="flex-1 overflow-y-auto p-4 md:p-6 bg-background relative z-10">
+        {/* Main Dashboard Pages Slot */}
+        <main className="flex-1 overflow-y-auto p-3 sm:p-5 md:p-6 pb-24 md:pb-6 bg-background relative z-10">
           <motion.div
             key={location.pathname}
             initial={{ opacity: 0, x: 10, filter: 'blur(4px)' }}
             animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           >
             {children}
           </motion.div>
         </main>
 
       </div>
+
+      {/* MOBILE BOTTOM NAVIGATION BAR */}
+      {!isLanding && (
+        <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-surface/95 backdrop-blur-xl border-t border-outline-variant/60 flex items-center justify-around py-2 px-1 shadow-ultra-soft">
+          <button 
+            onClick={() => navigate('/')}
+            className={`flex flex-col items-center gap-0.5 text-[10px] font-mono font-bold cursor-pointer ${location.pathname === '/' ? 'text-primary' : 'text-secondary'}`}
+          >
+            <Compass size={18} />
+            <span>Workspace</span>
+          </button>
+          
+          <button 
+            onClick={() => navigate('/commander')}
+            className={`flex flex-col items-center gap-0.5 text-[10px] font-mono font-bold cursor-pointer ${location.pathname === '/commander' ? 'text-primary' : 'text-secondary'}`}
+          >
+            <Brain size={18} />
+            <span>Command</span>
+          </button>
+
+          <button 
+            onClick={() => navigate('/digital-twin')}
+            className={`flex flex-col items-center gap-0.5 text-[10px] font-mono font-bold cursor-pointer ${location.pathname === '/digital-twin' ? 'text-primary' : 'text-secondary'}`}
+          >
+            <Map size={18} />
+            <span>Twin</span>
+          </button>
+
+          <button 
+            onClick={() => navigate('/security')}
+            className={`flex flex-col items-center gap-0.5 text-[10px] font-mono font-bold cursor-pointer ${location.pathname === '/security' ? 'text-primary' : 'text-secondary'}`}
+          >
+            <Shield size={18} />
+            <span>Security</span>
+          </button>
+
+          <button 
+            onClick={() => setMobileMenuOpen(true)}
+            className="flex flex-col items-center gap-0.5 text-[10px] font-mono font-bold text-secondary cursor-pointer"
+          >
+            <Menu size={18} />
+            <span>Menu</span>
+          </button>
+        </nav>
+      )}
 
       {/* 4. Command Palette Dialogue Overlay (Ctrl+K Modal) */}
       <AnimatePresence>

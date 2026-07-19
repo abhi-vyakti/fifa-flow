@@ -63,7 +63,7 @@ export const AICopilot: React.FC = () => {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-[100] flex flex-col items-end space-y-3 pointer-events-none">
+    <div className="fixed bottom-16 sm:bottom-6 right-4 sm:right-6 z-[100] flex flex-col items-end space-y-3 pointer-events-none">
       <AnimatePresence mode="wait">
         
         {/* STATE 1: Floating pulsing orb */}
