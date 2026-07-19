@@ -35,6 +35,12 @@ function sanitizeInput(prompt: string): string {
     .trim();
 }
 
+const VALID_ROLES = ['organizer', 'fan', 'volunteer', 'security', 'medical'];
+
+function sanitizeRole(role: string): string {
+  return VALID_ROLES.includes(role) ? role : 'organizer';
+}
+
 /**
  * Fallback local engine for offline / no-key execution.
  * Simulates the telemetry context processing, decision ranking, and formatted JSON output.
@@ -318,19 +324,20 @@ export async function getAIReasoning(
   useDeepseek: boolean = false
 ): Promise<AIReasoningTrace> {
   const sanitizedPrompt = sanitizeInput(prompt);
+  const sanitizedRole = sanitizeRole(role);
 
   // If no Groq API Key, run local simulation reasoning engine
   if (!groqClient) {
     // Artificial 300ms latency to look realistic
     await new Promise(resolve => setTimeout(resolve, 350));
-    return runLocalReasoningEngine(sanitizedPrompt, context, role);
+    return runLocalReasoningEngine(sanitizedPrompt, context, sanitizedRole);
   }
 
   const systemInstructions = `
 You are FLOW AI, the intelligent operations copilot for the FIFA World Cup 2026.
 Your job is to reason about stadium telemetry, safety incidents, volunteer grids, crowd levels, transport delay flags, and environmental stats.
 
-Role of user making request: "${role}"
+Role of user making request: "${sanitizedRole}"
 
 Current Stadium Telemetry Context:
 ${JSON.stringify({
@@ -437,6 +444,7 @@ export function streamAIReasoning(
   onComplete: () => void
 ) {
   const sanitizedPrompt = sanitizeInput(prompt);
+  const sanitizedRole = sanitizeRole(role);
   
   // 1. Simulate Context Collection Phase
   setTimeout(() => {
@@ -462,7 +470,7 @@ export function streamAIReasoning(
     }), 'reasoning_step');
 
     try {
-      const finalResponse = await getAIReasoning(sanitizedPrompt, context, role);
+      const finalResponse = await getAIReasoning(sanitizedPrompt, context, sanitizedRole);
       
       setTimeout(() => {
         sendEvent(JSON.stringify({
@@ -480,7 +488,7 @@ export function streamAIReasoning(
       }, 800);
 
     } catch (err) {
-      const fallback = runLocalReasoningEngine(sanitizedPrompt, context, role);
+      const fallback = runLocalReasoningEngine(sanitizedPrompt, context, sanitizedRole);
       sendEvent(JSON.stringify({
         step: 'COMPLETE',
         data: fallback

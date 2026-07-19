@@ -865,12 +865,12 @@ export const BroadcastCenter: React.FC = () => {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             
             {[
-              { id: 'CAM 01', name: 'Main Pitch Side', format: 'UHD · 60fps &bull; 12ms', status: 'Stable' },
-              { id: 'CAM 02', name: 'Goal Line South', format: 'UHD · 60fps &bull; 8ms', status: 'Stable' },
-              { id: 'CAM 03', name: 'VAR Center Feed', format: 'UHD · 60fps &bull; 5ms', status: 'Stable' },
-              { id: 'CAM 04', name: 'Aerial Drone W', format: 'HD &bull; 60fps &bull; 42ms', status: 'Stable' },
-              { id: 'CAM 05', name: 'West Gate Crowds', format: 'HD &bull; 30fps &bull; 18ms', status: 'Stable' },
-              { id: 'CAM 06', name: 'Press Room', format: 'UHD &bull; 30fps &bull; 15ms', status: 'Stable' }
+              { id: 'CAM 01', name: 'Main Pitch Side', format: 'UHD · 60fps • 12ms', status: 'Stable' },
+              { id: 'CAM 02', name: 'Goal Line South', format: 'UHD · 60fps • 8ms', status: 'Stable' },
+              { id: 'CAM 03', name: 'VAR Center Feed', format: 'UHD · 60fps • 5ms', status: 'Stable' },
+              { id: 'CAM 04', name: 'Aerial Drone W', format: 'HD • 60fps • 42ms', status: 'Stable' },
+              { id: 'CAM 05', name: 'West Gate Crowds', format: 'HD • 30fps • 18ms', status: 'Stable' },
+              { id: 'CAM 06', name: 'Press Room', format: 'UHD • 30fps • 15ms', status: 'Stable' }
             ].map((cam, idx) => {
               const isSelected = selectedCamIndex === idx;
               return (
@@ -890,7 +890,9 @@ export const BroadcastCenter: React.FC = () => {
                     </div>
                     <h4 className="font-bold text-xs text-on-surface text-left">{cam.name}</h4>
                   </div>
-                  <div className="text-[9px] text-secondary font-mono leading-none mt-2 text-left" dangerouslySetInnerHTML={{ __html: cam.format }} />
+                  <div className="text-[9px] text-secondary font-mono leading-none mt-2 text-left">
+                    {cam.format}
+                  </div>
                 </div>
               );
             })}
@@ -975,16 +977,18 @@ export const BroadcastCenter: React.FC = () => {
                 <span className="text-secondary text-[9px] font-mono uppercase block">Active Regional Feeds</span>
                 <div className="space-y-1.5 text-[10px]">
                   {[
-                    { name: 'Pan-America (EBU)', quality: '1080p60 &bull; SRT' },
-                    { name: 'Asia-Pacific (Dentsu)', quality: 'UHD4k60 &bull; RTMP' },
-                    { name: 'Mena Regional (beIN)', quality: '1080p60 &bull; SRT' }
+                    { name: 'Pan-America (EBU)', quality: '1080p60 • SRT' },
+                    { name: 'Asia-Pacific (Dentsu)', quality: 'UHD4k60 • RTMP' },
+                    { name: 'Mena Regional (beIN)', quality: '1080p60 • SRT' }
                   ].map((feed, idx) => (
                     <div key={idx} className="flex justify-between items-center border-b border-outline-variant/10 pb-1 last:border-0 last:pb-0">
                       <div className="flex items-center gap-1.5">
                         <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
                         <span className="font-bold text-on-surface">{feed.name}</span>
                       </div>
-                      <span className="text-emerald-600 font-mono text-[8px]" dangerouslySetInnerHTML={{ __html: feed.quality }} />
+                      <span className="text-emerald-600 font-mono text-[8px]">
+                        {feed.quality}
+                      </span>
                     </div>
                   ))}
                 </div>
