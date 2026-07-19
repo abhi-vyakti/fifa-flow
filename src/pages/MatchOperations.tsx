@@ -161,7 +161,7 @@ const TelemetryDial: React.FC<TelemetryDialProps> = ({ percent, label, icon: Ico
 
 export const MatchOperations: React.FC = () => {
   const navigate = useNavigate();
-  const { state, isPlayingDemo, activeDemoStep, stopJudgeDemo } = useLiveData();
+  const { state, isPlayingDemo, activeDemoStep, stopJudgeDemo, liveMatch } = useLiveData();
   const { emergencyMode } = useThemeSettings();
 
   // --- Interactive local selection ---
@@ -402,11 +402,17 @@ export const MatchOperations: React.FC = () => {
                     {isLive ? (
                       <>
                         <div className="flex items-center gap-2">
-                          <span className="font-display font-black text-2xl text-on-surface">1</span>
+                          <span className="font-display font-black text-2xl text-on-surface">
+                            {liveMatch.homeScore}
+                          </span>
                           <span className="text-secondary/50 font-mono text-base">–</span>
-                          <span className="font-display font-black text-2xl text-on-surface">0</span>
+                          <span className="font-display font-black text-2xl text-on-surface">
+                            {liveMatch.awayScore}
+                          </span>
                         </div>
-                        <span className="text-[9px] text-primary font-mono font-bold animate-pulse mt-0.5">78'</span>
+                        <span className="text-[9px] text-primary font-mono font-bold animate-pulse mt-0.5">
+                          {liveMatch.minute}'
+                        </span>
                       </>
                     ) : (
                       <span className="text-[10px] text-secondary font-mono">{match.stage === 'Preparing' ? 'PRE-MATCH' : 'KO 17:00'}</span>

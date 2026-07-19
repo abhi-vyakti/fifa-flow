@@ -64,7 +64,7 @@ const AppInner: React.FC = () => {
           <div className="fifa-spotlight" />
           <div className="relative z-10">
             <Routes>
-              <Route path="/" element={<LandingPage onTriggerIntro={() => setShowIntro(true)} />} />
+              <Route path="/" element={<LandingPage />} />
               <Route path="/select-persona" element={<PersonaSelectPage />} />
             </Routes>
           </div>

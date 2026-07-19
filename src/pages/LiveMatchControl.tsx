@@ -19,7 +19,7 @@ interface ReplayStep {
 }
 
 export const LiveMatchControl: React.FC = () => {
-  const { state, resolveIncident } = useLiveData();
+  const { state, resolveIncident, liveMatch } = useLiveData();
   const { emergencyMode } = useThemeSettings();
 
   // Replay Incident State
@@ -148,8 +148,10 @@ export const LiveMatchControl: React.FC = () => {
               <USABadge className="w-8 h-8 md:w-9 md:h-9" />
             </div>
             <span className="text-secondary font-mono text-[10px] font-bold uppercase tracking-wider">UNITED STATES</span>
-            <div className="hidden md:flex gap-1">
-              <span className="px-2 py-0.5 bg-primary/10 text-primary text-[10px] font-mono rounded font-semibold">Pulisic 76'</span>
+            <div className="hidden md:flex gap-1 flex-wrap justify-end">
+              {liveMatch.homeGoals.map((g, idx) => (
+                <span key={idx} className="px-2 py-0.5 bg-primary/10 text-primary text-[10px] font-mono rounded font-semibold">{g}</span>
+              ))}
             </div>
           </div>
 
@@ -160,11 +162,13 @@ export const LiveMatchControl: React.FC = () => {
               <span className="text-xs font-black text-error uppercase tracking-wider font-mono">LIVE STAGE</span>
             </div>
             <div className="font-display text-4xl md:text-5xl font-black tracking-tight text-primary">
-              2 <span className="text-outline-variant mx-2">—</span> 1
+              {liveMatch.homeScore} <span className="text-outline-variant mx-2">—</span> {liveMatch.awayScore}
             </div>
             <div className="mt-2.5 px-3.5 py-1 bg-surface-container rounded-full border border-outline-variant/50 flex items-center gap-1.5">
               <Clock size={12} className="text-primary animate-pulse" />
-              <span className="font-mono text-xs font-bold text-on-surface">78:42</span>
+              <span className="font-mono text-xs font-bold text-on-surface">
+                {liveMatch.minute}:{liveMatch.second.toString().padStart(2, '0')}
+              </span>
             </div>
             <span className="text-secondary font-mono text-[10px] font-semibold uppercase tracking-wider mt-2">
               LUSAIL ICONIC STADIUM · GROUP A
@@ -178,8 +182,10 @@ export const LiveMatchControl: React.FC = () => {
               <span className="font-display text-3xl md:text-4xl font-black text-on-surface">ENG</span>
             </div>
             <span className="text-secondary font-mono text-[10px] font-bold uppercase tracking-wider">ENGLAND</span>
-            <div className="hidden md:flex gap-1">
-              <span className="px-2 py-0.5 bg-outline-variant text-secondary text-[10px] font-mono rounded font-semibold">Kane 62'</span>
+            <div className="hidden md:flex gap-1 flex-wrap">
+              {liveMatch.awayGoals.map((g, idx) => (
+                <span key={idx} className="px-2 py-0.5 bg-outline-variant text-secondary text-[10px] font-mono rounded font-semibold">{g}</span>
+              ))}
             </div>
           </div>
         </div>

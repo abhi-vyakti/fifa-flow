@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useLiveData } from '../contexts/LiveDataContext';
 import { 
   Compass, MapPin, Plane, Radio, Cloud, Shield, Cpu, Wifi, ArrowRight, AlertTriangle,
   ChevronRight, Activity, Users, Thermometer, Eye, Zap
@@ -46,6 +47,7 @@ const VENUES: Venue[] = [
 
 export const GlobalMissionControl: React.FC = () => {
   const navigate = useNavigate();
+  const { liveMatch } = useLiveData();
   const [selectedVenue, setSelectedVenue] = useState<Venue>(VENUES.find(v => v.id === 'newyork')!);
   const [hoveredVenue, setHoveredVenue] = useState<string | null>(null);
 
@@ -274,7 +276,7 @@ export const GlobalMissionControl: React.FC = () => {
                           {v.city}
                         </text>
                         <text x="2.2" y="0.8" className="text-[1.1px] font-sans" fill="#78706a">
-                          {v.liveMatch} · {v.score}
+                          {v.liveMatch} · {v.id === 'newyork' ? `${liveMatch.homeScore}-${liveMatch.awayScore}` : v.score}
                         </text>
                       </g>
                     )}
@@ -349,7 +351,9 @@ export const GlobalMissionControl: React.FC = () => {
                       <span className="h-1.5 w-1.5 rounded-full bg-error animate-pulse" />
                       <span className="text-[8px] font-bold text-error uppercase tracking-wider">Live</span>
                     </div>
-                    <div className="text-lg font-mono font-black text-primary mt-0.5">{selectedVenue.score}</div>
+                    <div className="text-lg font-mono font-black text-primary mt-0.5">
+                      {selectedVenue.id === 'newyork' ? `${liveMatch.homeScore}-${liveMatch.awayScore}` : selectedVenue.score}
+                    </div>
                   </div>
                 </div>
               </div>

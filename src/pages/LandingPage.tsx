@@ -1,29 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useThemeSettings } from '../contexts/ThemeContext';
-import { useAtmosphereAudio } from '../hooks/useAtmosphereAudio';
 import { 
-  Brain, Sparkles, Play, Terminal, ArrowRight, 
-  Compass, Volume2, VolumeX, CheckCircle2
+  Brain, Sparkles, Terminal, ArrowRight, 
+  Compass, CheckCircle2
 } from 'lucide-react';
 
-interface LandingPageProps {
-  onTriggerIntro: () => void;
-}
-
-export const LandingPage: React.FC<LandingPageProps> = ({ onTriggerIntro }) => {
+export const LandingPage: React.FC = () => {
   const navigate = useNavigate();
   const { setRole } = useThemeSettings();
-  const { isPlaying: audioActive, toggleAudio: onToggleAudio } = useAtmosphereAudio();
-
-  const sponsors = [
-    { name: 'DeepSeek API', desc: 'Consensus Reasoning', logo: '⚡' },
-    { name: 'React 18', desc: 'Component VDOM', logo: '⚛️' },
-    { name: 'Node.js', desc: 'Express API Server', logo: '🟢' },
-    { name: 'Supabase', desc: 'Auth & DB Gateway', logo: '🔥' },
-    { name: 'Leaflet Maps', desc: 'Accessibility Geofence', logo: '🗺️' },
-    { name: 'Recharts', desc: 'Telemetry Visualization', logo: '📈' }
-  ];
 
   return (
     <div className="space-y-16 py-6 px-4 max-w-6xl mx-auto font-sans relative">
@@ -51,7 +36,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onTriggerIntro }) => {
         </p>
 
         {/* Platform Control Entry */}
-        <div className="max-w-md mx-auto bg-surface-container-low border border-outline-variant/60 p-5 rounded-3xl space-y-4 shadow-ultra-soft">
+        <div className="max-w-md mx-auto bg-surface-container-low border border-outline-variant/60 p-5 rounded-3xl shadow-ultra-soft">
           <button 
             onClick={() => {
               navigate('/select-persona');
@@ -61,25 +46,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onTriggerIntro }) => {
             <span>Enter Operations Platform</span>
             <ArrowRight size={14} />
           </button>
-
-          <div className="flex justify-center items-center space-x-3 pt-1">
-            <button 
-              onClick={onTriggerIntro}
-              className="text-[10px] font-bold text-primary hover:underline cursor-pointer"
-            >
-              Play Cinematic Broadcast Intro
-            </button>
-            <span className="text-secondary/50 text-[10px]">&bull;</span>
-            <button 
-              onClick={onToggleAudio}
-              className={`flex items-center space-x-1.5 px-3 py-1 rounded-full text-[10px] font-bold transition-all border cursor-pointer ${
-                audioActive ? 'bg-primary/20 border-primary text-primary' : 'bg-surface-container border-outline-variant text-secondary'
-              }`}
-            >
-              {audioActive ? <Volume2 size={10} className="animate-pulse" /> : <VolumeX size={10} />}
-              <span>{audioActive ? 'Audio ON' : 'Audio Muted'}</span>
-            </button>
-          </div>
         </div>
       </section>
 
@@ -205,24 +171,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onTriggerIntro }) => {
         </div>
       </section>
 
-      {/* 5. TECH BADGES */}
-      <section className="space-y-4 text-center">
-        <h3 className="text-[10px] font-bold uppercase tracking-widest text-secondary font-mono">Built With</h3>
-        <div className="flex flex-wrap items-center justify-center gap-2.5">
-          {sponsors.map((tech) => (
-            <div 
-              key={tech.name}
-              className="bg-surface-container-low px-3 py-2 rounded-2xl border border-outline-variant/60 flex items-center space-x-2 text-xs"
-            >
-              <span className="text-xs shrink-0">{tech.logo}</span>
-              <div>
-                <span className="font-bold text-on-surface text-[11px] block">{tech.name}</span>
-                <span className="text-[9px] text-secondary font-mono leading-none">{tech.desc}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+
 
     </div>
   );

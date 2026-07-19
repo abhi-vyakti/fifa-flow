@@ -20,7 +20,7 @@ interface DashboardLayoutProps {
 export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTriggerIntro: _onTriggerIntro }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { state } = useLiveData();
+  const { state, liveMatch } = useLiveData();
   const { 
     role, setRole, language, setLanguage, highContrast, emergencyMode, setEmergencyMode 
   } = useThemeSettings();
@@ -172,13 +172,17 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTr
               <div className="flex items-center gap-2">
                 <USABadge className="w-5 h-5 rounded-full border border-white/10 shadow-sm" />
                 <span className="font-display font-black text-xs text-white tracking-wide">USA</span>
-                <span className="font-display font-black text-sm text-white/90 bg-white/5 px-2 py-0.5 rounded-md ml-1 font-mono">1</span>
+                <span className="font-display font-black text-sm text-white/90 bg-white/5 px-2 py-0.5 rounded-md ml-1 font-mono">
+                  {liveMatch.homeScore}
+                </span>
               </div>
 
               <span className="text-gray-600 font-mono text-xs font-bold">:</span>
 
               <div className="flex items-center gap-2">
-                <span className="font-display font-black text-sm text-white/90 bg-white/5 px-2 py-0.5 rounded-md mr-1 font-mono">0</span>
+                <span className="font-display font-black text-sm text-white/90 bg-white/5 px-2 py-0.5 rounded-md mr-1 font-mono">
+                  {liveMatch.awayScore}
+                </span>
                 <span className="font-display font-black text-xs text-white tracking-wide">ENG</span>
                 <ENGBadge className="w-5 h-5 rounded-full border border-white/10 shadow-sm" />
               </div>
@@ -186,7 +190,9 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTr
 
             {/* Time Elapsed */}
             <div className="flex items-center gap-1.5 ml-3 pl-3 border-l border-white/10">
-              <span className="text-primary font-mono font-black text-[11px] tracking-wider animate-pulse">78'</span>
+              <span className="text-primary font-mono font-black text-[11px] tracking-wider animate-pulse">
+                {liveMatch.minute}'
+              </span>
             </div>
           </div>
         </div>

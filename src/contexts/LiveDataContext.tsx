@@ -13,6 +13,14 @@ interface LiveDataContextType {
   isPlayingDemo: boolean;
   startJudgeDemo: () => void;
   stopJudgeDemo: () => void;
+  liveMatch: {
+    homeScore: number;
+    awayScore: number;
+    minute: number;
+    second: number;
+    homeGoals: string[];
+    awayGoals: string[];
+  };
 }
 
 const LiveDataContext = createContext<LiveDataContextType | undefined>(undefined);
@@ -233,6 +241,56 @@ export const LiveDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [isMockedFrontend, setIsMockedFrontend] = useState(false);
   const [activeDemoStep, setActiveDemoStep] = useState<number | null>(null);
   const [isPlayingDemo, setIsPlayingDemo] = useState(false);
+
+  const [liveMatch, setLiveMatch] = useState({
+    homeScore: 1,
+    awayScore: 0,
+    minute: 78,
+    second: 0,
+    homeGoals: ["Pulisic 76'"],
+    awayGoals: [] as string[]
+  });
+
+  const startTimestampRef = useRef<number>(Date.now());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const elapsedSeconds = Math.floor((Date.now() - startTimestampRef.current) / 1000);
+      const elapsedMatchSeconds = elapsedSeconds * 4; // 1 real second = 4 match seconds
+      const minMatchSeconds = 78 * 60;
+      const maxMatchSeconds = 95 * 60;
+      const matchSpan = maxMatchSeconds - minMatchSeconds; // 17 minutes = 1020 seconds
+      const matchTimeSeconds = minMatchSeconds + (elapsedMatchSeconds % matchSpan);
+      
+      const minute = Math.floor(matchTimeSeconds / 60);
+      const second = matchTimeSeconds % 60;
+
+      let homeScore = 1;
+      let awayScore = 0;
+      let homeGoals = ["Pulisic 76'"];
+      let awayGoals: string[] = [];
+
+      if (minute >= 82) {
+        awayScore = 1;
+        awayGoals = ["Kane 82'"];
+      }
+      if (minute >= 86) {
+        homeScore = 2;
+        homeGoals = ["Pulisic 76'", "Reyna 86'"];
+      }
+
+      setLiveMatch({
+        homeScore,
+        awayScore,
+        minute,
+        second,
+        homeGoals,
+        awayGoals
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
 
   const demoIntervalRef = useRef<any | null>(null);
   const apiFetchIntervalRef = useRef<any | null>(null);
@@ -745,7 +803,8 @@ export const LiveDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       activeDemoStep,
       isPlayingDemo,
       startJudgeDemo,
-      stopJudgeDemo
+      stopJudgeDemo,
+      liveMatch
     }}>
       {children}
     </LiveDataContext.Provider>
