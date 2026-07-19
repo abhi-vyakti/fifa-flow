@@ -9,7 +9,7 @@ import {
 
 export const BroadcastCenter: React.FC = () => {
   const { state } = useLiveData();
-  const { emergencyMode } = useThemeSettings();
+  const { emergencyMode, t } = useThemeSettings();
 
   // State controls for broadcast simulation
   const [selectedCamIndex, setSelectedCamIndex] = useState(0);
@@ -592,16 +592,16 @@ export const BroadcastCenter: React.FC = () => {
         <div>
           <div className="flex items-center gap-2 text-xs font-bold text-primary uppercase font-mono tracking-wider">
             <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-            AI OS &bull; Broadcast Operations Center
+            AI OS &bull; {t.broadcastCenter}
           </div>
           <h1 className="font-display font-black text-3xl text-on-surface mt-1">
             {emergencyMode 
               ? "AI detected transmission failure risk. Switching to standby satellite path." 
-              : "AI predicts stable UHD feed performance. 142M active connections."
+              : t.broadcastCenter
             }
           </h1>
           <p className="text-secondary text-xs font-sans mt-0.5">
-            Monitor camera grids, audio booths, and multi-channel satellite uplinks.
+            {t.contextAwareIntelligence}
           </p>
         </div>
       </div>

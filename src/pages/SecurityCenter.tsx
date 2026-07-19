@@ -41,7 +41,7 @@ const getSectorPath = (cx: number, cy: number, startAngle: number, endAngle: num
 
 export const SecurityCenter: React.FC = () => {
   const { state, resolveIncident } = useLiveData();
-  const { emergencyMode } = useThemeSettings();
+  const { emergencyMode, t } = useThemeSettings();
   const [activeTab, setActiveTab] = useState<'level0' | 'level1' | 'level2'>('level1');
   const [zoomLevel, setZoomLevel] = useState<number>(100);
 
@@ -85,18 +85,16 @@ export const SecurityCenter: React.FC = () => {
         <div>
           <div className="flex items-center gap-2 text-xs font-bold text-primary uppercase font-mono tracking-wider">
             <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-            AI OS &bull; Security Operations Center
+            AI OS &bull; {t.securityCenter}
           </div>
           <h1 className="font-display font-black text-3xl text-on-surface mt-1">
             {emergencyMode 
               ? "AI detected emergency status. Elevating threat level to Level 3. Securing exits." 
-              : totalIncidentsCount > 0 
-                ? `AI monitors ${totalIncidentsCount} active security alert${totalIncidentsCount > 1 ? 's' : ''}. Deploying patrols.` 
-                : "AI predicts normal spectator behavior. All turnstiles operational."
+              : t.securityTitle
             }
           </h1>
           <p className="text-secondary text-xs font-sans mt-0.5">
-            Coordinate crowd flows, inspect real-time alarms, and dispatch response units.
+            {t.securityDesc}
           </p>
         </div>
       </div>

@@ -79,7 +79,7 @@ const personas: PersonaOption[] = [
 
 export const PersonaSelectPage: React.FC = () => {
   const navigate = useNavigate();
-  const { setRole } = useThemeSettings();
+  const { setRole, t } = useThemeSettings();
   const [hoveredId, setHoveredId] = useState<UserRole | null>(null);
   const [selectedId, setSelectedId] = useState<UserRole | null>(null);
 
@@ -114,12 +114,11 @@ export const PersonaSelectPage: React.FC = () => {
         </div>
         
         <h1 className="text-3xl sm:text-4xl font-headline font-black tracking-tight text-on-surface uppercase leading-tight">
-          Select Your
-          <span className="block text-primary">Operational Persona</span>
+          {t.selectWorkspace}
         </h1>
         
         <p className="text-xs sm:text-sm text-secondary max-w-md mx-auto leading-relaxed">
-          FIFA FLOW adapts its AI intelligence layer, dashboard modules, and data priority based on your operational role.
+          {t.contextAwareIntelligence}
         </p>
       </motion.div>
 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useLiveData } from '../contexts/LiveDataContext';
+import { useThemeSettings } from '../contexts/ThemeContext';
 import { 
   Users, CheckCircle2, Image as ImageIcon, 
   MapPin, Clock, Trophy, Star, Sparkles 
@@ -7,6 +8,7 @@ import {
 
 export const VolunteerDashboard: React.FC = () => {
   const { state, reportIncident } = useLiveData();
+  const { t } = useThemeSettings();
   
   const [itemName, setItemName] = useState('');
   const [itemLoc, setItemLoc] = useState('Section A3');
@@ -38,14 +40,14 @@ export const VolunteerDashboard: React.FC = () => {
       title: 'Volunteer Requested Backup',
       type: 'general',
       severity: 'medium',
-      location: 'Section C2',
-      details: 'Volunteer Maria G. requested backup crowd control assistance at Sector C2.',
-      priority: 3,
-      department: 'Volunteers',
-      resourcesRequired: ['Crowd Support Team'],
-      nearbyResponders: ['Volunteer John D.', 'Volunteer Yusuf A.'],
+      location: 'Section A3',
+      details: 'Volunteer requested backup support for crowd direction at Gate A.',
+      priority: 2,
+      department: 'Volunteer',
+      resourcesRequired: ['Volunteer Backup Team'],
+      nearbyResponders: ['Volunteer Unit 2'],
       escalationLevel: 'Level 0',
-      suggestedActions: ['Reroute secondary corridors', 'Establish physical barriers'],
+      suggestedActions: ['Reroute 2 idle volunteers from Sector A'],
       status: 'reported'
     });
 
@@ -58,8 +60,8 @@ export const VolunteerDashboard: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-black font-sans tracking-wide text-on-surface">Volunteer Portal</h1>
-          <p className="text-xs text-secondary font-medium">Shift diagnostics, task queues, and backup coordination.</p>
+          <h1 className="text-2xl font-black font-sans tracking-wide text-on-surface">{t.volunteerTitle}</h1>
+          <p className="text-xs text-secondary font-medium">{t.volunteerDesc}</p>
         </div>
 
         <button 

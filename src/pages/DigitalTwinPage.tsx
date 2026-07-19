@@ -97,7 +97,7 @@ const getSectorPath = (cx: number, cy: number, startAngle: number, endAngle: num
 
 export const StadiumDigitalTwin: React.FC = () => {
   const { state } = useLiveData();
-  const { emergencyMode } = useThemeSettings();
+  const { emergencyMode, t } = useThemeSettings();
   
   // States
   const [selectedStand, setSelectedStand] = useState<StandDetails>(STAND_DATA.south);
@@ -191,16 +191,16 @@ export const StadiumDigitalTwin: React.FC = () => {
         <div>
           <div className="flex items-center gap-2 text-xs font-bold text-primary uppercase font-mono tracking-wider">
             <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-            AI OS &bull; Stadium Digital Twin
+            AI OS &bull; {t.digitalTwinTitle}
           </div>
           <h1 className="font-display font-black text-3xl text-on-surface mt-1">
             {emergencyMode 
               ? "AI detected emergency state. Digital Twin displays evacuation lanes." 
-              : `AI monitoring stands. Selected: ${selectedStand.name} (Sector ${selectedSector}).`
+              : t.digitalTwinTitle
             }
           </h1>
           <p className="text-secondary text-xs font-sans mt-0.5">
-            Real-time interactive stadium map linked directly to gate telemetries and CCTV grids.
+            {t.digitalTwinDesc}
           </p>
         </div>
       </div>
@@ -211,7 +211,7 @@ export const StadiumDigitalTwin: React.FC = () => {
         <div className="col-span-12 lg:col-span-3 flex flex-col gap-6">
           <div className="bg-surface-container-lowest p-6 rounded-3xl border border-outline-variant/50 shadow-ultra-soft relative overflow-hidden group hover:border-primary/20 transition-all duration-300">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary/10 via-primary/30 to-primary/10" />
-            <h2 className="font-display font-black text-xl text-on-surface mb-5">Venue Health</h2>
+            <h2 className="font-display font-black text-xl text-on-surface mb-5">{t.healthScore}</h2>
             
             {/* Holographic gauge */}
             <div className="flex flex-col items-center justify-center mb-6">

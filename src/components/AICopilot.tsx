@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAI, type AIReasoningTrace } from '../contexts/AIContext';
 import { useLiveData } from '../contexts/LiveDataContext';
+import { useThemeSettings } from '../contexts/ThemeContext';
 import { useSpeech } from '../hooks/useSpeech';
 import { 
   Sparkles, Send, Mic, ShieldAlert, AlertTriangle, 
@@ -11,6 +12,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 export const AICopilot: React.FC = () => {
   const { askCopilot, loading, activeStep } = useAI();
   const { state } = useLiveData();
+  const { t } = useThemeSettings();
   
   const [query, setQuery] = useState('');
   const [response, setResponse] = useState<AIReasoningTrace | null>(null);

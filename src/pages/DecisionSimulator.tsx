@@ -9,7 +9,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 export const DecisionSimulator: React.FC = () => {
   const { state, triggerScenario } = useLiveData();
-  const { emergencyMode } = useThemeSettings();
+  const { emergencyMode, t } = useThemeSettings();
   
   // What-if states
   const [crowdMultiplier, setCrowdMultiplier] = useState(1.0);
@@ -38,15 +38,14 @@ export const DecisionSimulator: React.FC = () => {
   };
 
   const getThreatSeverity = (percent: string) => {
-    const num = parseInt(percent);
-    if (num <= 5) return { label: 'Low Profile', style: 'text-emerald-500 bg-emerald-500/10 border-emerald-500/25', progressColor: 'bg-emerald-500' };
-    if (num <= 20) return { label: 'Moderate', style: 'text-amber-600 bg-amber-500/10 border-amber-500/25', progressColor: 'bg-amber-500' };
+    if (parseInt(percent) <= 5) return { label: 'Nominal', style: 'text-emerald-500 bg-emerald-500/10 border-emerald-500/25', progressColor: 'bg-emerald-500' };
+    if (parseInt(percent) <= 20) return { label: 'Medium', style: 'text-amber-600 bg-amber-500/10 border-amber-500/25', progressColor: 'bg-amber-500' };
     return { label: 'High Threat', style: 'text-error bg-error/10 border-error/25 animate-pulse', progressColor: 'bg-error' };
   };
 
-  // Dynamic Telemetry Values
-  const simulatedQueue = Math.round(crowdMultiplier * 8);
-  const simulatedStoppage = Math.round(metroDelayMins / 6);
+  // Telemetry computations
+  const simulatedQueue = Math.round(12 * crowdMultiplier + (metroDelayMins * 0.6));
+  const simulatedStoppage = Math.round(1.5 * crowdMultiplier + (metroDelayMins * 0.4));
   const threatPercentage = crowdMultiplier > 1.5 || activeScenario ? (crowdMultiplier > 1.7 ? '34%' : '12%') : '2%';
 
   const queueData = getQueueSeverity(simulatedQueue);
@@ -61,16 +60,16 @@ export const DecisionSimulator: React.FC = () => {
         <div>
           <div className="flex items-center gap-2 text-xs font-bold text-primary uppercase font-mono tracking-wider">
             <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-            AI OS &bull; Decision Simulator
+            AI OS &bull; {t.aiDecisionSimulator}
           </div>
           <h1 className="font-display font-black text-3xl text-on-surface mt-1">
             {emergencyMode 
               ? "AI detected simulated disaster state. Directing all simulator resources to evacuation routes." 
-              : "AI ready. Modify parameters below to simulate what-if tournament states."
+              : t.aiDecisionSimulator
             }
           </h1>
           <p className="text-secondary text-xs font-sans mt-0.5">
-            What-if scenario generator. Telemetries updated dynamically across all modules.
+            {t.contextAwareIntelligence}
           </p>
         </div>
       </div>

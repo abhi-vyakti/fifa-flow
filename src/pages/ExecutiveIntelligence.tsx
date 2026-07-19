@@ -5,7 +5,7 @@ import {
 } from 'lucide-react';
 
 export const ExecutiveIntelligence: React.FC = () => {
-  const { emergencyMode } = useThemeSettings();
+  const { emergencyMode, t } = useThemeSettings();
 
   return (
     <div className="space-y-8 max-w-5xl mx-auto font-sans">
@@ -15,16 +15,16 @@ export const ExecutiveIntelligence: React.FC = () => {
         <div>
           <div className="flex items-center gap-2 text-xs font-bold text-primary uppercase font-mono tracking-wider">
             <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-            AI OS &bull; Executive Suite
+            AI OS &bull; {t.executiveIntelligence}
           </div>
           <h1 className="font-display font-black text-3xl text-on-surface mt-1.5 leading-tight">
             {emergencyMode 
               ? "AI detected emergency posture. Strategy reports updated for event mitigation." 
-              : "AI predicts 12% energy offset savings by end of today's fixtures."
+              : t.executiveIntelligence
             }
           </h1>
           <p className="text-secondary text-xs sm:text-[13px] font-medium mt-1">
-            FIFA FLOW tournament strategy suite, financial savings indicators, and tournament brain summary.
+            {t.contextAwareIntelligence}
           </p>
         </div>
       </div>
@@ -37,7 +37,7 @@ export const ExecutiveIntelligence: React.FC = () => {
             <Award className="text-primary animate-pulse" size={24} />
             <span className="font-mono text-xs uppercase tracking-wider text-primary font-bold">Tournament Brain Active</span>
           </div>
-          <h2 className="font-display font-black text-3xl sm:text-4xl text-on-surface">Strategy Intelligence Dashboard</h2>
+          <h2 className="font-display font-black text-3xl sm:text-4xl text-on-surface">{t.executiveIntelligence}</h2>
           <p className="text-xs sm:text-sm text-secondary/90 leading-relaxed font-medium">
             Real-time analytics aggregating telemetry nodes across all stadiums to compile carbon metrics, attendee satisfactions, and security logs.
           </p>
