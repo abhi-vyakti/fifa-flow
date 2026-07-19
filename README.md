@@ -1,13 +1,13 @@
 # FIFA FLOW
 ## The AI Operations Copilot Behind Every Match
 
-FIFA FLOW is an enterprise-grade AI operating system and telemetry dispatch copilot designed to manage and optimize the stadium experience for the **FIFA World Cup 2026**. 
+FIFA FLOW is an enterprise-grade AI operating system and telemetry dispatch copilot designed to manage and optimize the stadium experience for the FIFA World Cup 2026. 
 
 It aggregates real-time sensor telemetries (crowd volumes, gate queues, utilities load, and transit timings) into a single unified control room. It maps section bottlenecks visually, dispatches security or medical responders via optimal corridors, coordinates gamified volunteer checklist queues, and runs automated "What-If" crisis simulations.
 
 ---
 
-## 🌟 Key Features
+## Key Features
 
 1. **AI Situation Room (Operations Hub)**:
    - Displays real-time risk indicators, countdowns for incoming transits, and predicted bottlenecks.
@@ -16,15 +16,15 @@ It aggregates real-time sensor telemetries (crowd volumes, gate queues, utilitie
 
 2. **Interactive Stadium Digital Twin (SVG Heatmap)**:
    - Visual floor plan of stadium stands (North, East, South, West).
-   - Dynamic section colors matching crowd volumes (Green ➔ Yellow ➔ Orange ➔ Red).
+   - Dynamic section colors matching crowd volumes (Green -> Yellow -> Orange -> Red).
    - Hover grids and click handlers opening detailed metrics (staffing count, queues, active events).
 
 3. **What-If Scenario Simulator**:
    - Allows operators to simulate hypotheticals: Kickoff Rush, Medical Emergency, Heavy Rain Downpour, Metro Line Delay, Full Capacity Stadium, or VIP Delegation Arrival.
    - Modifies sensor values and triggers choreographed recovery timelines instantly.
 
-4. **Judge Demo Mode Walkthrough ("🚀 Launch Demo")**:
-   - An automated 60-second guided simulation sequence representing a kickoff bottleneck crisis and its step-by-step resolution. Ideal for rapid hackathon evaluations.
+4. **Judge Demo Mode Walkthrough ("Launch Demo")**:
+   - An automated 60-second guided simulation sequence representing a kickoff bottleneck crisis and its step-by-step resolution. Ideal for rapid evaluations.
 
 5. **Accessibility Assistant**:
    - Custom mobility routes for wheelchair users (avoids stairs and escalators), elderly, and families.
@@ -41,7 +41,7 @@ It aggregates real-time sensor telemetries (crowd volumes, gate queues, utilitie
 
 ---
 
-## ⚙️ System Architecture & Telemetry Pipeline
+## System Architecture and Telemetry Pipeline
 
 Rather than routing raw user inputs directly to LLMs, FIFA FLOW coordinates a context-aware filtering pipeline:
 
@@ -61,7 +61,7 @@ Dashboard Interface (Updates Situation Room & specialized views)
 
 ---
 
-## 📁 Project Directory Structure
+## Project Directory Structure
 
 ```
 FIFA-FLOW/
@@ -85,21 +85,21 @@ FIFA-FLOW/
     │   ├── StadiumDigitalTwin.tsx # Interactive SVG Stand Map
     │   ├── AISituationRoom.tsx   # Operations command summary board
     │   └── AICopilot.tsx         # Conversational search & voice analyzer
-    ├── pages/
-    │   ├── LandingPage.tsx       # Product welcome page & demo launcher
-    │   ├── OrganizerDashboard.tsx # Recharts grids & sustainability trackers
-    │   ├── FanAssistant.tsx      # Seat finding, SOS & navigation tools
-    │   ├── VolunteerDashboard.tsx # Gamified tasks & lost item loggers
-    │   ├── SecurityDashboard.tsx  # Broadcast translation & suspicious activity forms
-    │   ├── MedicalDashboard.tsx   # Triage dispatch, routes & aid beds capacity
-    │   ├── ArchitecturePage.tsx   # Interactive flowchart page for judges
-    │   └── SettingsPage.tsx       # Accessibility checks & active role toggle
+    └── pages/
+        ├── LandingPage.tsx       # Product welcome page & demo launcher
+        ├── OrganizerDashboard.tsx # Recharts grids & sustainability trackers
+        ├── FanAssistant.tsx      # Seat finding, SOS & navigation tools
+        ├── VolunteerDashboard.tsx # Gamified tasks & lost item loggers
+        ├── SecurityDashboard.tsx  # Broadcast translation & suspicious activity forms
+        ├── MedicalDashboard.tsx   # Triage dispatch, routes & aid beds capacity
+        ├── ArchitecturePage.tsx   # Interactive flowchart page for judges
+        └── SettingsPage.tsx       # Accessibility checks & active role toggle
     ├── contexts/
-    │   ├── LiveDataContext.tsx   # Telemetry polling & demo story controller
-    │   ├── AIContext.tsx         # Streaming SSE client & local fallback engine
-    │   └── ThemeContext.tsx      # Settings, translation & contrast toggle
+        ├── LiveDataContext.tsx   # Telemetry polling & demo story controller
+        ├── AIContext.tsx         # Streaming SSE client & local fallback engine
+        └── ThemeContext.tsx      # Settings, translation & contrast toggle
     ├── hooks/
-    │   └── useSpeech.ts          # Speech synthesis and web recognition
+        └── useSpeech.ts          # Speech synthesis and web recognition
     └── utils/
         ├── helpers.ts            # Formatting utility functions
         └── helpers.test.ts       # Vitest unit test suite
@@ -107,39 +107,29 @@ FIFA-FLOW/
 
 ---
 
-## 🚀 Installation & Launch Setup
+## Installation and Setup
 
 ### Prerequisites
 - Node.js (v18 or higher)
 - NPM or Yarn package manager
 
-### 1. Configure Environment Variables
-Create a `.env` file in the `server/` directory:
-```env
-PORT=3001
-GROQ_API_KEY=your_groq_api_key_here
-GROQ_MODEL=llama-3.3-70b-versatile
-GROQ_REASONING_MODEL=deepseek-r1-distill-llama-70b
-```
-*Note: If `GROQ_API_KEY` is omitted, the application automatically activates a local, deterministic client reasoning engine fallback. This guarantees the dashboard remains fully responsive and functional even without an API key.*
-
-### 2. Start the Backend Express Server (Port 3001)
+### 1. Start the Backend Express Server (Port 3001)
 ```bash
 cd server
 npm install
 npm run dev
 ```
 
-### 3. Start the Frontend Vite Server (Port 5173)
+### 2. Start the Frontend Vite Server (Port 5173)
 In a separate terminal, navigate to the project root:
 ```bash
 npm install
 npm run dev
 ```
 
-Open your browser and navigate to `http://localhost:5173` to explore the system!
+Open your browser and navigate to `http://localhost:5173` to explore the system.
 
-### 4. Run Automated Unit Tests
+### 3. Run Automated Unit Tests
 ```bash
 npm test
 ```
