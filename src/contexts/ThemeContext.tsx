@@ -24,6 +24,10 @@ interface ThemeContextType {
   setVoiceOutput: (val: boolean) => void;
   accessibility: AccessibilityPreferences;
   updateAccessibility: (key: keyof AccessibilityPreferences, val: boolean) => void;
+  emergencyMode: boolean;
+  setEmergencyMode: (val: boolean) => void;
+  voiceActive: boolean;
+  setVoiceActive: (val: boolean) => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -34,6 +38,8 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [highContrast, setHighContrast] = useState(false);
   const [colorBlindSafe, setColorBlindSafe] = useState(false);
   const [voiceOutput, setVoiceOutput] = useState(false);
+  const [emergencyMode, setEmergencyMode] = useState(false);
+  const [voiceActive, setVoiceActive] = useState(false);
   const [accessibility, setAccessibility] = useState<AccessibilityPreferences>({
     wheelchair: false,
     elderly: false,
@@ -42,7 +48,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     largeText: false
   });
 
-  // Keep body class synced with accessibility choices
+  // Keep body class synced with accessibility choices and emergency mode
   useEffect(() => {
     const root = document.documentElement;
     if (highContrast) {
@@ -56,7 +62,13 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     } else {
       root.style.fontSize = '16px';
     }
-  }, [highContrast, accessibility.largeText]);
+
+    if (emergencyMode) {
+      root.classList.add('emergency-hud-active');
+    } else {
+      root.classList.remove('emergency-hud-active');
+    }
+  }, [highContrast, accessibility.largeText, emergencyMode]);
 
   const updateAccessibility = (key: keyof AccessibilityPreferences, val: boolean) => {
     setAccessibility(prev => ({ ...prev, [key]: val }));
@@ -84,7 +96,11 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       voiceOutput,
       setVoiceOutput,
       accessibility,
-      updateAccessibility
+      updateAccessibility,
+      emergencyMode,
+      setEmergencyMode,
+      voiceActive,
+      setVoiceActive
     }}>
       {children}
     </ThemeContext.Provider>

@@ -86,7 +86,8 @@ export const SecurityDashboard: React.FC = () => {
       resourcesRequired: ['Patrol Officer', 'CCTV Zoom Focus'],
       nearbyResponders: ['Security Unit 5', 'Patrol 2'],
       escalationLevel: 'Level 0',
-      suggestedActions: ['Roving patrol inspection', 'CCTV continuous log check']
+      suggestedActions: ['Roving patrol inspection', 'CCTV continuous log check'],
+      status: 'reported'
     });
 
     setSuspiciousDesc('');

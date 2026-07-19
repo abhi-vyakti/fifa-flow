@@ -123,6 +123,15 @@ export interface CopilotAction {
   confidence: number;
   department: string;
   why: string;
+  expectedEffect?: string;
+  risks?: string;
+  rollbackPlan?: string;
+  whyDetails?: string[];
+  matchedMemory?: {
+    event: string;
+    resolution: string;
+    successRate: number;
+  };
 }
 
 export interface StadiumState {
@@ -182,4 +191,8 @@ export type PresetScenario =
   | 'HEAVY_RAIN'
   | 'METRO_DELAY'
   | 'FULL_STADIUM'
-  | 'VIP_ARRIVAL';
+  | 'VIP_ARRIVAL'
+  | 'CYBER_ATTACK'
+  | 'POWER_OUTAGE'
+  | 'DRONE_INTRUSION'
+  | 'CROWD_SURGE';

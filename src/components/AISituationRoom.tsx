@@ -17,14 +17,14 @@ export const AISituationRoom: React.FC = () => {
   const highCount = activeIncidents.filter(i => i.severity === 'high').length;
   
   let riskLevel: 'LOW' | 'MEDIUM' | 'HIGH' = 'LOW';
-  let riskColor = 'border-emerald-500/30 text-emerald-400 bg-emerald-500/5';
+  let riskColor = 'border-emerald-600/30 text-emerald-700 bg-emerald-600/10';
   
   if (criticalCount > 0 || highCount > 1 || state.occupancy.gates.C.congestion > 105) {
     riskLevel = 'HIGH';
-    riskColor = 'border-red-500/30 text-red-400 bg-red-500/5 animate-pulse';
+    riskColor = 'border-red-600/30 text-red-700 bg-red-600/10 animate-pulse';
   } else if (activeIncidents.length > 0 || state.occupancy.gates.C.congestion > 90) {
     riskLevel = 'MEDIUM';
-    riskColor = 'border-amber-500/30 text-amber-400 bg-amber-500/5';
+    riskColor = 'border-amber-600/30 text-amber-700 bg-amber-600/10';
   }
 
   // Next expected event countdown
@@ -37,11 +37,11 @@ export const AISituationRoom: React.FC = () => {
     <div className="space-y-8 font-sans">
       
       {/* 1. HORIZONTAL STATUS BAR (Compact & Clean) */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-white/[0.02] border border-darkBorder p-4 rounded-2xl items-center">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-surface-container-low border border-outline-variant/60 p-4 rounded-2xl items-center shadow-ultra-soft">
         
         {/* Risk Status Pill */}
         <div className="space-y-1 text-left">
-          <span className="text-[9px] text-gray-500 font-bold uppercase tracking-widest block">System Threat Level</span>
+          <span className="text-[9px] text-secondary font-bold uppercase tracking-widest block">System Threat Level</span>
           <div className={`inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg border text-xs font-black uppercase tracking-wider -skew-x-6 ${riskColor}`}>
             <ShieldAlert size={12} className="shrink-0" />
             <span>{riskLevel} RISK</span>
@@ -50,28 +50,28 @@ export const AISituationRoom: React.FC = () => {
 
         {/* Next critical countdown */}
         <div className="space-y-1 text-left">
-          <span className="text-[9px] text-gray-500 font-bold uppercase tracking-widest block">Transit Ingress Surge</span>
-          <div className="flex items-center space-x-1.5 text-white">
-            <Clock size={13} className="text-aiCyan" />
-            <span className="text-xs font-bold font-mono">Metro: {nextMetroArrival} min</span>
+          <span className="text-[9px] text-secondary font-bold uppercase tracking-widest block">Transit Ingress Surge</span>
+          <div className="flex items-center space-x-1.5 text-on-surface">
+            <Clock size={13} className="text-primary" />
+            <span className="text-xs font-extrabold font-mono">Metro: {nextMetroArrival} min</span>
           </div>
         </div>
 
         {/* Dynamic Stadium Health */}
         <div className="space-y-1 text-left">
-          <span className="text-[9px] text-gray-500 font-bold uppercase tracking-widest block">Overall Health</span>
-          <div className="flex items-baseline space-x-1.5 text-white">
-            <span className="text-sm font-extrabold text-white font-sans leading-none">{state.healthScore.overall}%</span>
-            <span className="text-[9px] text-emerald-400 font-mono">STABLE</span>
+          <span className="text-[9px] text-secondary font-bold uppercase tracking-widest block">Overall Health</span>
+          <div className="flex items-baseline space-x-1.5">
+            <span className="text-sm font-black text-on-surface font-sans leading-none">{state.healthScore.overall}%</span>
+            <span className="text-[9px] text-emerald-600 font-mono font-bold">STABLE</span>
           </div>
         </div>
 
         {/* Active Alarms */}
         <div className="space-y-1 text-left">
-          <span className="text-[9px] text-gray-500 font-bold uppercase tracking-widest block">Dispatched Alarms</span>
-          <div className="flex items-center space-x-1.5 text-white">
-            <span className={`h-2 w-2 rounded-full ${activeIncidents.length > 0 ? 'bg-red-500 animate-ping' : 'bg-emerald-500'}`} />
-            <span className="text-xs font-bold">{activeIncidents.length} Active alerts</span>
+          <span className="text-[9px] text-secondary font-bold uppercase tracking-widest block">Dispatched Alarms</span>
+          <div className="flex items-center space-x-1.5 text-on-surface">
+            <span className={`h-2 w-2 rounded-full ${activeIncidents.length > 0 ? 'bg-error animate-ping' : 'bg-emerald-500'}`} />
+            <span className="text-xs font-extrabold">{activeIncidents.length} Active alerts</span>
           </div>
         </div>
 
@@ -82,38 +82,38 @@ export const AISituationRoom: React.FC = () => {
         
         {/* Left HUD: Granular health progress parameters */}
         <div className="space-y-5 lg:col-span-1">
-          <div className="border-b border-darkBorder pb-2">
-            <span className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Health breakout</span>
+          <div className="border-b border-outline-variant/60 pb-2">
+            <span className="text-[10px] text-secondary font-bold uppercase tracking-widest">Health breakout</span>
           </div>
           
           <div className="space-y-4">
             {[
-              { label: 'Safety & Security', val: state.healthScore.safety, color: 'bg-emerald-500' },
-              { label: 'Transportation', val: state.healthScore.transportation, color: 'bg-cyan-500' },
-              { label: 'Concessions / Food', val: state.healthScore.food, color: 'bg-amber-500' },
-              { label: 'Medical Dispatch', val: state.healthScore.medical, color: 'bg-red-500' },
-              { label: 'Accessibility', val: state.healthScore.accessibility, color: 'bg-purple-500' },
-              { label: 'Sustainability', val: state.healthScore.sustainability, color: 'bg-green-500' }
+              { label: 'Safety & Security', val: state.healthScore.safety, color: 'bg-emerald-600' },
+              { label: 'Transportation', val: state.healthScore.safety, color: 'bg-primary' },
+              { label: 'Concessions / Food', val: state.healthScore.food, color: 'bg-primary' },
+              { label: 'Medical Dispatch', val: state.healthScore.medical, color: 'bg-error' },
+              { label: 'Accessibility', val: state.healthScore.accessibility, color: 'bg-primary' },
+              { label: 'Sustainability', val: state.healthScore.sustainability, color: 'bg-emerald-600' }
             ].map((score, idx) => (
               <div key={idx} className="space-y-1.5 text-xs text-left">
-                <div className="flex items-center justify-between text-gray-400">
-                  <span className="text-[11px] font-medium leading-none">{score.label}</span>
-                  <span className="font-bold font-mono text-[10px] text-white">{score.val}/100</span>
+                <div className="flex items-center justify-between text-secondary">
+                  <span className="text-[11px] font-bold leading-none">{score.label}</span>
+                  <span className="font-extrabold font-mono text-[10px] text-on-surface">{score.val}/100</span>
                 </div>
-                <div className="w-full bg-white/5 rounded-full h-1">
+                <div className="w-full bg-surface-container rounded-full h-1">
                   <div className={`${score.color} h-1 rounded-full`} style={{ width: `${score.val}%` }} />
                 </div>
               </div>
             ))}
           </div>
-
+ 
           {/* Core Latency diagnostics indicator */}
-          <div className="bg-gradient-to-r from-aiPurple/10 via-aiCyan/5 to-transparent border border-darkBorder p-3 rounded-xl space-y-2 text-left">
-            <div className="flex items-center space-x-1.5 text-[10px] font-bold text-white uppercase tracking-wider">
-              <Zap size={11} className="text-aiCyan animate-pulse" />
+          <div className="bg-primary/5 border border-outline-variant/60 p-4 rounded-2xl space-y-2 text-left shadow-ultra-soft">
+            <div className="flex items-center space-x-1.5 text-[10px] font-bold text-primary uppercase tracking-wider">
+              <Zap size={11} className="text-primary animate-pulse" />
               <span>FLOW COGNITIVE DIAGNOSTIC</span>
             </div>
-            <p className="text-[10px] text-gray-500 leading-normal">
+            <p className="text-[10px] text-secondary leading-normal">
               Active telemetry updates validated every 10s. Decision confidence score is dynamically mapped based on model inputs.
             </p>
           </div>
@@ -121,19 +121,19 @@ export const AISituationRoom: React.FC = () => {
 
         {/* Center HUD: The visual centerpiece (Stands Map Heatmap) */}
         <div className="lg:col-span-2 space-y-4">
-          <div className="border-b border-darkBorder pb-2 text-center">
-            <span className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Interactive Digital Twin Heatmap</span>
+          <div className="border-b border-outline-variant/60 pb-2 text-center">
+            <span className="text-[10px] text-secondary font-bold uppercase tracking-widest">Interactive Digital Twin Heatmap</span>
           </div>
 
-          <div className="p-4 bg-black/30 border border-darkBorder rounded-3xl overflow-hidden shadow-inner">
+          <div className="p-4 bg-surface-container-low border border-outline-variant/60 rounded-3xl overflow-hidden shadow-ultra-soft">
             <StadiumDigitalTwin />
           </div>
         </div>
 
         {/* Right HUD: AI automation logs connected timeline */}
         <div className="space-y-5 lg:col-span-1">
-          <div className="border-b border-darkBorder pb-2">
-            <span className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">AI Decision Path</span>
+          <div className="border-b border-outline-variant/60 pb-2">
+            <span className="text-[10px] text-secondary font-bold uppercase tracking-widest">AI Decision Path</span>
           </div>
 
           <div className="space-y-4 pr-1">
@@ -142,19 +142,19 @@ export const AISituationRoom: React.FC = () => {
                 
                 {/* Neon connecting circuit line */}
                 {idx < Math.min(state.aiTimeline.length - 1, 3) && (
-                  <div className="absolute top-5 left-2.5 bottom-[-16px] w-0.5 bg-darkBorder" />
+                  <div className="absolute top-5 left-2.5 bottom-[-16px] w-0.5 bg-outline-variant/60" />
                 )}
 
-                <div className="h-5 w-5 rounded-full bg-aiCyan/5 border border-aiCyan/25 flex items-center justify-center shrink-0 z-10">
-                  <span className="h-1.5 w-1.5 rounded-full bg-aiCyan" />
+                <div className="h-5 w-5 rounded-full bg-primary/10 border border-primary/25 flex items-center justify-center shrink-0 z-10">
+                  <span className="h-1.5 w-1.5 rounded-full bg-primary" />
                 </div>
 
-                <div className="flex-1 bg-white/5 border border-darkBorder/40 p-2.5 rounded-xl">
+                <div className="flex-1 bg-surface-container-low border border-outline-variant/40 p-2.5 rounded-xl shadow-ultra-soft">
                   <div className="flex items-center justify-between mb-1">
-                    <span className="font-bold text-white text-[11px] leading-tight">{item.event}</span>
-                    <span className="text-[9px] font-mono text-gray-500">{item.time}</span>
+                    <span className="font-bold text-on-surface text-[11px] leading-tight">{item.event}</span>
+                    <span className="text-[9px] font-mono text-secondary">{item.time}</span>
                   </div>
-                  <p className="text-[10px] text-gray-500 leading-normal">Operational telemetry protocol configured.</p>
+                  <p className="text-[10px] text-secondary leading-normal">Operational telemetry protocol configured.</p>
                 </div>
               </div>
             ))}
@@ -164,13 +164,13 @@ export const AISituationRoom: React.FC = () => {
       </div>
 
       {/* 3. LOWER SECTION: Copilot Actions (Inspect Details Drawer) */}
-      <section className="glass-panel p-5 rounded-2xl text-left border border-darkBorder space-y-4">
-        <div className="flex items-center justify-between border-b border-darkBorder pb-2">
+      <section className="bg-surface-container-low p-5 rounded-3xl text-left border border-outline-variant/60 space-y-4 shadow-ultra-soft">
+        <div className="flex items-center justify-between border-b border-outline-variant/60 pb-2">
           <div className="flex items-center space-x-2">
-            <Sparkles size={14} className="text-aiCyan" />
-            <h3 className="font-bold text-xs text-white uppercase tracking-wider">AI Operations Action Queue</h3>
+            <Sparkles size={14} className="text-primary animate-pulse" />
+            <h3 className="font-display font-black text-lg text-on-surface uppercase tracking-wider">AI Operations Action Queue</h3>
           </div>
-          <span className="text-[9px] bg-aiPurple/15 text-aiPurple border border-aiPurple/20 px-2 py-0.5 rounded font-extrabold uppercase">
+          <span className="text-[9px] bg-primary/10 text-primary border border-primary/20 px-2 py-0.5 rounded font-extrabold uppercase font-mono">
             Inference Actions
           </span>
         </div>
@@ -178,29 +178,29 @@ export const AISituationRoom: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {state.copilotActions.map((action) => {
             const isOpened = activeExplainId === action.id;
-            let priorityClass = 'bg-gray-500/10 text-gray-400 border-gray-500/20';
-            if (action.priority === 'high') priorityClass = 'bg-red-500/15 border-red-500/35 text-red-400';
-            if (action.priority === 'medium') priorityClass = 'bg-amber-500/15 border-amber-500/35 text-amber-400';
+            let priorityClass = 'bg-secondary/10 text-secondary border-outline-variant/40';
+            if (action.priority === 'high') priorityClass = 'bg-error/10 border-error/25 text-error';
+            if (action.priority === 'medium') priorityClass = 'bg-primary/10 border-primary/25 text-primary';
 
             return (
               <div 
                 key={action.id}
-                className="bg-white/5 border border-darkBorder/50 rounded-xl p-4 flex flex-col justify-between hover:border-darkBorderGlow transition-all duration-300 space-y-3"
+                className="bg-surface-container-lowest border border-outline-variant/60 rounded-2xl p-4 flex flex-col justify-between hover:border-primary/40 transition-all duration-300 space-y-3 shadow-ultra-soft"
               >
                 <div className="space-y-1.5">
                   <div className="flex items-center justify-between">
                     <span className={`text-[8px] font-extrabold uppercase px-1.5 py-0.5 rounded border ${priorityClass}`}>
                       {action.priority} Priority
                     </span>
-                    <span className="text-[9px] text-gray-500 font-mono">Conf: {action.confidence}%</span>
+                    <span className="text-[9px] text-secondary font-mono">Conf: {action.confidence}%</span>
                   </div>
-                  <h4 className="font-extrabold text-white text-xs leading-normal">{action.recommendation}</h4>
+                  <h4 className="font-extrabold text-on-surface text-xs leading-normal">{action.recommendation}</h4>
                 </div>
 
-                <div className="flex items-center justify-between pt-2 border-t border-white/[0.02]">
+                <div className="flex items-center justify-between pt-2 border-t border-outline-variant/30">
                   <button
                     onClick={() => setActiveExplainId(isOpened ? null : action.id)}
-                    className="text-[10px] text-aiCyan font-bold uppercase tracking-wider hover:underline flex items-center space-x-0.5"
+                    className="text-[10px] text-primary font-bold uppercase tracking-wider hover:underline flex items-center space-x-0.5 cursor-pointer"
                   >
                     <span>{isOpened ? 'Hide Explanation' : 'Inspect Why?'}</span>
                     <ChevronRight size={10} className={`transform transition-transform ${isOpened ? 'rotate-90' : ''}`} />
@@ -213,7 +213,7 @@ export const AISituationRoom: React.FC = () => {
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      className="bg-black/35 border border-darkBorder p-2.5 rounded-lg text-[10px] text-gray-400 leading-relaxed font-sans overflow-hidden"
+                      className="bg-surface-container border border-outline-variant/60 p-2.5 rounded-xl text-[10px] text-secondary leading-relaxed font-sans overflow-hidden"
                     >
                       {action.why}
                     </motion.div>

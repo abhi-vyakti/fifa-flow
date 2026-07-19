@@ -135,10 +135,94 @@ const defaultInitialState: StadiumState = {
     { time: '14:10:15', message: 'Security patrol resolved scuffle at West Plaza', type: 'security' }
   ],
   copilotActions: [
-    { id: 'CO-1', recommendation: 'Deploy 3 volunteers from West Gate to Gate C congestion', priority: 'high', confidence: 96, department: 'Volunteers', why: 'Gate C is experiencing 104% design capacity entry volume while West Gate has 3 idle volunteers.' },
-    { id: 'CO-2', recommendation: 'Trigger Sustainability Protocol: Dim exterior structural lights by 30%', priority: 'medium', confidence: 94, department: 'Operations', why: 'Stadium power draw reached 840kW (threshold is 800kW) during non-match halftime phase.' },
-    { id: 'CO-3', recommendation: 'Redirect mobile concession orders to Stall 20 (Vegan Deli)', priority: 'low', confidence: 89, department: 'Food', why: 'Stall 18 queue time is 18 minutes with low stock, while Stall 20 has excess stock and 2 minute wait times.' },
-    { id: 'CO-4', recommendation: 'Broadcast audio & display accessibility warnings at Metro Platform 2', priority: 'high', confidence: 95, department: 'Security', why: 'Congestion at Platform 2 requires slow movement guidance for elderly and wheelchair users.' }
+    {
+      id: 'CO-1',
+      recommendation: 'Deploy 3 volunteers from West Gate to Gate C congestion',
+      priority: 'high',
+      confidence: 96,
+      department: 'Volunteers',
+      why: 'Gate C is experiencing 104% design capacity entry volume while West Gate has 3 idle volunteers.',
+      expectedEffect: 'Queue ↓ 21% | Wait Time ↓ 4 min',
+      risks: 'Minor coverage gap at West Gate (risk: low)',
+      rollbackPlan: 'Re-assign volunteers if West Gate volume increases by 15%',
+      whyDetails: [
+        'Gate C crowd capacity reached 104% (threshold 90%)',
+        'Average queue wait time at Gate C exceeded 18 minutes',
+        'West Gate crowd capacity is at 35% with 3 idle volunteers',
+        'Camera analysis shows entry bottlenecks developing at outer perimeter C'
+      ],
+      matchedMemory: {
+        event: 'World Cup Qatar 2022 - Group Stage Ingress Surge',
+        resolution: 'Redistribute volunteers + perimeter dynamic sign routing',
+        successRate: 94
+      }
+    },
+    {
+      id: 'CO-2',
+      recommendation: 'Trigger Sustainability Protocol: Dim exterior structural lights by 30%',
+      priority: 'medium',
+      confidence: 94,
+      department: 'Operations',
+      why: 'Stadium power draw reached 840kW (threshold is 800kW) during non-match halftime phase.',
+      expectedEffect: 'Power Usage ↓ 40kW | Cost ↓ 12%',
+      risks: 'Reduced ambient lighting outside (risk: low)',
+      rollbackPlan: 'Restore lighting if crowd egress rate drops below 10k/hr',
+      whyDetails: [
+        'Stadium total power load exceeded threshold of 800kW',
+        'No active match play in progress (non-critical visual stage)',
+        'Solar battery reserve is at 42% (below 50% target)',
+        'Estimated savings: 40kW over next 4 hours'
+      ],
+      matchedMemory: {
+        event: 'Stadium Energy Conservation Protocol 2024',
+        resolution: 'Dim external architecture lighting ring',
+        successRate: 98
+      }
+    },
+    {
+      id: 'CO-3',
+      recommendation: 'Redirect mobile concession orders to Stall 20 (Vegan Deli)',
+      priority: 'low',
+      confidence: 89,
+      department: 'Food',
+      why: 'Stall 18 queue time is 18 minutes with low stock, while Stall 20 has excess stock and 2 minute wait times.',
+      expectedEffect: 'Wait Time ↓ 6 min | Inventory Balanced',
+      risks: 'Vegan preference compatibility check (risk: low)',
+      rollbackPlan: 'Revert default recommendation if Stall 20 queue grows beyond 8 mins',
+      whyDetails: [
+        'Stall 18 queue wait times reached critical 18 minutes',
+        'Stall 18 inventory has depleted to 28% of capacity',
+        'Stall 20 inventory is at 94% with 2 minutes queue wait times',
+        'AI user profiles suggest 64% concession overlap compatibility'
+      ],
+      matchedMemory: {
+        event: 'CONCACAF 2025 - Mid-match Concession Redistribution',
+        resolution: 'Reroute mobile app food suggestions dynamically',
+        successRate: 88
+      }
+    },
+    {
+      id: 'CO-4',
+      recommendation: 'Broadcast audio & display accessibility warnings at Metro Platform 2',
+      priority: 'high',
+      confidence: 95,
+      department: 'Security',
+      why: 'Congestion at Platform 2 requires slow movement guidance for elderly and wheelchair users.',
+      expectedEffect: 'Accident Risk ↓ 45% | Flow Egress Rate ↑ 8%',
+      risks: 'Temporary noise levels increase (risk: low)',
+      rollbackPlan: 'Disable broadcast once platform occupancy drops to <60%',
+      whyDetails: [
+        'Metro Platform 2 occupancy reached 88% capacity limit',
+        'Wheelchair route egress timing slowed by 4.2 minutes',
+        'Dashed guide-paths indicate platform bottleneck',
+        'Safety regulations require immediate audio warnings for visual/motor assistance'
+      ],
+      matchedMemory: {
+        event: 'Metro Platform Crisis Simulation 2024',
+        resolution: 'Activate accessibility safety announcements + custom guidance paths',
+        successRate: 95
+      }
+    }
   ]
 };
 
@@ -150,8 +234,8 @@ export const LiveDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [activeDemoStep, setActiveDemoStep] = useState<number | null>(null);
   const [isPlayingDemo, setIsPlayingDemo] = useState(false);
 
-  const demoIntervalRef = useRef<NodeJS.Timeout | null>(null);
-  const apiFetchIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const demoIntervalRef = useRef<any | null>(null);
+  const apiFetchIntervalRef = useRef<any | null>(null);
 
   // 1. Fetch live telemetry from Express API
   const fetchLiveTelemetry = async (silent = false) => {
@@ -307,6 +391,50 @@ export const LiveDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       } else if (scenario === 'VIP_ARRIVAL') {
         next.transportation.parking.lotA.occupiedPercent = 100;
         next.aiTimeline.unshift({ time: timeStr, event: 'VIP Motorcade successfully arrived.', icon: 'security' });
+      } else if (scenario === 'CYBER_ATTACK') {
+        const id = `INC-${Date.now().toString().slice(-4)}`;
+        next.incidents.unshift({
+          id, title: 'Brute-force attack on Access Control Servers', type: 'security', severity: 'critical', location: 'Server Room 3',
+          status: 'investigating', reportedAt: new Date().toISOString(), details: 'Intrusion detection alerted multiple login failures from unknown exterior gateway.',
+          priority: 1, department: 'Security', resourcesRequired: ['Cyber Response Team', 'Network Lock'],
+          nearbyResponders: ['NetOps Team Alpha'], escalationLevel: 'Level 3',
+          suggestedActions: ['Isolate Gate Ingress subnet', 'Activate offline volunteer check-in lists']
+        });
+        next.aiTimeline.unshift({ time: timeStr, event: 'Cyber attack detected on gate ticketing network.', icon: 'security' });
+      } else if (scenario === 'POWER_OUTAGE') {
+        next.sustainability.powerUsageKw = 120; // Standby generator load
+        const id = `INC-${Date.now().toString().slice(-4)}`;
+        next.incidents.unshift({
+          id, title: 'Lusail Substation Failure', type: 'infrastructure', severity: 'critical', location: 'Substation B',
+          status: 'reported', reportedAt: new Date().toISOString(), details: 'Lusail main grid offline. Backups and standby generators active. South stand dimmed.',
+          priority: 1, department: 'Operations', resourcesRequired: ['Maintenance Crew', 'Emergency Lighting'],
+          nearbyResponders: ['Power Station Operator'], escalationLevel: 'Level 3',
+          suggestedActions: ['Direct volunteers with mega-horns', 'Keep evacuation paths lit']
+        });
+        next.aiTimeline.unshift({ time: timeStr, event: 'Main grid power failure reported. Backups active.', icon: 'system' });
+      } else if (scenario === 'DRONE_INTRUSION') {
+        const id = `INC-${Date.now().toString().slice(-4)}`;
+        next.incidents.unshift({
+          id, title: 'Unauthorized drone near South Stand', type: 'security', severity: 'high', location: 'Section C3',
+          status: 'reported', reportedAt: new Date().toISOString(), details: 'Spectator reported micro-drone hovering above section C3 at 30m altitude.',
+          priority: 2, department: 'Security', resourcesRequired: ['RF Jammer', 'Police Drone Intercept'],
+          nearbyResponders: ['Security Unit 12'], escalationLevel: 'Level 2',
+          suggestedActions: ['Deploy RF Jammer Unit', 'Notify Airspace Control']
+        });
+        next.aiTimeline.unshift({ time: timeStr, event: 'Unauthorized drone spotted over South stand.', icon: 'security' });
+      } else if (scenario === 'CROWD_SURGE') {
+        next.occupancy.gates.B.congestion = 125;
+        next.sections.B2.crowdDensity = 'red';
+        next.sections.B2.queueLength = 40;
+        const id = `INC-${Date.now().toString().slice(-4)}`;
+        next.incidents.unshift({
+          id, title: 'Crowd surge at Gate B entry ramp', type: 'general', severity: 'high', location: 'Gate B',
+          status: 'dispatched', reportedAt: new Date().toISOString(), details: 'Platform ingress bottleneck due to ticket-scanner failures. Density rising.',
+          priority: 2, department: 'Volunteers', resourcesRequired: ['Crowd Directors', 'Spare Scanners'],
+          nearbyResponders: ['Volunteer Team Beta'], escalationLevel: 'Level 2',
+          suggestedActions: ['Open overflow security lanes', 'Reroute incoming spectators to Gate A']
+        });
+        next.aiTimeline.unshift({ time: timeStr, event: 'Crowd surge detected at Gate B entry ramp.', icon: 'crowd' });
       }
 
       return next;
