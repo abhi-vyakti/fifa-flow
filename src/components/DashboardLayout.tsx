@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { USABadge, ENGBadge } from './FlagBadge';
+import { FIFALogo } from './FIFALogo';
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -98,18 +99,18 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTr
   const getBreadcrumbs = () => {
     const segments = location.pathname.split('/').filter(Boolean);
     if (segments.length === 0) return 'FIFA FLOW > LANDING';
-    return `FIFA FLOW > ${segments[segments.length - 1].toUpperCase()}`;
+    return `FIFA FLOW > ${segments[0].toUpperCase()}`;
   };
 
   const isLanding = location.pathname === '/';
 
   return (
-    <div className={`min-h-screen bg-background text-on-surface flex flex-col font-sans selection:bg-primary/30 ${highContrast ? 'high-contrast' : ''}`}>
+    <div className={`min-h-screen flex flex-col bg-background font-sans text-on-surface antialiased transition-colors duration-300 ${highContrast ? 'high-contrast-mode' : ''}`}>
       
-      {/* Top Application Bar */}
-      <header className="h-14 border-b border-outline-variant/60 bg-surface-container-low/90 backdrop-blur-md px-4 flex items-center justify-between sticky top-0 z-40 shadow-ultra-soft">
+      {/* TOP COMPACT CONTROL HEADER */}
+      <header className="sticky top-0 z-40 w-full h-14 bg-surface-container-low/95 border-b border-outline-variant/60 backdrop-blur-md px-4 flex items-center justify-between shadow-ultra-soft">
         
-        {/* LEFT: Branding & Hamburger toggle */}
+        {/* LEFT: Branding + Breadcrumbs + Hamburger */}
         <div className="flex items-center space-x-3">
           <button 
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -122,13 +123,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTr
             onClick={() => navigate('/')} 
             className="flex items-center space-x-2.5 cursor-pointer group"
           >
-            <div className="w-8 h-8 rounded-xl bg-primary/10 border border-primary/25 flex items-center justify-center text-primary group-hover:scale-105 transition-transform shadow-ultra-soft">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <circle cx="12" cy="12" r="10" />
-                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10z" />
-                <path d="M2 12h20" />
-              </svg>
-            </div>
+            <FIFALogo size={28} className="group-hover:scale-105 transition-transform" />
 
             <div className="hidden md:flex flex-col leading-none">
               <span className="font-display font-black text-on-surface text-[14px] tracking-tight group-hover:text-primary transition-colors">FIFA FLOW</span>
@@ -330,11 +325,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTr
             <aside className="w-64 h-full bg-surface border-r border-outline-variant p-4 flex flex-col space-y-6" onClick={(e) => e.stopPropagation()}>
               <div className="flex items-center justify-between border-b border-outline-variant pb-4">
                 <div className="flex items-center space-x-2">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="text-primary animate-pulse-slow">
-                    <circle cx="12" cy="12" r="10" />
-                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10z" />
-                    <path d="M2 12h20" />
-                  </svg>
+                  <FIFALogo size={24} />
                   <span className="font-display font-extrabold text-primary">FIFA FLOW</span>
                 </div>
                 <button onClick={() => setMobileMenuOpen(false)} className="p-1 rounded hover:bg-surface-container-high text-secondary">
