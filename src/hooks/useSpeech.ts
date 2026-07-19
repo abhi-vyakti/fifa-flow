@@ -1,22 +1,23 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef } from 'react';
 
 export const useSpeech = (onResult?: (text: string) => void) => {
   const [isListening, setIsListening] = useState(false);
-  const [supported, setSupported] = useState(false);
-  const [recognition, setRecognition] = useState<any>(null);
+  const supported = typeof window !== 'undefined' && ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window);
+  const recognitionRef = useRef<any>(null);
 
-  // Capture onResult in a Ref to avoid triggering useEffect cycles
+  // Capture onResult in a Ref to avoid stale closure issues
   const onResultRef = useRef(onResult);
-  useEffect(() => {
-    onResultRef.current = onResult;
-  }, [onResult]);
+  onResultRef.current = onResult;
 
-  useEffect(() => {
-    const SpeechRecognition =
-      (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+  const startListening = useCallback(() => {
+    if (!supported || isListening) return;
 
-    if (SpeechRecognition) {
-      setSupported(true);
+    try {
+      const SpeechRecognition =
+        (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+      
+      if (!SpeechRecognition) return;
+
       const rec = new SpeechRecognition();
       rec.continuous = false;
       rec.interimResults = false;
@@ -28,11 +29,13 @@ export const useSpeech = (onResult?: (text: string) => void) => {
 
       rec.onend = () => {
         setIsListening(false);
+        recognitionRef.current = null;
       };
 
       rec.onerror = (event: any) => {
         console.error('Speech recognition error:', event.error);
         setIsListening(false);
+        recognitionRef.current = null;
       };
 
       rec.onresult = (event: any) => {
@@ -42,33 +45,36 @@ export const useSpeech = (onResult?: (text: string) => void) => {
         }
       };
 
-      setRecognition(rec);
+      recognitionRef.current = rec;
+      rec.start();
+    } catch (err) {
+      console.error('Failed to start speech recognition:', err);
+      setIsListening(false);
     }
-  }, []); // Run exactly once on mount
+  }, [supported, isListening]);
 
-  const startListening = useCallback(() => {
-    if (recognition && !isListening) {
+  const stopListening = useCallback(() => {
+    if (recognitionRef.current && isListening) {
       try {
-        recognition.start();
+        recognitionRef.current.stop();
       } catch (err) {
         console.error(err);
       }
+      setIsListening(false);
     }
-  }, [recognition, isListening]);
-
-  const stopListening = useCallback(() => {
-    if (recognition && isListening) {
-      recognition.stop();
-    }
-  }, [recognition, isListening]);
+  }, [isListening]);
 
   const speak = useCallback((text: string) => {
-    if ('speechSynthesis' in window) {
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.rate = 1.0;
-      utterance.pitch = 1.0;
-      window.speechSynthesis.speak(utterance);
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      try {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 1.0;
+        utterance.pitch = 1.0;
+        window.speechSynthesis.speak(utterance);
+      } catch (err) {
+        console.error('Speech synthesis error:', err);
+      }
     }
   }, []);
 
