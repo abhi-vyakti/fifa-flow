@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Temporary downloads and screenshots
+download_stitch.ps1
+stitch_downloads/
+stitch_screenshots/

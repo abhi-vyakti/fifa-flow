@@ -228,7 +228,7 @@ export const LiveMatchControl: React.FC = () => {
         
         {/* ── Left Column: Active Dashboard Content (Dynamic Tabs) ── */}
         <div className="lg:col-span-8 space-y-5">
-          <AnimatePresence mode="wait">
+          <AnimatePresence>
             
             {/* 1. Tab Decisions & Memory */}
             {activeTab === 'decisions' && (

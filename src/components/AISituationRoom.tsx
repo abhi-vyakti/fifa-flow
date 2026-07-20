@@ -4,7 +4,7 @@ import { useThemeSettings } from '../contexts/ThemeContext';
 import { StadiumDigitalTwin } from './StadiumDigitalTwin';
 import { 
   ShieldCheck, AlertTriangle, Clock, Activity, ShieldAlert, Zap,
-  CheckCircle2, Sparkles, ChevronRight, HelpCircle
+  CheckCircle2, Sparkles, ChevronRight
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -39,13 +39,17 @@ export const AISituationRoom: React.FC = () => {
     <div className="space-y-8 font-sans">
       
       {/* 1. HORIZONTAL STATUS BAR (Compact & Clean) */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-surface-container-low border border-outline-variant/60 p-4 rounded-2xl items-center shadow-ultra-soft">
+      <div 
+        role="region" 
+        aria-label="System status metrics" 
+        className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-surface-container-low border border-outline-variant/60 p-4 rounded-2xl items-center shadow-ultra-soft"
+      >
         
         {/* Risk Status Pill */}
         <div className="space-y-1 text-left">
           <span className="text-[9px] text-secondary font-bold uppercase tracking-widest block">{t.systemThreatLevel}</span>
           <div className={`inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg border text-xs font-black uppercase tracking-wider -skew-x-6 ${riskColor}`}>
-            <ShieldAlert size={12} className="shrink-0" />
+            <ShieldAlert size={12} className="shrink-0" aria-hidden="true" />
             <span>{riskLevel} RISK</span>
           </div>
         </div>
@@ -54,7 +58,7 @@ export const AISituationRoom: React.FC = () => {
         <div className="space-y-1 text-left">
           <span className="text-[9px] text-secondary font-bold uppercase tracking-widest block">{t.transitIngressSurge}</span>
           <div className="flex items-center space-x-1.5 text-on-surface">
-            <Clock size={13} className="text-primary" />
+            <Clock size={13} className="text-primary" aria-hidden="true" />
             <span className="text-xs font-extrabold font-mono">Metro: {nextMetroArrival} min</span>
           </div>
         </div>
@@ -72,7 +76,7 @@ export const AISituationRoom: React.FC = () => {
         <div className="space-y-1 text-left">
           <span className="text-[9px] text-secondary font-bold uppercase tracking-widest block">{t.dispatchedAlarms}</span>
           <div className="flex items-center space-x-1.5 text-on-surface">
-            <span className={`h-2 w-2 rounded-full ${activeIncidents.length > 0 ? 'bg-error animate-ping' : 'bg-emerald-500'}`} />
+            <span className={`h-2 w-2 rounded-full ${activeIncidents.length > 0 ? 'bg-error animate-ping' : 'bg-emerald-500'}`} aria-hidden="true" />
             <span className="text-xs font-extrabold">{activeIncidents.length} Active alerts</span>
           </div>
         </div>
@@ -83,7 +87,7 @@ export const AISituationRoom: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
         
         {/* Left HUD: Granular health progress parameters */}
-        <div className="space-y-5 lg:col-span-1">
+        <div className="space-y-5 lg:col-span-1" role="region" aria-label="Stadium health breakout">
           <div className="border-b border-outline-variant/60 pb-2">
             <span className="text-[10px] text-secondary font-bold uppercase tracking-widest">{t.healthBreakout}</span>
           </div>
@@ -102,7 +106,14 @@ export const AISituationRoom: React.FC = () => {
                   <span className="text-[11px] font-bold leading-none">{score.label}</span>
                   <span className="font-extrabold font-mono text-[10px] text-on-surface">{score.val}/100</span>
                 </div>
-                <div className="w-full bg-surface-container rounded-full h-1">
+                <div 
+                  className="w-full bg-surface-container rounded-full h-1"
+                  role="progressbar"
+                  aria-label={`${score.label} score`}
+                  aria-valuenow={score.val}
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                >
                   <div className={`${score.color} h-1 rounded-full`} style={{ width: `${score.val}%` }} />
                 </div>
               </div>
@@ -112,7 +123,7 @@ export const AISituationRoom: React.FC = () => {
           {/* Core Latency diagnostics indicator */}
           <div className="bg-primary/5 border border-outline-variant/60 p-4 rounded-2xl space-y-2 text-left shadow-ultra-soft">
             <div className="flex items-center space-x-1.5 text-[10px] font-bold text-primary uppercase tracking-wider">
-              <Zap size={11} className="text-primary animate-pulse" />
+              <Zap size={11} className="text-primary animate-pulse" aria-hidden="true" />
               <span>FLOW COGNITIVE DIAGNOSTIC</span>
             </div>
             <p className="text-[10px] text-secondary leading-normal">
@@ -122,7 +133,7 @@ export const AISituationRoom: React.FC = () => {
         </div>
 
         {/* Center HUD: The visual centerpiece (Stands Map Heatmap) */}
-        <div className="lg:col-span-2 space-y-4">
+        <div className="lg:col-span-2 space-y-4" role="region" aria-label="Digital Twin Heatmap">
           <div className="border-b border-outline-variant/60 pb-2 text-center">
             <span className="text-[10px] text-secondary font-bold uppercase tracking-widest">{t.digitalTwinTitle}</span>
           </div>
@@ -133,7 +144,7 @@ export const AISituationRoom: React.FC = () => {
         </div>
 
         {/* Right HUD: AI automation logs connected timeline */}
-        <div className="space-y-5 lg:col-span-1">
+        <div className="space-y-5 lg:col-span-1" role="region" aria-label="AI Decision Path timeline">
           <div className="border-b border-outline-variant/60 pb-2">
             <span className="text-[10px] text-secondary font-bold uppercase tracking-widest">{t.aiDecisionPath}</span>
           </div>
@@ -148,7 +159,7 @@ export const AISituationRoom: React.FC = () => {
                 )}
 
                 <div className="h-5 w-5 rounded-full bg-primary/10 border border-primary/25 flex items-center justify-center shrink-0 z-10">
-                  <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-primary" aria-hidden="true" />
                 </div>
 
                 <div className="flex-1 bg-surface-container-low border border-outline-variant/40 p-2.5 rounded-xl shadow-ultra-soft">
@@ -166,10 +177,10 @@ export const AISituationRoom: React.FC = () => {
       </div>
 
       {/* 3. LOWER SECTION: Copilot Actions (Inspect Details Drawer) */}
-      <section className="bg-surface-container-low p-5 rounded-3xl text-left border border-outline-variant/60 space-y-4 shadow-ultra-soft">
+      <section role="region" aria-label="AI Operations Action Queue" className="bg-surface-container-low p-5 rounded-3xl text-left border border-outline-variant/60 space-y-4 shadow-ultra-soft">
         <div className="flex items-center justify-between border-b border-outline-variant/60 pb-2">
           <div className="flex items-center space-x-2">
-            <Sparkles size={14} className="text-primary animate-pulse" />
+            <Sparkles size={14} className="text-primary animate-pulse" aria-hidden="true" />
             <h3 className="font-display font-black text-lg text-on-surface uppercase tracking-wider">AI Operations Action Queue</h3>
           </div>
           <span className="text-[9px] bg-primary/10 text-primary border border-primary/20 px-2 py-0.5 rounded font-extrabold uppercase font-mono">
@@ -202,10 +213,12 @@ export const AISituationRoom: React.FC = () => {
                 <div className="flex items-center justify-between pt-2 border-t border-outline-variant/30">
                   <button
                     onClick={() => setActiveExplainId(isOpened ? null : action.id)}
-                    className="text-[10px] text-primary font-bold uppercase tracking-wider hover:underline flex items-center space-x-0.5 cursor-pointer"
+                    aria-expanded={isOpened}
+                    aria-label={`Inspect why for recommendation: ${action.recommendation}`}
+                    className="text-[10px] text-primary font-bold uppercase tracking-wider hover:underline flex items-center space-x-0.5 cursor-pointer focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none rounded"
                   >
                     <span>{isOpened ? 'Hide Explanation' : 'Inspect Why?'}</span>
-                    <ChevronRight size={10} className={`transform transition-transform ${isOpened ? 'rotate-90' : ''}`} />
+                    <ChevronRight size={10} className={`transform transition-transform ${isOpened ? 'rotate-90' : ''}`} aria-hidden="true" />
                   </button>
                 </div>
 

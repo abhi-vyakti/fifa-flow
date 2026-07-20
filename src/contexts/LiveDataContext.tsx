@@ -525,8 +525,7 @@ export const LiveDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     };
 
     setState(prev => {
-      const next = { ...prev };
-      next.incidents.unshift(newInc);
+      const next = { ...prev, incidents: [newInc, ...prev.incidents] };
       
       const loc = incident.location;
       if (next.sections[loc]) {

@@ -2,10 +2,16 @@ import React from 'react';
 
 interface FlagBadgeProps {
   className?: string;
+  'aria-label'?: string;
 }
 
-export const USABadge: React.FC<FlagBadgeProps> = ({ className = "w-6 h-6" }) => (
-  <svg viewBox="0 0 100 100" className={`${className} rounded-full shadow-sm border border-outline-variant/40 bg-white shrink-0 inline-block align-middle`}>
+export const USABadge: React.FC<FlagBadgeProps> = ({ className = "w-6 h-6", 'aria-label': ariaLabel = "USA flag" }) => (
+  <svg 
+    viewBox="0 0 100 100" 
+    role="img"
+    aria-label={ariaLabel}
+    className={`${className} rounded-full shadow-sm border border-outline-variant/40 bg-white shrink-0 inline-block align-middle`}
+  >
     <mask id="circle-mask-usa-badge">
       <circle cx="50" cy="50" r="50" fill="white" />
     </mask>
@@ -19,8 +25,13 @@ export const USABadge: React.FC<FlagBadgeProps> = ({ className = "w-6 h-6" }) =>
   </svg>
 );
 
-export const ENGBadge: React.FC<FlagBadgeProps> = ({ className = "w-6 h-6" }) => (
-  <svg viewBox="0 0 100 100" className={`${className} rounded-full shadow-sm border border-outline-variant/40 bg-white shrink-0 inline-block align-middle`}>
+export const ENGBadge: React.FC<FlagBadgeProps> = ({ className = "w-6 h-6", 'aria-label': ariaLabel = "England flag" }) => (
+  <svg 
+    viewBox="0 0 100 100" 
+    role="img"
+    aria-label={ariaLabel}
+    className={`${className} rounded-full shadow-sm border border-outline-variant/40 bg-white shrink-0 inline-block align-middle`}
+  >
     <mask id="circle-mask-eng-badge">
       <circle cx="50" cy="50" r="50" fill="white" />
     </mask>
@@ -32,8 +43,13 @@ export const ENGBadge: React.FC<FlagBadgeProps> = ({ className = "w-6 h-6" }) =>
   </svg>
 );
 
-export const CANBadge: React.FC<FlagBadgeProps> = ({ className = "w-6 h-6" }) => (
-  <svg viewBox="0 0 100 100" className={`${className} rounded-full shadow-sm border border-outline-variant/40 bg-white shrink-0 inline-block align-middle`}>
+export const CANBadge: React.FC<FlagBadgeProps> = ({ className = "w-6 h-6", 'aria-label': ariaLabel = "Canada flag" }) => (
+  <svg 
+    viewBox="0 0 100 100" 
+    role="img"
+    aria-label={ariaLabel}
+    className={`${className} rounded-full shadow-sm border border-outline-variant/40 bg-white shrink-0 inline-block align-middle`}
+  >
     <mask id="circle-mask-can-badge">
       <circle cx="50" cy="50" r="50" fill="white" />
     </mask>
@@ -47,8 +63,13 @@ export const CANBadge: React.FC<FlagBadgeProps> = ({ className = "w-6 h-6" }) =>
   </svg>
 );
 
-export const MEXBadge: React.FC<FlagBadgeProps> = ({ className = "w-6 h-6" }) => (
-  <svg viewBox="0 0 100 100" className={`${className} rounded-full shadow-sm border border-outline-variant/40 bg-white shrink-0 inline-block align-middle`}>
+export const MEXBadge: React.FC<FlagBadgeProps> = ({ className = "w-6 h-6", 'aria-label': ariaLabel = "Mexico flag" }) => (
+  <svg 
+    viewBox="0 0 100 100" 
+    role="img"
+    aria-label={ariaLabel}
+    className={`${className} rounded-full shadow-sm border border-outline-variant/40 bg-white shrink-0 inline-block align-middle`}
+  >
     <mask id="circle-mask-mex-badge">
       <circle cx="50" cy="50" r="50" fill="white" />
     </mask>
@@ -64,21 +85,22 @@ export const MEXBadge: React.FC<FlagBadgeProps> = ({ className = "w-6 h-6" }) =>
 interface FlagBadgeSelectorProps {
   country: string;
   className?: string;
+  'aria-label'?: string;
 }
 
-export const FlagBadge: React.FC<FlagBadgeSelectorProps> = ({ country, className }) => {
+export const FlagBadge: React.FC<FlagBadgeSelectorProps> = ({ country, className, 'aria-label': ariaLabel }) => {
   const norm = country.toLowerCase();
   if (norm.includes('usa') || norm.includes('united states') || norm.includes('us')) {
-    return <USABadge className={className} />;
+    return <USABadge className={className} aria-label={ariaLabel || "USA flag"} />;
   }
   if (norm.includes('eng') || norm.includes('england')) {
-    return <ENGBadge className={className} />;
+    return <ENGBadge className={className} aria-label={ariaLabel || "England flag"} />;
   }
   if (norm.includes('can') || norm.includes('canada')) {
-    return <CANBadge className={className} />;
+    return <CANBadge className={className} aria-label={ariaLabel || "Canada flag"} />;
   }
   if (norm.includes('mex') || norm.includes('mexico')) {
-    return <MEXBadge className={className} />;
+    return <MEXBadge className={className} aria-label={ariaLabel || "Mexico flag"} />;
   }
   return null;
 };

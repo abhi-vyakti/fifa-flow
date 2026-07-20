@@ -51,6 +51,8 @@ export const BroadcastIntro: React.FC<BroadcastIntroProps> = ({ onComplete, onTo
     <AnimatePresence>
       {step < 5 && (
         <motion.div 
+          role="region"
+          aria-label="Broadcast Intro Overlay"
           className="fixed inset-0 z-[2000] bg-[#020308] flex flex-col items-center justify-center overflow-hidden font-sans"
           exit={{ 
             opacity: 0, 
@@ -67,15 +69,17 @@ export const BroadcastIntro: React.FC<BroadcastIntroProps> = ({ onComplete, onTo
           <div className="absolute top-6 flex items-center space-x-3 z-[1000]">
             <button 
               onClick={onToggleAudio}
-              className={`flex items-center space-x-2 px-4 py-2 rounded-full text-xs font-bold transition-all border ${audioActive ? 'bg-fifaGold/15 border-fifaGold text-fifaGold' : 'bg-white/5 border-darkBorder text-gray-400'}`}
+              aria-label={audioActive ? 'Disable match atmosphere audio' : 'Enable match atmosphere audio'}
+              className={`flex items-center space-x-2 px-4 py-2 rounded-full text-xs font-bold transition-all border cursor-pointer focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:outline-none ${audioActive ? 'bg-fifaGold/15 border-fifaGold text-fifaGold' : 'bg-white/5 border-darkBorder text-gray-400'}`}
             >
-              {audioActive ? <Volume2 size={13} className="animate-pulse" /> : <VolumeX size={13} />}
+              {audioActive ? <Volume2 size={13} className="animate-pulse" aria-hidden="true" /> : <VolumeX size={13} aria-hidden="true" />}
               <span>{audioActive ? '🔊 Atmosphere Enabled' : '🔇 Enable Match Atmosphere'}</span>
             </button>
             
             <button 
               onClick={onComplete}
-              className="px-4 py-2 bg-white/5 border border-darkBorder hover:bg-white/10 text-gray-300 text-xs font-bold rounded-full transition-all"
+              aria-label="Skip Broadcast Intro"
+              className="px-4 py-2 bg-white/5 border border-darkBorder hover:bg-white/10 text-gray-300 text-xs font-bold rounded-full transition-all cursor-pointer focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:outline-none"
             >
               Skip Intro
             </button>
@@ -111,6 +115,9 @@ export const BroadcastIntro: React.FC<BroadcastIntroProps> = ({ onComplete, onTo
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0 }}
                 className="space-y-3"
+                role="timer"
+                aria-live="polite"
+                aria-label={`Match engagement countdown: ${countdown}`}
               >
                 <span className="text-[10px] text-gray-500 uppercase tracking-widest block font-mono">MATCH ENGAGEMENT COUNTDOWN</span>
                 <motion.div 
@@ -132,9 +139,10 @@ export const BroadcastIntro: React.FC<BroadcastIntroProps> = ({ onComplete, onTo
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 className="space-y-4"
+                role="status"
               >
                 <div className="flex justify-center space-x-1">
-                  <span className="h-2 w-2 rounded-full bg-aiCyan animate-ping" />
+                  <span className="h-2 w-2 rounded-full bg-aiCyan animate-ping" aria-hidden="true" />
                   <span className="text-[10px] text-aiCyan font-bold uppercase tracking-widest">ACTIVATING STADIUM LIGHTS</span>
                 </div>
                 <h3 className="text-lg font-bold text-white uppercase tracking-wider font-sans">IGNITING PILOT CONNECTORS</h3>
@@ -155,9 +163,10 @@ export const BroadcastIntro: React.FC<BroadcastIntroProps> = ({ onComplete, onTo
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 className="space-y-6"
+                role="status"
               >
                 <div className="inline-flex items-center space-x-2 px-3 py-1 bg-emerald-500/10 border border-emerald-500/30 rounded-full text-[9px] font-bold text-emerald-400 uppercase tracking-widest">
-                  <Sparkles size={11} className="animate-spin text-emerald-400" />
+                  <Sparkles size={11} className="animate-spin text-emerald-400" aria-hidden="true" />
                   <span>AI SYSTEM ONLINE</span>
                 </div>
                 <h2 className="text-3xl font-extrabold text-white tracking-wide uppercase font-sans">
@@ -168,7 +177,8 @@ export const BroadcastIntro: React.FC<BroadcastIntroProps> = ({ onComplete, onTo
                 </p>
                 <button
                   onClick={onComplete}
-                  className="px-6 py-3 bg-gradient-to-r from-aiCyan to-blue-600 hover:brightness-110 text-white font-bold rounded-xl shadow-glow text-xs uppercase tracking-wider transition-all"
+                  aria-label="Enter Control Room"
+                  className="px-6 py-3 bg-gradient-to-r from-aiCyan to-blue-600 hover:brightness-110 text-white font-bold rounded-xl shadow-glow text-xs uppercase tracking-wider transition-all cursor-pointer focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:outline-none"
                 >
                   Enter Control Room
                 </button>

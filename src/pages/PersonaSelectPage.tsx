@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useThemeSettings, type UserRole } from '../contexts/ThemeContext';
 import { 
   Brain, Shield, Activity, Users, HelpCircle, 
-  ArrowRight, Sparkles, ChevronRight, CheckCircle2, ShieldCheck, Terminal
+  ArrowRight, Sparkles, CheckCircle2
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -91,7 +91,7 @@ const personas: PersonaOption[] = [
 
 export const PersonaSelectPage: React.FC = () => {
   const navigate = useNavigate();
-  const { setRole, t } = useThemeSettings();
+  const { setRole } = useThemeSettings();
   const [hoveredId, setHoveredId] = useState<UserRole | null>(null);
   const [selectedId, setSelectedId] = useState<UserRole | null>(null);
 
@@ -119,7 +119,7 @@ export const PersonaSelectPage: React.FC = () => {
         className="text-center space-y-3.5 mb-10 relative z-10 max-w-2xl"
       >
         <div className="inline-flex items-center space-x-2 px-4 py-1.5 bg-primary/10 border border-primary/25 rounded-full text-xs font-bold text-primary uppercase font-mono tracking-widest shadow-ultra-soft">
-          <Sparkles size={12} className="animate-pulse" />
+          <Sparkles size={12} className="animate-pulse" aria-hidden="true" />
           <span>FIFA FLOW Operational Access Control</span>
         </div>
         
@@ -133,7 +133,11 @@ export const PersonaSelectPage: React.FC = () => {
       </motion.div>
 
       {/* Persona Selection Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 w-full max-w-6xl relative z-10">
+      <div 
+        role="region" 
+        aria-label="Persona Selection Options"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 w-full max-w-6xl relative z-10"
+      >
         <AnimatePresence>
           {personas.map((persona, index) => {
             const Icon = persona.icon;
@@ -143,6 +147,9 @@ export const PersonaSelectPage: React.FC = () => {
             return (
               <motion.button
                 key={persona.id}
+                type="button"
+                aria-label={`Select persona ${persona.title} (${persona.subtitle})`}
+                aria-pressed={isSelected}
                 initial={{ opacity: 0, y: 25 }}
                 animate={{ 
                   opacity: isSelected && selectedId !== persona.id ? 0.35 : 1, 
@@ -155,7 +162,7 @@ export const PersonaSelectPage: React.FC = () => {
                 onMouseLeave={() => setHoveredId(null)}
                 className={`
                   group relative text-left p-6 rounded-3xl border transition-all duration-300 cursor-pointer flex flex-col justify-between
-                  bg-surface-container-low/95 backdrop-blur-md shadow-ultra-soft
+                  bg-surface-container-low/95 backdrop-blur-md shadow-ultra-soft focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none
                   ${isSelected 
                     ? 'border-primary ring-2 ring-primary/40 bg-surface-container-high shadow-lg scale-[1.01]'
                     : isHovered 
@@ -170,7 +177,7 @@ export const PersonaSelectPage: React.FC = () => {
                   {/* Top Bar: Icon Badge & Role Pill */}
                   <div className="flex items-center justify-between">
                     <div className={`p-3 rounded-2xl border ${persona.accentBorder} ${persona.accentBg} ${persona.accentText} transition-transform group-hover:scale-110 shadow-sm`}>
-                      <Icon size={24} />
+                      <Icon size={24} aria-hidden="true" />
                     </div>
 
                     <span className={`px-2.5 py-1 rounded-xl text-[10px] font-mono font-black uppercase tracking-wider border ${persona.badgeBg}`}>
@@ -180,9 +187,9 @@ export const PersonaSelectPage: React.FC = () => {
 
                   {/* Title & Subtitle */}
                   <div>
-                    <h3 className="font-display font-black text-lg text-on-surface group-hover:text-primary transition-colors tracking-tight">
+                    <h2 className="font-display font-black text-lg text-on-surface group-hover:text-primary transition-colors tracking-tight">
                       {persona.title}
-                    </h3>
+                    </h2>
                     <p className={`text-xs font-mono font-bold uppercase tracking-wider mt-0.5 ${persona.accentText}`}>
                       {persona.subtitle}
                     </p>
@@ -194,7 +201,7 @@ export const PersonaSelectPage: React.FC = () => {
                   </p>
 
                   {/* Capability Tags */}
-                  <div className="flex flex-wrap gap-1.5 pt-1">
+                  <div className="flex flex-wrap gap-1.5 pt-1" aria-label="Capabilities">
                     {persona.capabilities.map((cap) => (
                       <span 
                         key={cap}
@@ -211,7 +218,7 @@ export const PersonaSelectPage: React.FC = () => {
                 <div className="mt-6 pt-3 border-t border-outline-variant/40 flex items-center justify-between text-xs font-bold font-mono text-primary group-hover:text-primary-container transition-colors">
                   <span className="uppercase tracking-wider">Launch Workspace</span>
                   <div className="flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-                    <ArrowRight size={14} />
+                    <ArrowRight size={14} aria-hidden="true" />
                   </div>
                 </div>
 
@@ -222,7 +229,7 @@ export const PersonaSelectPage: React.FC = () => {
                     animate={{ scale: 1 }}
                     className="absolute top-4 right-4 w-6 h-6 bg-primary rounded-full flex items-center justify-center shadow-md"
                   >
-                    <CheckCircle2 size={14} className="text-white" />
+                    <CheckCircle2 size={14} className="text-white" aria-hidden="true" />
                   </motion.div>
                 )}
               </motion.button>

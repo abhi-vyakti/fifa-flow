@@ -107,21 +107,37 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTr
   return (
     <div className={`min-h-screen flex flex-col bg-background font-sans text-on-surface antialiased transition-colors duration-300 ${highContrast ? 'high-contrast-mode' : ''}`}>
       
+      {/* Accessibility Skip Link */}
+      <a 
+        href="#main-content" 
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[9999] focus:px-4 focus:py-2 focus:bg-primary focus:text-on-primary focus:font-bold focus:rounded-lg focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-emerald-400"
+      >
+        {t.skipToContent || 'Skip to main content'}
+      </a>
+
+      {/* Screen Reader Live Announcements */}
+      <div className="sr-only" aria-live="polite" aria-atomic="true">
+        {emergencyMode ? 'Emergency HUD activated' : 'Standard operations mode'}
+      </div>
+
       {/* TOP COMPACT CONTROL HEADER */}
-      <header className="sticky top-0 z-40 w-full h-14 bg-surface-container-low/95 border-b border-outline-variant/60 backdrop-blur-md px-4 flex items-center justify-between shadow-ultra-soft">
+      <header role="banner" className="sticky top-0 z-40 w-full h-14 bg-surface-container-low/95 border-b border-outline-variant/60 backdrop-blur-md px-4 flex items-center justify-between shadow-ultra-soft">
         
         {/* LEFT: Branding + Breadcrumbs + Hamburger */}
         <div className="flex items-center space-x-3">
           <button 
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 rounded-xl text-secondary hover:text-on-surface hover:bg-surface-container-high cursor-pointer transition-all"
+            aria-label={mobileMenuOpen ? 'Close Navigation Menu' : 'Open Navigation Menu'}
+            aria-expanded={mobileMenuOpen}
+            className="md:hidden p-2 rounded-xl text-secondary hover:text-on-surface hover:bg-surface-container-high cursor-pointer transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
           >
-            {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
+            {mobileMenuOpen ? <X size={18} aria-hidden="true" /> : <Menu size={18} aria-hidden="true" />}
           </button>
 
-          <div 
+          <button 
             onClick={() => navigate('/')} 
-            className="flex items-center space-x-2.5 cursor-pointer group"
+            aria-label="FIFA FLOW Homepage"
+            className="flex items-center space-x-2.5 cursor-pointer group text-left focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none rounded-lg p-1"
           >
             <FIFALogo size={28} className="group-hover:scale-105 transition-transform" />
 
@@ -129,7 +145,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTr
               <span className="font-display font-black text-on-surface text-[14px] tracking-tight group-hover:text-primary transition-colors">FIFA FLOW</span>
               <span className="text-[7.5px] font-mono font-bold text-emerald-600 uppercase tracking-widest mt-0.5">{t.osOnline}</span>
             </div>
-          </div>
+          </button>
         </div>
 
         {/* CENTER: Floating Broadcast-Quality Scoreboard (Desktop & Tablet) */}
@@ -183,23 +199,26 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTr
           {/* Emergency HUD Toggle */}
           <button
             onClick={() => setEmergencyMode(!emergencyMode)}
-            className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all duration-150 border cursor-pointer active:scale-95 ${
+            aria-label="Toggle Emergency HUD"
+            aria-pressed={emergencyMode}
+            className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all duration-150 border cursor-pointer active:scale-95 focus-visible:ring-2 focus-visible:ring-error focus-visible:outline-none ${
               emergencyMode
                 ? 'bg-error border-error text-white shadow-[0_0_12px_rgba(192,57,43,0.35)]'
                 : 'bg-surface-container border border-outline-variant/60 hover:border-error/50 hover:text-error text-secondary'
             }`}
           >
-            <AlertCircle size={12} />
+            <AlertCircle size={12} aria-hidden="true" />
             <span className="hidden sm:inline">{emergencyMode ? t.emergency : t.emergencyHud}</span>
           </button>
 
           {/* Language Selector */}
           <div className="hidden sm:flex items-center gap-1 bg-surface-container border border-outline-variant/60 rounded-xl px-2 py-1 text-xs">
-            <Languages size={12} className="text-secondary" />
+            <Languages size={12} className="text-secondary" aria-hidden="true" />
             <select
               value={language}
               onChange={(e) => setLanguage(e.target.value as any)}
-              className="bg-transparent text-on-surface text-[11px] font-bold outline-none cursor-pointer"
+              aria-label="Select Language"
+              className="bg-transparent text-on-surface text-[11px] font-bold outline-none cursor-pointer focus-visible:ring-2 focus-visible:ring-primary"
             >
               <option value="en" className="bg-surface text-on-surface">EN</option>
               <option value="es" className="bg-surface text-on-surface">ES</option>
@@ -375,7 +394,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, onTr
         )}
 
         {/* Main Dashboard Pages Slot */}
-        <main className="flex-1 overflow-y-auto p-3 sm:p-5 md:p-6 pb-24 md:pb-6 bg-background relative z-10">
+        <main id="main-content" tabIndex={-1} role="main" aria-label="Main content" className="flex-1 overflow-y-auto p-3 sm:p-5 md:p-6 pb-24 md:pb-6 bg-background relative z-10 focus:outline-none">
           <motion.div
             key={location.pathname}
             initial={{ opacity: 0, x: 10, filter: 'blur(4px)' }}

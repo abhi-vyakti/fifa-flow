@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { useThemeSettings, type UserRole, type AppLanguage } from '../contexts/ThemeContext';
 import { 
   Settings as SettingsIcon, Accessibility, Languages, Check, 
@@ -109,7 +109,7 @@ export const SettingsPage: React.FC = () => {
       </div>
 
       {/* Content Area */}
-      <AnimatePresence mode="wait">
+      <AnimatePresence>
         <motion.div
           key={activeSection}
           initial={{ opacity: 0, y: 12, filter: 'blur(4px)' }}

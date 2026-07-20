@@ -226,7 +226,7 @@ export const LandingPage: React.FC = () => {
               <Cpu size={12} className="animate-spin" />
               <span>AI STREAM</span>
             </div>
-            <AnimatePresence mode="wait">
+            <AnimatePresence>
               <motion.p 
                 key={tickerIndex}
                 initial={{ opacity: 0, y: 8 }}

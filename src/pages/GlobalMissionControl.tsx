@@ -310,7 +310,7 @@ export const GlobalMissionControl: React.FC = () => {
         <div className="xl:col-span-1 space-y-4">
           
           {/* Selected Venue Card */}
-          <AnimatePresence mode="wait">
+          <AnimatePresence>
             <motion.div
               key={selectedVenue.id}
               initial={{ opacity: 0, y: 10 }}
