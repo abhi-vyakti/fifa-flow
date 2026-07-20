@@ -104,32 +104,3 @@ FIFA-FLOW/
         ├── helpers.ts            # Formatting utility functions
         └── helpers.test.ts       # Vitest unit test suite
 ```
-
----
-
-## Installation and Setup
-
-### Prerequisites
-- Node.js (v18 or higher)
-- NPM or Yarn package manager
-
-### 1. Start the Backend Express Server (Port 3001)
-```bash
-cd server
-npm install
-npm run dev
-```
-
-### 2. Start the Frontend Vite Server (Port 5173)
-In a separate terminal, navigate to the project root:
-```bash
-npm install
-npm run dev
-```
-
-Open your browser and navigate to `http://localhost:5173` to explore the system.
-
-### 3. Run Automated Unit Tests
-```bash
-npm test
-```
