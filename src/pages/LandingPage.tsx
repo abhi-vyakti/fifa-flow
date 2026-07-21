@@ -54,17 +54,6 @@ export const LandingPage: React.FC = () => {
       {/* ── 1. CINEMATIC HERO SECTION ── */}
       <section className="text-center space-y-8 pt-6 relative z-10">
         
-        {/* Pulsing Status Pill */}
-        <motion.div 
-          initial={{ opacity: 0, y: -15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="inline-flex items-center space-x-2.5 px-4 py-1.5 bg-surface-container-low border border-primary/30 rounded-full text-xs font-bold text-primary uppercase font-mono tracking-widest shadow-ultra-soft"
-        >
-          <span className="h-2 w-2 rounded-full bg-emerald-500 animate-ping" />
-          <Sparkles size={13} className="text-primary animate-pulse" />
-          <span>FIFA World Cup 2026 • AI Stadium Operating System</span>
-        </motion.div>
 
         {/* Hero Title with Metallic Shimmer & Deep Impact */}
         <motion.div 
