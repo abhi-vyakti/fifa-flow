@@ -8,7 +8,7 @@ const LiveDataConsumer = () => {
 
   return (
     <div>
-      <span data-testid="stadium-name">{state.stadiumName || 'MetLife Stadium'}</span>
+      <span data-testid="stadium-name">{(state as any).stadiumName || 'MetLife Stadium'}</span>
       <span data-testid="total-occupancy">{state.occupancy.current}</span>
       <span data-testid="incidents-count">{state.incidents.length}</span>
       <span data-testid="gate-c-congestion">{state.occupancy.gates.C.congestion}</span>
@@ -36,7 +36,7 @@ const LiveDataConsumer = () => {
         Resolve INC-101
       </button>
 
-      <button onClick={() => triggerScenario('gate_c_surge')}>
+      <button onClick={() => triggerScenario('KICKOFF_RUSH')}>
         Trigger Gate C Surge
       </button>
     </div>

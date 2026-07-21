@@ -7,6 +7,7 @@ export interface TranslationDictionary {
   config: string;
 
   // Nav items
+  skipToContent: string;
   globalMissionControl: string;
   aiSituationRoom: string;
   matchOperations: string;
@@ -125,6 +126,7 @@ export const translations: Record<AppLanguage, TranslationDictionary> = {
     operations: 'OPERATIONS',
     config: 'CONFIG',
 
+    skipToContent: 'Skip to main content',
     globalMissionControl: 'Global Mission Control',
     aiSituationRoom: 'AI Situation Room',
     matchOperations: 'Match Operations',
@@ -236,6 +238,7 @@ export const translations: Record<AppLanguage, TranslationDictionary> = {
     operations: 'OPERACIONES',
     config: 'CONFIGURACIÓN',
 
+    skipToContent: 'Saltar al contenido principal',
     globalMissionControl: 'Control de Misión Global',
     aiSituationRoom: 'Sala de Situación IA',
     matchOperations: 'Operaciones del Partido',
@@ -347,6 +350,7 @@ export const translations: Record<AppLanguage, TranslationDictionary> = {
     operations: 'OPÉRATIONS',
     config: 'CONFIGURATION',
 
+    skipToContent: 'Passer au contenu principal',
     globalMissionControl: 'Contrôle de Mission Global',
     aiSituationRoom: 'Salle de Situation IA',
     matchOperations: 'Opérations du Match',
@@ -458,6 +462,7 @@ export const translations: Record<AppLanguage, TranslationDictionary> = {
     operations: 'OPERAÇÕES',
     config: 'CONFIGURAÇÃO',
 
+    skipToContent: 'Ir para o conteúdo principal',
     globalMissionControl: 'Controle de Missão Global',
     aiSituationRoom: 'Sala de Situação IA',
     matchOperations: 'Operações do Jogo',
@@ -569,6 +574,7 @@ export const translations: Record<AppLanguage, TranslationDictionary> = {
     operations: 'العمليات',
     config: 'الإعدادات',
 
+    skipToContent: 'الانتقال إلى المحتوى الرئيسي',
     globalMissionControl: 'التحكم في المهمة العالمية',
     aiSituationRoom: 'غرفة وضع الذكاء الاصطناعي',
     matchOperations: 'عمليات المباراة',
@@ -680,6 +686,7 @@ export const translations: Record<AppLanguage, TranslationDictionary> = {
     operations: 'ऑपरेशंस',
     config: 'कॉन्फ़िगर',
 
+    skipToContent: 'मुख्य सामग्री पर जाएं',
     globalMissionControl: 'ग्लोबल मिशन कंट्रोल',
     aiSituationRoom: 'एआई सिचुएशन रूम',
     matchOperations: 'मैच ऑपरेशंस',
